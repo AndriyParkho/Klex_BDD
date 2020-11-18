@@ -8,7 +8,7 @@ create table Dept(
   constraint pkDept primary key (deptNo)  
 );
 
-create table emp(  
+create table Emp(  
   empNo    number(4,0),  
   eName    varchar2(10),  
   job      varchar2(9),  
