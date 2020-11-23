@@ -1,5 +1,14 @@
 import sqlite3
 
+# syntax : 
+#
+# connexion = sqlite3.connect("nom_de_la_base.db")
+# cursor = connexion.cursor()
+# connexion.execute("requette en sql en chaine de caractères")
+# connexion.commit()
+# connexion.execute("d'autres requettes")
+# connexion.commit()
+# connexion.close()
 
 
 conn = sqlite3.connect("base.db")
