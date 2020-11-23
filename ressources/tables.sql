@@ -1,248 +1,256 @@
-drop table if exists Flux;
-drop table if exists FluxTexte;
-drop table if exists FluxAudio;
-drop table if exists FluxVideo;
-drop table if exists Dept;
-drop table if exists Emp;
-drop table if exists PisteAPourCategorie;
-drop table if exists Album;
-drop table if exists AlbumAPourCategorie;
-drop table if exists Codec;
-drop table if exists Client;
-drop table if exists SupporteCodec;
-drop table if exists CategorieMusique;
-drop table if exists Artiste;
-drop table if exists APourRole;
-drop table if exists Piste;
-drop table if exists APourInstrument;
-drop table if exists Utilisateur;
-drop table if exists Fichier;
-drop table if exists Film;
-drop table if exists EstUnFilm;
-drop table if exists EstUnePiste;
-drop table if exists ImgExtraiteFilm;
-drop table if exists CategorieFilm;
-drop table if exists APourCategorie;
+DROP TABLE IF EXISTS Flux;
+DROP TABLE IF EXISTS FluxTexte;
+DROP TABLE IF EXISTS FluxAudio;
+DROP TABLE IF EXISTS FluxVideo;
+DROP TABLE IF EXISTS Dept;
+DROP TABLE IF EXISTS Emp;
+DROP TABLE IF EXISTS PisteAPourCategorie;
+DROP TABLE IF EXISTS Album;
+DROP TABLE IF EXISTS AlbumAPourCategorie;
+DROP TABLE IF EXISTS Codec;
+DROP TABLE IF EXISTS Client;
+DROP TABLE IF EXISTS SupporteCodec;
+DROP TABLE IF EXISTS CategorieMusique;
+DROP TABLE IF EXISTS Artiste;
+DROP TABLE IF EXISTS APourRole;
+DROP TABLE IF EXISTS Piste;
+DROP TABLE IF EXISTS APourInstrument;
+DROP TABLE IF EXISTS Utilisateur;
+DROP TABLE IF EXISTS Fichier;
+DROP TABLE IF EXISTS Film;
+DROP TABLE IF EXISTS EstUnFilm;
+DROP TABLE IF EXISTS EstUnePiste;
+DROP TABLE IF EXISTS ImgExtraiteFilm;
+DROP TABLE IF EXISTS CategorieFilm;
+DROP TABLE IF EXISTS APourCategorie;
+
+/*
+After foreign key:
+ON DELETE CASCADE: if a row in the parent is deleted, then all the rows in the child table that reference the removed row will be deleted.
+ON DELETE SET NULL: if a row in the parent is deleted, then all the rows in the child table reference the removed row will be set to NULL for the foreign key columns.
+*/ 
 
 /*
 mettre la taille des identifiants de table
-ajouter les contraintes not null
 */
-create table PisteAPourCategorie(
-    idPiste     int,
-    idAlbum     int,
-    typeCategorieMusique    varchar(20),
-    constraint pkPisteAPourCategorie primary key (idPiste, idAlbum, typeCategorieMusique),
-    constraint fkIdPisteIdAlbum foreign key (idPiste, idAlbum) references Piste(idPiste, idAlbum),
-    constraint fkTypeCategorieMusique foreign key (typeCategorieMusique) references CategorieMusique(typeCategorieMusique)
+CREATE TABLE PisteAPourCategorie(
+  idPiste integer NOT NULL,
+  idAlbum integer NOT NULL,
+  typeCategorieMusique varchar(20) NOT NULL REFERENCES CategorieMusique (typeCategorieMusique),
+  CONSTRAINT pkPisteAPourCategorie PRIMARY KEY (idPiste, idAlbum, typeCategorieMusique),
+  CONSTRAINT fkIdPisteIdAlbum FOREIGN KEY (idPiste, idAlbum) REFERENCES Piste (idPiste, idAlbum)
 );
 
 /*
 mettre la taille des identifiants de table
-ajouter les contraintes not null
 */
-create table Album(
-    idAlbum     int,
-    titreAlbum  varchar(50),
-    nomAlbum    varchar(50),
-    dateSortieAlbum     date,
-    urlImagePochette    varchar(100),
-    constraint pkAlbum primary key (idAlbum)
+CREATE TABLE Album(
+  idAlbum integer GENERATED ALWAYS AS IDENTITY,
+  titreAlbum varchar(50) NOT NULL,
+  nomAlbum varchar(50) NOT NULL,
+  dateSortieAlbum date NOT NULL,
+  urlImagePochette varchar(100) NOT NULL,
+  CONSTRAINT pkAlbum PRIMARY KEY (idAlbum)
 );
 
 /*
 mettre la taille des identifiants de table
-ajouter les contraintes not null
 */
-create table AlbumAPourCategorie(
-    idAlbum     int,
-    typeCategorieMusique    varchar(20),
-    constraint pkPisteAPourCategorie primary key (idAlbum, typeCategorieMusique),
-    constraint fkIdAlbum foreign key (idAlbum) references Album(idAlbum),
-    constraint fkTypeCategorieMusique foreign key (typeCategorieMusique) references CategorieMusique(typeCategorieMusique)
+CREATE TABLE AlbumAPourCategorie(
+  idAlbum integer NOT NULL REFERENCES Album (idAlbum),
+  typeCategorieMusique varchar(20) NOT NULL REFERENCES CategorieMusique (typeCategorieMusique),
+  CONSTRAINT pkPisteAPourCategorie PRIMARY KEY (idAlbum, typeCategorieMusique)
 );
 
 /*
 revoir le check à la fin des déclarations en contrainte
-ajouter les contraintes not null
 */
-create table Codec(
-    nomCodec    varchar(20),
-    typeCodec   varchar(20) check(typeCodec in ('audio', 'video', 'texte')),
-    constraint pkCodec primary key (nomCodec)
+CREATE TABLE Codec(
+  nomCodec varchar(20) NOT NULL,
+  typeCodec varchar(20) NOT NULL check(typeCodec in ('audio', 'video', 'texte')),
+  CONSTRAINT pkCodec PRIMARY KEY (nomCodec)
 );
 
 /*
 mettre la taille des number
-ajouter les contraintes not null
 */
-create table Client(
-    marque  varchar(20),
-    modele  varchar(20),
-    largeurMax  int,
-    hauteurMax  int,
-    constraint pkClient primary key (marque, modele)
+CREATE TABLE Client(
+  marque varchar(20) NOT NULL,
+  modele varchar(20) NOT NULL,
+  largeurMax integer NOT NULL,
+  hauteurMax integer NOT NULL,
+  CONSTRAINT pkClient PRIMARY KEY (marque, modele)
+);
+
+
+CREATE TABLE SupporteCodec(
+  marque varchar(20) NOT NULL,
+  modele varchar(20) NOT NULL,
+  nomCodec varchar(20) NOT NULL REFERENCES Codec (nomCodec),
+  CONSTRAINT pkSupporteCodec PRIMARY KEY (marque, modele, nomCodec),
+  CONSTRAINT fkClient FOREIGN KEY (marque, modele) REFERENCES Client (marque, modele)
+);
+
+
+CREATE TABLE Artiste(
+  idArtiste integer GENERATED ALWAYS AS IDENTITY,
+  nomArtiste varchar(50) NOT NULL,
+  dateNaissance date, urlPhoto varchar(150) NOT NULL,
+  Specialite varchar(50) NOT NULL,
+  biographie varchar(8000),
+  CONSTRAINT pkArtiste PRIMARY KEY (idArtiste)
 );
 
 /*
-ajouter les contraintes not null
+verifier qu'un film est associé à au moins un artiste
+vérifier qu'on le format year de anneeSortie
 */
-create table SupporteCodec(
-    marque  varchar(20),
-    modele  varchar(20),
-    nomCodec    varchar(20),
-    constraint pkSupporteCodec primary key (marque, modele, nomCodec),
-    constraint fkClient foreign key (marque, modele) references Client(marque, modele),
-    constraint fkCodec foreign key (nomCodec) references Codec(nomCodec)
+CREATE TABLE APourRole(
+  roleFilm varchar(50) NOT NULL,
+  titreFilm varchar(50) NOT NULL,
+  anneeSortie integer NOT NULL,
+  idArtiste integer NOT NULL REFERENCES Artiste (idArtiste),
+  CONSTRAINT fkFilm FOREIGN KEY (titreFilm, anneeSortie) REFERENCES Film (titreFilm, anneeSortie),
+  CONSTRAINT pkAPourRole PRIMARY KEY (titreFilm, anneeSortie, idArtiste)
 );
 
 
-create table Artiste(
-  idArtiste     int,
-  nomArtiste      varchar(50) not null,
-  dateNaissance        date not null,
-  urlPhoto        varchar(150) not null,
-  Specialite        varchar(50) not null,
-  biographie        varchar(8000) not null,
-
-  constraint pkArtiste primary key (idArtiste)
-);
-
-create table APourRole(
-  roleFilm     varchar(50) not null,
-  titreFilm      varchar(50),
-  anneeSortie        integer,/*normalement on devrait pouvoir mettre year*/
-  idArtiste        integer,
-
-  constraint fkTitreFilm foreign key (titreFilm) references Film (titreFilm)
-  constraint fkAnneeSortie foreign key (anneeSortie) references Film (anneeSortie)
-  constraint fkIdArtiste foreign key (idArtiste) references Artiste (idArtiste)
-/* verifier qu'un film est associé à au moins un artiste*/
+CREATE TABLE Piste(
+  idPiste integer GENERATED ALWAYS AS IDENTITY,
+  numPiste integer NOT NULL,
+  titrePiste varchar(50) NOT NULL,
+  dureePiste time(0) NOT NULL,
+  idAlbum integer NOT NULL REFERENCES Album (idAlbum),
+  idFichier integer NOT NULL REFERENCES Fichier (idFichier),
+  CONSTRAINT pkPiste PRIMARY KEY (idPiste)
 );
 
 
-create table Piste(
-  idPiste    integer,
-  numPiste    integer,
-  titrePiste      varchar(50),
-  dureePiste      time(0),
-  idAlbum    integer,
-  idFichier      integer references Fichier (idFichier),
-  constraint pkIdPiste primary key (idPiste),
-  constraint fkidAlbum foreign key (idAlbum) references Album (idAlbum)
+CREATE TABLE APourInstrument(
+  instrument varchar(50) NOT NULL,
+  idArtiste integer NOT NULL REFERENCES Piste (idPiste),
+  idPiste integer NOT NULL REFERENCES Artiste (idArtiste),
+  CONSTRAINT pkAPourInstrument PRIMARY KEY (idArtiste, idPiste)
 );
 
-create table APourInstrument(
-  instrument     varchar(50),
-  idArtiste      integer,
-  idPiste        integer,
 
-  constraint fkIdPiste foreign key (idPiste) references Piste (idPiste)
-  constraint fkIdArtiste foreign key (idArtiste) references Artiste (idArtiste)
+CREATE TABLE CategorieMusique(
+  typeCategorieMusique varchar(50) NOT NULL,
+  CONSTRAINT pkCategorieMusique PRIMARY KEY (typeCategorieMusique)
 );
 
-create table CategorieMusique(
-  typeCategorieMusique varchar(50),
-  constraint pkTypeCategorieMusique primary key (typeCategorieMusique)
+/* revoir la taille pour les nom de codec */
+CREATE TABLE Flux(
+  idFlux integer GENERATED ALWAYS AS IDENTITY,
+  debit float NOT NULL CHECK (debit > 0),
+  idFichier integer NOT NULL REFERENCES Fichier (idFichier),
+  nomCodec varchar(100) NOT NULL REFERENCES Codec (nomCodec),
+  CONSTRAINT pkFlux PRIMARY KEY (idFlux)
 );
 
-create table Flux(
-	idFlux int,
-	debit float CHECK (debit > 0),
-	idFichier int,
-	nomCodec varchar(100), -- revoir la taille pour les nom de codec
-	constraint pkIdFlux primary key (idFlux)
+/* references pour idFichier, debit et nomCodec ? */
+CREATE TABLE FluxTexte(
+  idFlux integer NOT NULL REFERENCES Flux (idFlux),
+  debit float NOT NULL CHECK (debit > 0),
+  idFichier integer NOT NULL,
+  nomCodec varchar(100) NOT NULL,
+  langueTexte varchar(100) NOT NULL CHECK (langueTexte in ('Français', 'Anglais', 'Italien', 'Espagnol', 'Allemand')),
+  CONSTRAINT pkFluxTexte PRIMARY KEY (idFlux)
 );
 
-create table FluxTexte(
-	idFlux int,
-	debit float check (debit > 0),
-	idFichier int,
-	nomCodec varchar(100),
-	langueTexte varchar(100) check (langueTexte in ('Français', 'Anglais', 'Italien', 'Espagnol', 'Allemand')),
-	constraint pkIdFlux primary key (idFlux),
-	constraint fkIdFlux foreign key (idFlux) references Flux(idFlux) --voir pour auto_increment
+/* references pour idFichier, debit et nomCodec ? */
+CREATE TABLE FluxAudio(
+  idFlux integer NOT NULL REFERENCES Flux (idFlux),
+  debit float NOT NULL CHECK (debit > 0),
+  idFichier integer NOT NULL,
+  nomCodec varchar(100) NOT NULL,
+  echantillonage integer NOT NULL CHECK (echantillonage in (16, 24, 32)),
+  langueAudio varchar(100) NOT NULL CHECK (langueAudio in ('Français', 'Anglais', 'Italien', 'Espagnol', 'Allemand')),
+  CONSTRAINT pkFluxAudio PRIMARY KEY (idFlux)
 );
 
-create table FluxAudio(
-	idFlux int,
-	debit float check (debit > 0),
-	idFichier int,
-	nomCodec varchar(100),
-	echantillonage int check (echantillonage in (16, 24, 32)),
-	langueAudio varchar(100) check (langueAudio in ('Français', 'Anglais', 'Italien', 'Espagnol', 'Allemand')),
-	constraint pkIdFlux primary key (idFlux),
-	constraint fkIdFlux foreign key (idFlux) references Flux(idFlux)
+/* references pour idFichier, debit et nomCodec ? */
+CREATE TABLE FluxVideo(
+  idFlux integer NOT NULL REFERENCES Flux (idFlux),
+  debit float NOT NULL CHECK (debit > 0),
+  idFichier integer NOT NULL,
+  nomCodec varchar(100) NOT NULL,
+  largeurImage integer NOT NULL,
+  hauteurImage integer NOT NULL,
+  CONSTRAINT pkFluxVideo PRIMARY KEY (idFlux)
 );
 
-create table FluxVideo(
-	idFlux int,
-	debit float check (debit > 0),
-	idFichier int,
-	nomCodec varchar(100),
-	largeurImage int,
-	hauteurImage int,
-	constraint pkIdFlux primary key (idFlux),
-	constraint fkIdFlux foreign key (idFlux) references Flux(idFlux)
-);
 
 CREATE TABLE Utilisateur(
-	email	varchar(255),
-    nom		varchar(50) not null,
-    prenom	varchar(30) not null,
-    age		int not null check(age > 0),
-    langueDiffusion varchar(100) check (langueDiffusion in ('Français', 'Anglais', 'Italien', 'Espagnol', 'Allemand')),
-    code	char(4) not null,
-    constraint pkUtil primary key (email),
-    constraint chekCode check (code like '[0-9][0-9][0-9][0-9]') -- check que le code est bien constitué que de 4 chiffres
+  email varchar(255) NOT NULL,
+  nom varchar(50) NOT NULL,
+  prenom varchar(30) NOT NULL,
+  age integer NOT NULL check(age > 0),
+  langueDiffusion varchar(100) NOT NULL CHECK (langueDiffusion in ('Français', 'Anglais', 'Italien', 'Espagnol', 'Allemand')),
+  code char(4) NOT NULL CHECK (code like '[0-9][0-9][0-9][0-9]'), -- check que le code est bien constitué que de 4 chiffres
+  CONSTRAINT pkUtilisateur PRIMARY KEY (email)
 );
+
 
 CREATE TABLE Fichier(
-	idFichier int,
-	taille		int not null,
-	dateDepot DATE not null,
-	email			int,
-	constraint pkFich primary key (idFichier),
-	constraint fkUtil foreign key (email) references Utilisateur(email)
+  idFichier integer GENERATED ALWAYS AS IDENTITY,
+  taille integer NOT NULL,
+  dateDepot DATE NOT NULL,
+  email integer NOT NULL REFERENCES Utilisateur (email),
+  CONSTRAINT pkFichier PRIMARY KEY (idFichier)
 );
 
+/*
+Il faut peut-être rajouter une contrainte de valeur pour anneeSortie
+Il faut vérifier que resume existe pour Oracle sinon VARCHAR(65000)
+ageMin peut être null ?
+Si le type TEXT fonctionne pas pour Oracle utiliser VARCHAR(2083)
+*/
 CREATE TABLE Film(
-	titreFilm varchar(1000),
-	anneeSortie int, -- Il faut peut-être rajouter une contrainte de valeur
-	resume MEDIUMTEXT not null, -- Faut vérifier si ce type existe pour Oracle sinon VARCHAR(65000)
-	ageMin int check (ageMin > 0), -- Peut être null selon moi
-	urlAffiche text not null, -- Si le type TEXT fonctionne pas pour Oracle utiliser VARCHAR(2083)
-	constraint pkFilm primary key (titreFilm, anneeSortie)
+  titreFilm varchar(1000) NOT NULL,
+  anneeSortie integer NOT NULL,
+  resume MEDIUMTEXT NOT NULL,
+  ageMin integer NOT NULL CHECK (ageMin > 0),
+  urlAffiche text NOT NULL,
+  CONSTRAINT pkFilm PRIMARY KEY (titreFilm, anneeSortie)
 );
+
 
 CREATE TABLE EstUnFilm(
-	idFichier int references Fichier(idFichier),
-	titreFilm varchar(1000) references Film(titreFilm),
-	anneeSortie int references Film(anneeSortie),
-	constraint pkEuf primary key (idFichier)
+  idFichier integer NOT NULL REFERENCES Fichier (idFichier),
+  titreFilm varchar(1000) NOT NULL,
+  anneeSortie integer NOT NULL,
+  CONSTRAINT fkFilm FOREIGN KEY (titreFilm, anneeSortie) REFERENCES Film (titreFilm, anneeSortie),
+  CONSTRAINT pkEstUnFilm PRIMARY KEY (idFichier)
 );
+
 
 CREATE TABLE EstUnePiste(
-	idFichier int references Fichier(idFichier),
-	idPiste int references Piste(idPiste),
-	constraint pkEup primary key (idFichier)
+  idFichier integer NOT NULL REFERENCES Fichier (idFichier),
+  idPiste integer NOT NULL REFERENCES Piste (idPiste),
+  CONSTRAINT pkEstUnePiste PRIMARY KEY (idFichier)
 );
+
 
 CREATE TABLE ImgExtraiteFilm(
-	urlImage text,
-	titreFilm varchar(1000) references Film(titreFilm),
-	anneeSortie int references Film(anneeSortie),
-	constraint pkImgfilm primary key (urlImage)
+  urlImage text NOT NULL,
+  titreFilm varchar(1000) NOT NULL,
+  anneeSortie integer NOT NULL,
+  CONSTRAINT fkFilm FOREIGN KEY (titreFilm, anneeSortie) REFERENCES Film (titreFilm, anneeSortie),
+  CONSTRAINT pkImgExtraiteFilm PRIMARY KEY (urlImage)
 );
+
 
 CREATE TABLE CategorieFilm(
-	typeCategorieFilm varchar(255),
-	constraint pkCatgfilm primary key (typeCategorieFilm)
+  typeCategorieFilm varchar(255) NOT NULL,
+  CONSTRAINT pkCategorieFilm PRIMARY KEY (typeCategorieFilm)
 );
 
+
 CREATE TABLE APourCategorie(
-	titreFilm varchar(1000) references Film(titreFilm),
-	anneeSortie int references Film(anneeSortie),
-	typeCategorieFilm varchar(255) references CategorieFilm(typeCategorieFilm),
-	constraint pkApcatg primary key (titreFilm, anneeSortie, typeCategorieFilm)
+  titreFilm varchar(1000) NOT NULL,
+  anneeSortie integer NOT NULL,
+  typeCategorieFilm varchar(255) NOT NULL REFERENCES CategorieFilm (typeCategorieFilm),
+  CONSTRAINT fkFilm FOREIGN KEY (titreFilm, anneeSortie) REFERENCES Film (titreFilm, anneeSortie),
+  CONSTRAINT pkAPourCategorie PRIMARY KEY (titreFilm, anneeSortie, typeCategorieFilm)
 );
