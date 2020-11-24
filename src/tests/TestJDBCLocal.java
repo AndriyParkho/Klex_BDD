@@ -42,7 +42,7 @@ public class TestJDBCLocal {
             ScriptRunner sr = new ScriptRunner(connection);
             sr.setEscapeProcessing(false);
             // Creating a reader object
-            Reader reader = new BufferedReader(new FileReader("ressources/sampleScript.sql"));
+            Reader reader = new BufferedReader(new FileReader("ressources/tables.sql"));
             // Running the script
             sr.runScript(reader);
         } catch (SQLException e) {
