@@ -6,8 +6,10 @@ import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.ibatis.jdbc.ScriptRunner;
@@ -23,6 +25,19 @@ public class TestJDBC {
     public static String dropIfExist(String tableName) {
         return "BEGIN EXECUTE IMMEDIATE 'DROP TABLE " + tableName
                 + " CASCADE CONSTRAINTS'; EXCEPTION WHEN OTHERS THEN IF SQLCODE != -942 THEN RAISE; END IF; END;";
+    }
+
+    public static void selectAll(Connection connection, String tableName) throws SQLException {
+        Statement statement = connection.createStatement();
+
+        statement.setQueryTimeout(30); // set timeout to 30 sec.
+        ResultSet rs = statement.executeQuery("select * from " + tableName);
+
+        // dump and print result
+        System.out.println(dumpResultSet(rs));
+
+        // close statement
+        statement.close();
     }
 
     public static void testSimpleQuery(Connection connection) throws SQLException {
@@ -78,6 +93,30 @@ public class TestJDBC {
         }
     }
 
+    public static String dumpResultSet(ResultSet rs) throws SQLException {
+        String result = "\n";
+        /* while (rs.next()) {
+            for (String columnName : columns) {
+                // les méthodes getString et getObject sont des méthodes génériques qui peuvent être 
+                // employées quel que soit le type SQL de la valeur recherchée.
+                result += rs.getString(columnName) + " ";   
+            }
+            result += '\n';
+        } */
+        ResultSetMetaData rsmd = rs.getMetaData();
+        int columnsNumber = rsmd.getColumnCount();
+        while (rs.next()) {
+            for (int i = 1; i <= columnsNumber; i++) {
+                if (i > 1) result += ",  \n";
+                String columnValue = rs.getString(i);
+                result += columnValue + " " + rsmd.getColumnName(i);
+            }
+            result += "\n";
+        }
+        rs.close();
+        return result;
+    }
+
     public static void main(String[] args) {
         Connection connection = null;
 
@@ -96,8 +135,8 @@ public class TestJDBC {
             connection = DriverManager.getConnection(url, user, passwd);
             System.out.println("connected.");
 
-            testSimpleQuery(connection);
-            testSimpleTransaction(connection);
+            // testSimpleQuery(connection);
+            // testSimpleTransaction(connection);
 
             // Initialize the script runner
             ScriptRunner sr = new ScriptRunner(connection);
@@ -106,13 +145,17 @@ public class TestJDBC {
             // Drop existing tables
             Statement statement = connection.createStatement();
             for (String tableName : tables) {
-                statement.executeUpdate(dropIfExist(tableName));;
+                statement.executeUpdate(dropIfExist(tableName));
             }
             // close statement
             statement.close();
             
             // Running the script
-            loadFile(sr, "ressources/tables.sql");
+            loadFile(sr, "ressources/CreateTables.sql");
+            loadFile(sr, "ressources/InsertCategorieMusique.sql");
+            loadFile(sr, "ressources/InsertAlbum.sql");
+            selectAll(connection, "CategorieMusique");
+            selectAll(connection, "Album");
 
         } catch (SQLException e) {
             System.err.println("sql error !");

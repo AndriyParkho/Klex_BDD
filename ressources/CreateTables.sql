@@ -6,7 +6,7 @@ CREATE TABLE CategorieMusique(
 CREATE TABLE Album(
   idAlbum integer GENERATED ALWAYS AS IDENTITY,
   titreAlbum varchar(50) NOT NULL,
-  nomAlbum varchar(50) NOT NULL,
+  nomGroupe varchar(50) NOT NULL,
   dateSortieAlbum date NOT NULL,
   urlImagePochette varchar(100) NOT NULL,
   CONSTRAINT pkAlbum PRIMARY KEY (idAlbum)

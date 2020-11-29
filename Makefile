@@ -1,8 +1,8 @@
-all: execJDBCLocal
+all: execJDBC
 
-testJDBCLocal:
-	javac -d lib -classpath "lib/*" -sourcepath src src/TestJDBCLocal.java
+testJDBC:
+	javac -d lib -classpath "lib/*" -sourcepath src src/TestJDBC.java
 
 # Execution:
-execJDBCLocal: testJDBCLocal
-	java -classpath "lib:lib/*" TestJDBCLocal
+execJDBC: testJDBC
+	java -classpath "lib:lib/*" TestJDBC

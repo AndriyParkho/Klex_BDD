@@ -8,6 +8,15 @@ INSERT INTO CategorieMusique
 VALUES ('electro');
 
 INSERT INTO CategorieMusique
+VALUES ('electro house');
+
+INSERT INTO CategorieMusique
+VALUES ('house');
+
+INSERT INTO CategorieMusique
+VALUES ('EDM');
+
+INSERT INTO CategorieMusique
 VALUES ('soul');
 
 INSERT INTO CategorieMusique
