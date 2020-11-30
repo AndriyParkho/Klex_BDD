@@ -65,7 +65,7 @@ CREATE TABLE AlbumAPourCategorie(
 CREATE TABLE Codec(
   nomCodec varchar(20) NOT NULL,
   typeCodec varchar(20) NOT NULL check(typeCodec in ('audio', 'video', 'texte')),
-  CONSTRAINT pkCodec PRIMARY KEY (nomCodec)
+  CONSTRAINT pkCodec PRIMARY KEY (nomCodec, typeCodec)
 );
 
 CREATE TABLE Client(
@@ -79,9 +79,11 @@ CREATE TABLE Client(
 CREATE TABLE SupporteCodec(
   marque varchar(20) NOT NULL,
   modele varchar(20) NOT NULL,
-  nomCodec varchar(20) NOT NULL REFERENCES Codec (nomCodec),
+  nomCodec varchar(20) NOT NULL,
+  typeCodec varchar(20) NOT NULL, 
   CONSTRAINT pkSupporteCodec PRIMARY KEY (marque, modele, nomCodec),
-  CONSTRAINT fkClient FOREIGN KEY (marque, modele) REFERENCES Client (marque, modele)
+  CONSTRAINT fkClient FOREIGN KEY (marque, modele) REFERENCES Client (marque, modele),
+  CONSTRAINT fkCodecSupporteCodec FOREIGN KEY (nomCodec, typeCodec) REFERENCES Codec (nomCodec, typeCodec)
 );
 
 CREATE TABLE Artiste(
@@ -115,7 +117,7 @@ CREATE TABLE Film(
 
 CREATE TABLE FilmAPourCategorie(
   titreFilm varchar(1000) NOT NULL,
-  anneeSortie integer NOT NULL,
+  anneeSortie date NOT NULL,
   typeCategorieFilm varchar(255) NOT NULL REFERENCES CategorieFilm (typeCategorieFilm),
   CONSTRAINT fkFilmAPourCategorie FOREIGN KEY (titreFilm, anneeSortie) REFERENCES Film (titreFilm, anneeSortie),
   CONSTRAINT pkFilmAPourCategorie PRIMARY KEY (titreFilm, anneeSortie, typeCategorieFilm)
@@ -124,7 +126,7 @@ CREATE TABLE FilmAPourCategorie(
 CREATE TABLE EstUnFilm(
   idFichier integer NOT NULL REFERENCES Fichier (idFichier),
   titreFilm varchar(1000) NOT NULL,
-  anneeSortie integer NOT NULL,
+  anneeSortie date NOT NULL,
   CONSTRAINT fkEstUnFilmFilm FOREIGN KEY (titreFilm, anneeSortie) REFERENCES Film (titreFilm, anneeSortie),
   CONSTRAINT pkEstUnFilm PRIMARY KEY (idFichier)
 );
@@ -132,7 +134,7 @@ CREATE TABLE EstUnFilm(
 CREATE TABLE ImgExtraiteFilm(
   urlImage varchar(1000) NOT NULL,
   titreFilm varchar(1000) NOT NULL,
-  anneeSortie integer NOT NULL,
+  anneeSortie date NOT NULL,
   CONSTRAINT fkImgExtraiteFilmFilm FOREIGN KEY (titreFilm, anneeSortie) REFERENCES Film (titreFilm, anneeSortie),
   CONSTRAINT pkImgExtraiteFilm PRIMARY KEY (urlImage)
 );
@@ -144,7 +146,7 @@ vérifier le format year de anneeSortie
 CREATE TABLE APourRole(
   roleFilm varchar(50) NOT NULL,
   titreFilm varchar(50) NOT NULL,
-  anneeSortie integer NOT NULL,
+  anneeSortie date NOT NULL,
   idArtiste integer NOT NULL REFERENCES Artiste (idArtiste),
   CONSTRAINT fkAPourRoleFilm FOREIGN KEY (titreFilm, anneeSortie) REFERENCES Film (titreFilm, anneeSortie),
   CONSTRAINT pkAPourRole PRIMARY KEY (titreFilm, anneeSortie, idArtiste)
@@ -164,8 +166,10 @@ CREATE TABLE Flux(
   idFlux integer GENERATED ALWAYS AS IDENTITY,
   debit float NOT NULL CHECK (debit > 0),
   idFichier integer NOT NULL REFERENCES Fichier (idFichier),
-  nomCodec varchar(100) NOT NULL REFERENCES Codec (nomCodec),
-  CONSTRAINT pkFlux PRIMARY KEY (idFlux)
+  nomCodec varchar(20) NOT NULL,
+  typeCodec varchar(20) NOT NULL,
+  CONSTRAINT pkFlux PRIMARY KEY (idFlux),
+  CONSTRAINT fkCodecFlux FOREIGN KEY (nomCodec, typeCodec) REFERENCES Codec (nomCodec, typeCodec)
 );
 
 /* references pour idFichier, debit et nomCodec ? */
@@ -173,7 +177,8 @@ CREATE TABLE FluxTexte(
   idFlux integer NOT NULL REFERENCES Flux (idFlux),
   debit float NOT NULL CHECK (debit > 0),
   idFichier integer NOT NULL,
-  nomCodec varchar(100) NOT NULL,
+  nomCodec varchar(20) NOT NULL,
+  typeCodec varchar(20) NOT NULL,
   langueTexte varchar(100) NOT NULL CHECK (langueTexte in ('Français', 'Anglais', 'Italien', 'Espagnol', 'Allemand')),
   CONSTRAINT pkFluxTexte PRIMARY KEY (idFlux)
 );
@@ -184,7 +189,8 @@ CREATE TABLE FluxAudio(
   idFlux integer NOT NULL REFERENCES Flux (idFlux),
   debit float NOT NULL CHECK (debit > 0),
   idFichier integer NOT NULL,
-  nomCodec varchar(100) NOT NULL,
+  nomCodec varchar(20) NOT NULL,
+  typeCodec varchar(20) NOT NULL,
   echantillonage integer NOT NULL CHECK (echantillonage in (16, 24, 32)),
   langueAudio varchar(100) NOT NULL CHECK (langueAudio in ('Français', 'Anglais', 'Italien', 'Espagnol', 'Allemand')),
   CONSTRAINT pkFluxAudio PRIMARY KEY (idFlux)
@@ -195,7 +201,8 @@ CREATE TABLE FluxVideo(
   idFlux integer NOT NULL REFERENCES Flux (idFlux),
   debit float NOT NULL CHECK (debit > 0),
   idFichier integer NOT NULL,
-  nomCodec varchar(100) NOT NULL,
+  nomCodec varchar(20) NOT NULL,
+  typeCodec varchar(20) NOT NULL,
   largeurImage integer NOT NULL,
   hauteurImage integer NOT NULL,
   CONSTRAINT pkFluxVideo PRIMARY KEY (idFlux)
