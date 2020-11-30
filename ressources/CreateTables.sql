@@ -113,12 +113,12 @@ CREATE TABLE Film(
   CONSTRAINT pkFilm PRIMARY KEY (titreFilm, anneeSortie)
 );
 
-CREATE TABLE APourCategorie(
+CREATE TABLE FilmAPourCategorie(
   titreFilm varchar(1000) NOT NULL,
   anneeSortie integer NOT NULL,
   typeCategorieFilm varchar(255) NOT NULL REFERENCES CategorieFilm (typeCategorieFilm),
-  CONSTRAINT fkAPourCategorieFilm FOREIGN KEY (titreFilm, anneeSortie) REFERENCES Film (titreFilm, anneeSortie),
-  CONSTRAINT pkAPourCategorie PRIMARY KEY (titreFilm, anneeSortie, typeCategorieFilm)
+  CONSTRAINT fkFilmAPourCategorie FOREIGN KEY (titreFilm, anneeSortie) REFERENCES Film (titreFilm, anneeSortie),
+  CONSTRAINT pkFilmAPourCategorie PRIMARY KEY (titreFilm, anneeSortie, typeCategorieFilm)
 );
 
 CREATE TABLE EstUnFilm(

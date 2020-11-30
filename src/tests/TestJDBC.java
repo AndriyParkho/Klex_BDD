@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.ibatis.jdbc.ScriptRunner;
@@ -154,8 +153,10 @@ public class TestJDBC {
             loadFile(sr, "ressources/CreateTables.sql");
             loadFile(sr, "ressources/InsertCategorieMusique.sql");
             loadFile(sr, "ressources/InsertAlbum.sql");
+            loadFile(sr, "ressources/InsertAlbumAPourCategorie.sql");
             selectAll(connection, "CategorieMusique");
             selectAll(connection, "Album");
+            selectAll(connection, "AlbumAPourCategorie");
 
         } catch (SQLException e) {
             System.err.println("sql error !");
