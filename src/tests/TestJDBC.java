@@ -167,6 +167,11 @@ public class TestJDBC {
             loadFile(sr, "ressources/InsertImgExtraiteFilm.sql");
             loadFile(sr, "ressources/InsertPisteAPourCategorie.sql");
             loadFile(sr, "ressources/InsertSupporteCodec.sql");
+            loadFile(sr, "ressources/InsertFlux.sql");
+            loadFile(sr, "ressources/InsertFluxTexte.sql");
+            loadFile(sr, "ressources/InsertFluxAudio.sql");
+            loadFile(sr, "ressources/InsertFluxVideo.sql");
+
             selectAll(connection, "CategorieMusique");
             selectAll(connection, "Album");
             selectAll(connection, "AlbumAPourCategorie");
@@ -186,6 +191,10 @@ public class TestJDBC {
             selectAll(connection, "ImgExtraiteFilm");
             selectAll(connection, "PisteAPourCategorie");
             selectAll(connection, "SupporteCodec");
+            selectAll(connection, "Flux");
+            selectAll(connection, "FluxTexte");
+            selectAll(connection, "FluxAudio");
+            selectAll(connection, "FluxVideo");
 
         } catch (SQLException e) {
             System.err.println("sql error !");
