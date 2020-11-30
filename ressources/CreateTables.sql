@@ -18,7 +18,7 @@ CREATE TABLE Utilisateur(
   prenom varchar(30) NOT NULL,
   age integer NOT NULL check(age > 0),
   langueDiffusion varchar(100) NOT NULL CHECK (langueDiffusion in ('Français', 'Anglais', 'Italien', 'Espagnol', 'Allemand')),
-  code char(4) NOT NULL CHECK (code like '[0-9][0-9][0-9][0-9]'), -- check que le code est bien constitué que de 4 chiffres
+  code integer NOT NULL CHECK (code BETWEEN 0000 AND 9999), -- check que le code est bien constitué que de 4 chiffres
   CONSTRAINT pkUtilisateur PRIMARY KEY (email)
 );
 

@@ -1,23 +1,8 @@
-insert into Piste (numPiste, titrePiste, dureePiste, idAlbum, ifFichier) values (
-    1,
-    "Faith",
-    "00:03:23",
-    0,
-    0
-);
+INSERT INTO Piste (numPiste, titrePiste, dureePiste, idAlbum, idFichier)
+VALUES (1, 'Faith', INTERVAL '03:23' MINUTE TO SECOND, 1, 1);
 
-insert into Piste (numPiste, titrePiste, dureePiste, idAlbum, ifFichier) values (
-    2,
-    "Under Control",
-    "00:04:12",
-    0,
-    1
-);
+INSERT INTO Piste (numPiste, titrePiste, dureePiste, idAlbum, idFichier)
+VALUES (2, 'Under Control', INTERVAL '04:12' MINUTE TO SECOND, 1, 2);
 
-insert into Piste (numPiste, titrePiste, dureePiste, idAlbum, ifFichier) values (
-    1,
-    "Green Valey",
-    "00:03:56",
-    1,
-    2
-);
+INSERT INTO Piste (numPiste, titrePiste, dureePiste, idAlbum, idFichier)
+VALUES (1, 'Green Valey', INTERVAL '03:56' MINUTE TO SECOND, 2, 3);

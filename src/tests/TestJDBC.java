@@ -153,11 +153,21 @@ public class TestJDBC {
             loadFile(sr, "ressources/InsertAlbumAPourCategorie.sql");
             loadFile(sr, "ressources/InsertArtiste.sql");
             loadFile(sr, "ressources/InsertFilm.sql");
+            loadFile(sr, "ressources/InsertUtilisateur.sql");
+            loadFile(sr, "ressources/InsertFichier.sql");
+            loadFile(sr, "ressources/InsertPiste.sql");
+            loadFile(sr, "ressources/InsertClient.sql");
+            loadFile(sr, "ressources/InsertCodec.sql");
             selectAll(connection, "CategorieMusique");
             selectAll(connection, "Album");
             selectAll(connection, "AlbumAPourCategorie");
             selectAll(connection, "Artiste");
             selectAll(connection, "Film");
+            selectAll(connection, "Utilisateur");
+            selectAll(connection, "Fichier");
+            selectAll(connection, "Piste");
+            selectAll(connection, "Client");
+            selectAll(connection, "Codec");
 
         } catch (SQLException e) {
             System.err.println("sql error !");
