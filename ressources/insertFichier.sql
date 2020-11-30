@@ -35,13 +35,13 @@ insert into Fichier (taille, dateDepot, email) values (
 );
 
 insert into Fichier (taille, dateDepot, email) values (
-    789546,
-    to_date('28/11/2013', 'dd/mm/yyyy'),
+    378208,
+    to_date('24/11/2013', 'dd/mm/yyyy'),
     'andriy.parkhomenko@grenoble-inp.fr'
 );
 
 insert into Fichier (taille, dateDepot, email) values (
-    875963,
-    to_date('09/09/2019', 'dd/mm/yyyy'),
+    730275,
+    to_date('04/09/2019', 'dd/mm/yyyy'),
     'nicolas.vincent@grenoble-inp.fr'
 );

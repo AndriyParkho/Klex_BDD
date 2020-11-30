@@ -81,7 +81,7 @@ CREATE TABLE SupporteCodec(
   modele varchar(20) NOT NULL,
   nomCodec varchar(20) NOT NULL,
   typeCodec varchar(20) NOT NULL, 
-  CONSTRAINT pkSupporteCodec PRIMARY KEY (marque, modele, nomCodec),
+  CONSTRAINT pkSupporteCodec PRIMARY KEY (marque, modele, nomCodec, typeCodec),
   CONSTRAINT fkClient FOREIGN KEY (marque, modele) REFERENCES Client (marque, modele),
   CONSTRAINT fkCodecSupporteCodec FOREIGN KEY (nomCodec, typeCodec) REFERENCES Codec (nomCodec, typeCodec)
 );
