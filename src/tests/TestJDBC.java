@@ -158,6 +158,15 @@ public class TestJDBC {
             loadFile(sr, "ressources/InsertPiste.sql");
             loadFile(sr, "ressources/InsertClient.sql");
             loadFile(sr, "ressources/InsertCodec.sql");
+            loadFile(sr, "ressources/InsertAPourInstrument.sql");
+            loadFile(sr, "ressources/InsertAPourRole.sql");
+            loadFile(sr, "ressources/InsertEstUnePiste.sql");
+            loadFile(sr, "ressources/InsertEstUnFilm.sql");
+            loadFile(sr, "ressources/InsertCategorieFilm.sql");
+            loadFile(sr, "ressources/InsertFilmAPourCategorie.sql");
+            loadFile(sr, "ressources/InsertImgExtraiteFilm.sql");
+            loadFile(sr, "ressources/InsertPisteAPourCategorie.sql");
+            loadFile(sr, "ressources/InsertSupporteCodec.sql");
             selectAll(connection, "CategorieMusique");
             selectAll(connection, "Album");
             selectAll(connection, "AlbumAPourCategorie");
@@ -168,6 +177,15 @@ public class TestJDBC {
             selectAll(connection, "Piste");
             selectAll(connection, "Client");
             selectAll(connection, "Codec");
+            selectAll(connection, "APourInstrument");
+            selectAll(connection, "APourRole");
+            selectAll(connection, "EstUnePiste");
+            selectAll(connection, "EstUnFilm");
+            selectAll(connection, "CategorieFilm");
+            selectAll(connection, "FilmAPourCategorie");
+            selectAll(connection, "ImgExtraiteFilm");
+            selectAll(connection, "PisteAPourCategorie");
+            selectAll(connection, "SupporteCodec");
 
         } catch (SQLException e) {
             System.err.println("sql error !");
