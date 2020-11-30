@@ -106,7 +106,7 @@ Si le type TEXT fonctionne pas pour Oracle utiliser VARCHAR(2083)
 */
 CREATE TABLE Film(
   titreFilm varchar(1000) NOT NULL,
-  anneeSortie integer NOT NULL,
+  anneeSortie date NOT NULL,
   resume CLOB NOT NULL,
   ageMin integer NOT NULL CHECK (ageMin > 0),
   urlAffiche varchar(1000) NOT NULL,

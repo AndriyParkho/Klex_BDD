@@ -27,16 +27,16 @@ public class TestJDBC {
     }
 
     public static void selectAll(Connection connection, String tableName) throws SQLException {
-        Statement statement = connection.createStatement();
-
-        statement.setQueryTimeout(30); // set timeout to 30 sec.
-        ResultSet rs = statement.executeQuery("select * from " + tableName);
-
-        // dump and print result
-        System.out.println(dumpResultSet(rs));
-
-        // close statement
-        statement.close();
+        String query = "select * from " + tableName;
+        // automatically close Statement and ResultSet objects, regardless of whether an
+        // SQLException has been thrown.
+        try (Statement statement = connection.createStatement()) {
+            statement.setQueryTimeout(30); // set timeout to 30 sec.
+            try (ResultSet rs = statement.executeQuery(query)) {
+                // dump and print result
+                System.out.println(dumpResultSet(rs));
+            }
+        }
     }
 
     public static void testSimpleQuery(Connection connection) throws SQLException {
@@ -94,25 +94,23 @@ public class TestJDBC {
 
     public static String dumpResultSet(ResultSet rs) throws SQLException {
         String result = "\n";
-        /* while (rs.next()) {
-            for (String columnName : columns) {
-                // les méthodes getString et getObject sont des méthodes génériques qui peuvent être 
-                // employées quel que soit le type SQL de la valeur recherchée.
-                result += rs.getString(columnName) + " ";   
-            }
-            result += '\n';
-        } */
+        /*
+         * while (rs.next()) { for (String columnName : columns) { // les méthodes
+         * getString et getObject sont des méthodes génériques qui peuvent être //
+         * employées quel que soit le type SQL de la valeur recherchée. result +=
+         * rs.getString(columnName) + " "; } result += '\n'; }
+         */
         ResultSetMetaData rsmd = rs.getMetaData();
         int columnsNumber = rsmd.getColumnCount();
         while (rs.next()) {
             for (int i = 1; i <= columnsNumber; i++) {
-                if (i > 1) result += ",  \n";
+                if (i > 1)
+                    result += ",  \n";
                 String columnValue = rs.getString(i);
                 result += columnValue + " " + rsmd.getColumnName(i);
             }
             result += "\n";
         }
-        rs.close();
         return result;
     }
 
@@ -122,7 +120,7 @@ public class TestJDBC {
         List<String> tables = List.of("Flux", "FluxTexte", "FluxAudio", "FluxVideo", "Dept", "Emp",
                 "PisteAPourCategorie", "Album", "AlbumAPourCategorie", "Codec", "Client", "SupporteCodec",
                 "CategorieMusique", "Artiste", "APourRole", "Piste", "APourInstrument", "Utilisateur", "Fichier",
-                "Film", "EstUnFilm", "EstUnePiste", "ImgExtraiteFilm", "CategorieFilm", "APourCategorie");
+                "Film", "FilmAPourCategorie", "EstUnFilm", "EstUnePiste", "ImgExtraiteFilm", "CategorieFilm", "APourCategorie");
         try {
             // Enregistrement d’un pilote JDBC
             System.out.println("Loading Oracle thin driver...");
@@ -142,25 +140,28 @@ public class TestJDBC {
             sr.setEscapeProcessing(false);
 
             // Drop existing tables
-            Statement statement = connection.createStatement();
-            for (String tableName : tables) {
-                statement.executeUpdate(dropIfExist(tableName));
+            try (Statement statement = connection.createStatement()) {
+                for (String tableName : tables) {
+                    statement.executeUpdate(dropIfExist(tableName));
+                }
             }
-            // close statement
-            statement.close();
-            
+
             // Running the script
             loadFile(sr, "ressources/CreateTables.sql");
             loadFile(sr, "ressources/InsertCategorieMusique.sql");
             loadFile(sr, "ressources/InsertAlbum.sql");
             loadFile(sr, "ressources/InsertAlbumAPourCategorie.sql");
+            loadFile(sr, "ressources/InsertArtiste.sql");
+            loadFile(sr, "ressources/InsertFilm.sql");
             selectAll(connection, "CategorieMusique");
             selectAll(connection, "Album");
             selectAll(connection, "AlbumAPourCategorie");
+            selectAll(connection, "Artiste");
+            selectAll(connection, "Film");
 
         } catch (SQLException e) {
             System.err.println("sql error !");
-            e.printStackTrace();
+            JDBCUtilities.printSQLException(e);
         } finally {
             try {
                 if (connection != null) {
@@ -168,7 +169,7 @@ public class TestJDBC {
                 }
             } catch (SQLException e) {
                 // connection close failed.
-                System.err.println(e.getMessage());
+                JDBCUtilities.printSQLException(e);
             }
         }
     }
