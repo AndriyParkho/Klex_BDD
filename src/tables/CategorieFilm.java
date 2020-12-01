@@ -1,4 +1,4 @@
-package src.tables;
+package tables;
 
 public class CategorieFilm {
     private String categorie;

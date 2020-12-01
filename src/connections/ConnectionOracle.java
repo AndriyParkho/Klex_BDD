@@ -1,10 +1,8 @@
-package src.connections;
+package connections;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
-import src.JDBCUtilities;
 
 public class ConnectionOracle {
     private static final String url = "jdbc:oracle:thin:@oracle1.ensimag.fr:" + "1521:oracle1";

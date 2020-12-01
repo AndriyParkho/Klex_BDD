@@ -1,4 +1,4 @@
-package src.tests;
+package tests;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,7 +9,7 @@ import java.util.List;
 
 import org.apache.ibatis.jdbc.ScriptRunner;
 
-import src.JDBCUtilities;
+import connections.JDBCUtilities;
 
 /**
  * Connection

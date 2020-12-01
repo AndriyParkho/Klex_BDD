@@ -1,4 +1,4 @@
-package src.tables;
+package tables;
 
 public class Fichier {
     private long id;
