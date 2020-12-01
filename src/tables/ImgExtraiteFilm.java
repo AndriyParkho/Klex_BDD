@@ -1,4 +1,4 @@
-package src.tables;
+package tables;
 
 public class ImgExtraiteFilm {
     private String urlImg;

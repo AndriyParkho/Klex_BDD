@@ -1,9 +1,9 @@
-package src.dao;
+package dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import src.tables.CategorieMusique;
+import tables.CategorieMusique;
 
 public class DAOCategorieMusique extends DAO<CategorieMusique> {
 

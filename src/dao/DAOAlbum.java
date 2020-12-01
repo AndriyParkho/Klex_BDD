@@ -1,4 +1,4 @@
-package src.dao;
+package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import src.tables.Album;
-import src.tables.CategorieMusique;
+import tables.Album;
+import tables.CategorieMusique;
 
 public class DAOAlbum extends DAO<Album> {
 
@@ -37,7 +37,7 @@ public class DAOAlbum extends DAO<Album> {
                 throw new SQLException("no rows affected");
             }
 
-            // on doit crÃ©er les liens entre albums et catÃ©gories
+            // on doit créer les liens entre albums et catégories
             for (CategorieMusique categorieMusique : album.getCategoriesMusique()) {
                 // si pas de categorie
                 if (categorieMusique.getCategorie() == null) {

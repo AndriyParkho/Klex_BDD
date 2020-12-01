@@ -1,4 +1,4 @@
-package src.tests;
+package tests;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -13,7 +13,7 @@ import java.util.List;
 
 import org.apache.ibatis.jdbc.ScriptRunner;
 
-import src.JDBCUtilities;
+import connections.JDBCUtilities;
 
 /**
  * Connection

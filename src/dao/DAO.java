@@ -1,28 +1,28 @@
-package src.dao;
+package dao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import src.connections.ConnectionOracle;
+import connections.ConnectionOracle;
 
 public abstract class DAO<T> {
     public Connection connection = ConnectionOracle.getInstance();
     
     /**
-     * Permet de crÃ©er une entrÃ©e dans la base de donnÃ©es
-     * par rapport Ã  un objet
+     * Permet de créer une entrée dans la base de données
+     * par rapport à un objet
      * @param obj
      */
     public abstract T create(T obj) throws SQLException;
 
     /**
-     * Permet de mettre Ã  jour les donnÃ©es d'une entrÃ©e dans la base 
+     * Permet de mettre à jour les données d'une entrée dans la base 
      * @param obj
      */
     public abstract T update(T obj);
 
     /**
-     * Permet la suppression d'une entrÃ©e de la base
+     * Permet la suppression d'une entrée de la base
      * @param obj
      */
     public abstract void delete(T obj);
