@@ -3,6 +3,7 @@ package tests;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.jdbc.ScriptRunner;
@@ -89,6 +90,36 @@ public class TestDAO {
             System.out.println("\nAprès create d'un album :");
             System.out.println(albumDAO.find(album.getId()));
 
+            JDBCUtilities.selectAll(connection, "CategorieMusique");
+            JDBCUtilities.selectAll(connection, "AlbumAPourCategorie");
+
+            album.setGroupe("Théo le Guitariste");
+            album.setUrlImagePochette("none");
+            album = albumDAO.update(album);
+
+            System.out.println("\nAprès update d'un album :");
+            System.out.println(albumDAO.find(album.getId()));
+
+            album.setTitre("18 Months");
+            album.setGroupe("Calvin Harris");
+            album.setDateSortie("26/10/2012");
+            album.setUrlImagePochette("https://fr.wikipedia.org/wiki/18_Months");
+            album.setCategoriesMusique(new ArrayList<CategorieMusique>());
+            album.addCategorieMusique(new CategorieMusique("pop"));
+            album.addCategorieMusique(new CategorieMusique("electro-dance"));
+            album.addCategorieMusique(new CategorieMusique("EDM"));
+
+            album = albumDAO.create(album);
+
+            System.out.println("\nAprès create d'un album :");
+            JDBCUtilities.selectAll(connection, "Album");
+            JDBCUtilities.selectAll(connection, "CategorieMusique");
+            JDBCUtilities.selectAll(connection, "AlbumAPourCategorie");
+
+            albumDAO.delete(albumDAO.find(1));
+
+            System.out.println("\nAprès delete d'un album :");
+            JDBCUtilities.selectAll(connection, "Album");
             JDBCUtilities.selectAll(connection, "CategorieMusique");
             JDBCUtilities.selectAll(connection, "AlbumAPourCategorie");
 

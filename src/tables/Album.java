@@ -8,6 +8,7 @@ public class Album {
     private String groupe = "";
     private String dateSortie = "";
     private String urlImagePochette = "";
+    // ou HashSet ?
     private ArrayList<CategorieMusique> categoriesMusique = new ArrayList<CategorieMusique>();
 
     public Album(long id, String titre, String groupe, String dateSortie, String urlImagePochette,
@@ -72,7 +73,9 @@ public class Album {
     }
 
     public void addCategorieMusique(CategorieMusique categorieMusique) {
-        this.categoriesMusique.add(categorieMusique);
+        if (!this.categoriesMusique.contains(categorieMusique)) {
+            this.categoriesMusique.add(categorieMusique);
+        }
     }
 
     public CategorieMusique getCategorieMusique(int index) {
