@@ -1,7 +1,5 @@
 package tables;
 
-import java.util.ArrayList;
-
 public class Artiste {
     private long id = 0;
     private String nom = "";

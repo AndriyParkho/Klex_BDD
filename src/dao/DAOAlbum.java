@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import connections.JDBCUtilities;
 import tables.Album;
 import tables.CategorieMusique;
 

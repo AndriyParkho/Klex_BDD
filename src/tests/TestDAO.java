@@ -1,4 +1,4 @@
-package src.tests;
+package tests;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -7,12 +7,12 @@ import java.util.List;
 
 import org.apache.ibatis.jdbc.ScriptRunner;
 
-import src.JDBCUtilities;
-import src.connections.ConnectionOracle;
-import src.dao.DAOAlbum;
-import src.dao.DAOCategorieMusique;
-import src.tables.Album;
-import src.tables.CategorieMusique;
+import connections.JDBCUtilities;
+import connections.ConnectionOracle;
+import dao.DAOAlbum;
+import dao.DAOCategorieMusique;
+import tables.Album;
+import tables.CategorieMusique;
 
 public class TestDAO {
     static List<String> tables = List.of("Flux", "FluxTexte", "FluxAudio", "FluxVideo", "Dept", "Emp",
