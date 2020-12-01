@@ -2,7 +2,7 @@ package src.tables;
 
 import java.util.ArrayList;
 
-public abstract class Artiste {
+public class Artiste {
     private long id = 0;
     private String nom = "";
     private String dateNaissance = "";
