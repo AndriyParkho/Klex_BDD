@@ -20,7 +20,10 @@ public class Album {
         this.categoriesMusique = categoriesMusique;
     }
 
-    public long getId() {
+    public Album() {
+	}
+
+	public long getId() {
         return id;
     }
 
@@ -74,5 +77,11 @@ public class Album {
 
     public CategorieMusique getCategorieMusique(int index) {
         return this.categoriesMusique.get(index);
+    }
+
+    @Override
+    public String toString() {
+        return "Album [categoriesMusique=" + categoriesMusique + ", dateSortie=" + dateSortie + ", groupe=" + groupe
+                + ", id=" + id + ", titre=" + titre + ", urlImagePochette=" + urlImagePochette + "]";
     }
 }

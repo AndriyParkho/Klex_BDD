@@ -14,4 +14,9 @@ public class CategorieMusique {
     public void setCategorie(String categorie) {
         this.categorie = categorie;
     }
+
+    @Override
+    public String toString() {
+        return "CategorieMusique [categorie=" + categorie + "]";
+    }
 }

@@ -1,12 +1,8 @@
 package src.tests;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -23,29 +19,11 @@ public class TestJDBC {
     static final String user = "vincentn";
     static final String passwd = "vincentn";
 
-    public static String dropIfExist(String tableName) {
-        return "BEGIN EXECUTE IMMEDIATE 'DROP TABLE " + tableName
-                + " CASCADE CONSTRAINTS'; EXCEPTION WHEN OTHERS THEN IF SQLCODE != -942 THEN RAISE; END IF; END;";
-    }
-
-    public static void selectAll(Connection connection, String tableName) throws SQLException {
-        String query = "select * from " + tableName;
-        // automatically close Statement and ResultSet objects, regardless of whether an
-        // SQLException has been thrown.
-        try (Statement statement = connection.createStatement()) {
-            statement.setQueryTimeout(30); // set timeout to 30 sec.
-            try (ResultSet rs = statement.executeQuery(query)) {
-                // dump and print result
-                System.out.println(dumpResultSet(rs));
-            }
-        }
-    }
-
     public static void testSimpleQuery(Connection connection) throws SQLException {
         Statement statement = connection.createStatement();
 
         statement.setQueryTimeout(30); // set timeout to 30 sec.
-        statement.executeUpdate(dropIfExist("person"));
+        statement.executeUpdate(JDBCUtilities.dropIfExist("person"));
         statement.executeUpdate("create table person(id integer, name varchar(20))");
         statement.executeUpdate("insert into person values(1, 'leo')");
         statement.executeUpdate("insert into person values(2, 'yui')");
@@ -85,37 +63,6 @@ public class TestJDBC {
         statement.close();
     }
 
-    public static void loadFile(ScriptRunner sr, String fileName) {
-        try {
-            sr.runScript(new BufferedReader(new FileReader(fileName)));
-        } catch (FileNotFoundException e) {
-            System.err.println("file not found !");
-            e.printStackTrace();
-        }
-    }
-
-    public static String dumpResultSet(ResultSet rs) throws SQLException {
-        String result = "\n";
-        /*
-         * while (rs.next()) { for (String columnName : columns) { // les méthodes
-         * getString et getObject sont des méthodes génériques qui peuvent être //
-         * employées quel que soit le type SQL de la valeur recherchée. result +=
-         * rs.getString(columnName) + " "; } result += '\n'; }
-         */
-        ResultSetMetaData rsmd = rs.getMetaData();
-        int columnsNumber = rsmd.getColumnCount();
-        while (rs.next()) {
-            for (int i = 1; i <= columnsNumber; i++) {
-                if (i > 1)
-                    result += ",  \n";
-                String columnValue = rs.getString(i);
-                result += columnValue + " " + rsmd.getColumnName(i);
-            }
-            result += "\n";
-        }
-        return result;
-    }
-
     public static void main(String[] args) {
         Connection connection = null;
 
@@ -144,59 +91,59 @@ public class TestJDBC {
             // Drop existing tables
             try (Statement statement = connection.createStatement()) {
                 for (String tableName : tables) {
-                    statement.executeUpdate(dropIfExist(tableName));
+                    statement.executeUpdate(JDBCUtilities.dropIfExist(tableName));
                 }
             }
 
             // Running the script
-            loadFile(sr, "ressources/CreateTables.sql");
-            loadFile(sr, "ressources/inserts/InsertCategorieMusique.sql");
-            loadFile(sr, "ressources/inserts/InsertAlbum.sql");
-            loadFile(sr, "ressources/inserts/InsertAlbumAPourCategorie.sql");
-            loadFile(sr, "ressources/inserts/InsertArtiste.sql");
-            loadFile(sr, "ressources/inserts/InsertFilm.sql");
-            loadFile(sr, "ressources/inserts/InsertUtilisateur.sql");
-            loadFile(sr, "ressources/inserts/InsertFichier.sql");
-            loadFile(sr, "ressources/inserts/InsertPiste.sql");
-            loadFile(sr, "ressources/inserts/InsertClient.sql");
-            loadFile(sr, "ressources/inserts/InsertCodec.sql");
-            loadFile(sr, "ressources/inserts/InsertAPourInstrument.sql");
-            loadFile(sr, "ressources/inserts/InsertAPourRole.sql");
-            loadFile(sr, "ressources/inserts/InsertEstUnePiste.sql");
-            loadFile(sr, "ressources/inserts/InsertEstUnFilm.sql");
-            loadFile(sr, "ressources/inserts/InsertCategorieFilm.sql");
-            loadFile(sr, "ressources/inserts/InsertFilmAPourCategorie.sql");
-            loadFile(sr, "ressources/inserts/InsertImgExtraiteFilm.sql");
-            loadFile(sr, "ressources/inserts/InsertPisteAPourCategorie.sql");
-            loadFile(sr, "ressources/inserts/InsertSupporteCodec.sql");
-            loadFile(sr, "ressources/inserts/InsertFlux.sql");
-            loadFile(sr, "ressources/inserts/InsertFluxTexte.sql");
-            loadFile(sr, "ressources/inserts/InsertFluxAudio.sql");
-            loadFile(sr, "ressources/inserts/InsertFluxVideo.sql");
+            JDBCUtilities.loadFile(sr, "ressources/CreateTables.sql");
+            JDBCUtilities.loadFile(sr, "ressources/inserts/InsertCategorieMusique.sql");
+            JDBCUtilities.loadFile(sr, "ressources/inserts/InsertAlbum.sql");
+            JDBCUtilities.loadFile(sr, "ressources/inserts/InsertAlbumAPourCategorie.sql");
+            JDBCUtilities.loadFile(sr, "ressources/inserts/InsertArtiste.sql");
+            JDBCUtilities.loadFile(sr, "ressources/inserts/InsertFilm.sql");
+            JDBCUtilities.loadFile(sr, "ressources/inserts/InsertUtilisateur.sql");
+            JDBCUtilities.loadFile(sr, "ressources/inserts/InsertFichier.sql");
+            JDBCUtilities.loadFile(sr, "ressources/inserts/InsertPiste.sql");
+            JDBCUtilities.loadFile(sr, "ressources/inserts/InsertClient.sql");
+            JDBCUtilities.loadFile(sr, "ressources/inserts/InsertCodec.sql");
+            JDBCUtilities.loadFile(sr, "ressources/inserts/InsertAPourInstrument.sql");
+            JDBCUtilities.loadFile(sr, "ressources/inserts/InsertAPourRole.sql");
+            JDBCUtilities.loadFile(sr, "ressources/inserts/InsertEstUnePiste.sql");
+            JDBCUtilities.loadFile(sr, "ressources/inserts/InsertEstUnFilm.sql");
+            JDBCUtilities.loadFile(sr, "ressources/inserts/InsertCategorieFilm.sql");
+            JDBCUtilities.loadFile(sr, "ressources/inserts/InsertFilmAPourCategorie.sql");
+            JDBCUtilities.loadFile(sr, "ressources/inserts/InsertImgExtraiteFilm.sql");
+            JDBCUtilities.loadFile(sr, "ressources/inserts/InsertPisteAPourCategorie.sql");
+            JDBCUtilities.loadFile(sr, "ressources/inserts/InsertSupporteCodec.sql");
+            JDBCUtilities.loadFile(sr, "ressources/inserts/InsertFlux.sql");
+            JDBCUtilities.loadFile(sr, "ressources/inserts/InsertFluxTexte.sql");
+            JDBCUtilities.loadFile(sr, "ressources/inserts/InsertFluxAudio.sql");
+            JDBCUtilities.loadFile(sr, "ressources/inserts/InsertFluxVideo.sql");
 
-            selectAll(connection, "CategorieMusique");
-            selectAll(connection, "Album");
-            selectAll(connection, "AlbumAPourCategorie");
-            selectAll(connection, "Artiste");
-            selectAll(connection, "Film");
-            selectAll(connection, "Utilisateur");
-            selectAll(connection, "Fichier");
-            selectAll(connection, "Piste");
-            selectAll(connection, "Client");
-            selectAll(connection, "Codec");
-            selectAll(connection, "APourInstrument");
-            selectAll(connection, "APourRole");
-            selectAll(connection, "EstUnePiste");
-            selectAll(connection, "EstUnFilm");
-            selectAll(connection, "CategorieFilm");
-            selectAll(connection, "FilmAPourCategorie");
-            selectAll(connection, "ImgExtraiteFilm");
-            selectAll(connection, "PisteAPourCategorie");
-            selectAll(connection, "SupporteCodec");
-            selectAll(connection, "Flux");
-            selectAll(connection, "FluxTexte");
-            selectAll(connection, "FluxAudio");
-            selectAll(connection, "FluxVideo");
+            JDBCUtilities.selectAll(connection, "CategorieMusique");
+            JDBCUtilities.selectAll(connection, "Album");
+            JDBCUtilities.selectAll(connection, "AlbumAPourCategorie");
+            JDBCUtilities.selectAll(connection, "Artiste");
+            JDBCUtilities.selectAll(connection, "Film");
+            JDBCUtilities.selectAll(connection, "Utilisateur");
+            JDBCUtilities.selectAll(connection, "Fichier");
+            JDBCUtilities.selectAll(connection, "Piste");
+            JDBCUtilities.selectAll(connection, "Client");
+            JDBCUtilities.selectAll(connection, "Codec");
+            JDBCUtilities.selectAll(connection, "APourInstrument");
+            JDBCUtilities.selectAll(connection, "APourRole");
+            JDBCUtilities.selectAll(connection, "EstUnePiste");
+            JDBCUtilities.selectAll(connection, "EstUnFilm");
+            JDBCUtilities.selectAll(connection, "CategorieFilm");
+            JDBCUtilities.selectAll(connection, "FilmAPourCategorie");
+            JDBCUtilities.selectAll(connection, "ImgExtraiteFilm");
+            JDBCUtilities.selectAll(connection, "PisteAPourCategorie");
+            JDBCUtilities.selectAll(connection, "SupporteCodec");
+            JDBCUtilities.selectAll(connection, "Flux");
+            JDBCUtilities.selectAll(connection, "FluxTexte");
+            JDBCUtilities.selectAll(connection, "FluxAudio");
+            JDBCUtilities.selectAll(connection, "FluxVideo");
 
         } catch (SQLException e) {
             System.err.println("sql error !");

@@ -33,6 +33,7 @@ public class ConnectionOracle {
             System.out.println("Connecting to the database...");
             try {
                 connection = DriverManager.getConnection(url, user, passwd);
+                // connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             } catch (SQLException e) {
                 System.err.println("sql error !");
                 JDBCUtilities.printSQLException(e);
