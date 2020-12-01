@@ -9,7 +9,16 @@ public class Album {
     private String dateSortie = "";
     private String urlImagePochette = "";
     private ArrayList<CategorieMusique> categoriesMusique = new ArrayList<CategorieMusique>();
-    private ArrayList<Piste> pistes = new ArrayList<Piste>();
+
+    public Album(long id, String titre, String groupe, String dateSortie, String urlImagePochette,
+            ArrayList<CategorieMusique> categoriesMusique) {
+        this.id = id;
+        this.titre = titre;
+        this.groupe = groupe;
+        this.dateSortie = dateSortie;
+        this.urlImagePochette = urlImagePochette;
+        this.categoriesMusique = categoriesMusique;
+    }
 
     public long getId() {
         return id;
@@ -65,27 +74,5 @@ public class Album {
 
     public CategorieMusique getCategorieMusique(int index) {
         return this.categoriesMusique.get(index);
-    }
-
-    public ArrayList<Piste> getPistes() {
-        return pistes;
-    }
-
-    public void setPistes(ArrayList<Piste> pistes) {
-        this.pistes = pistes;
-    }
-
-    public void addPiste(Piste piste) {
-        this.pistes.add(piste);
-    }
-
-    public Piste getPiste(int index) {
-        return pistes.get(index);
-    }
-
-    @Override
-    public String toString() {
-        return "Album [categoriesMusique=" + categoriesMusique + ", dateSortie=" + dateSortie + ", groupe=" + groupe
-                + ", id=" + id + ", titre=" + titre + ", urlImagePochette=" + urlImagePochette + "]";
     }
 }

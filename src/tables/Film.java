@@ -1,6 +1,7 @@
 package src.tables;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Film {
     private String titreFilm = "";
@@ -10,6 +11,7 @@ public class Film {
     private String urlAffiche = "";
     private ArrayList<CategorieFilm> categoriesFilm = new ArrayList<CategorieFilm>();
     private ArrayList<ImgExtraiteFilm> imgExtraitesFilm = new ArrayList<ImgExtraiteFilm>();
+    private HashMap<Artiste, String> artistes = new HashMap<Artiste, String>();
 
     public String getTitreFilm() {
         return titreFilm;
@@ -81,5 +83,21 @@ public class Film {
 
     public ImgExtraiteFilm getImgExtraiteFilm(int index) {
         return this.imgExtraitesFilm.get(index);
+    }
+
+    public HashMap<Artiste, String> getArtistes() {
+        return artistes;
+    }
+
+    public void setArtistes(HashMap<Artiste, String> artistes) {
+        this.artistes = artistes;
+    }
+
+    public void addArtiste(Artiste artiste, String role) {
+        this.artistes.put(artiste, role);
+    }
+
+    public String getRole(Artiste artiste) {
+        return this.artistes.get(artiste);
     }
 }

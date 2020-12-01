@@ -1,9 +1,13 @@
 package src.tables;
 
 public class CategorieMusique {
-    private String categorie;
+    private String categorie = null;
 
-    public String getCategorie() {
+    public CategorieMusique(String categorie) {
+        this.categorie = categorie;
+    }
+
+	public String getCategorie() {
         return categorie;
     }
 

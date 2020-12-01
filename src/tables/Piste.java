@@ -1,6 +1,7 @@
 package src.tables;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Piste {
     private long id = 0;
@@ -9,6 +10,8 @@ public class Piste {
     private String duree = "";
     private Fichier fichier = new Fichier();
     private ArrayList<CategorieMusique> categoriesMusique = new ArrayList<CategorieMusique>();
+    private HashMap<Artiste, String> artistes = new HashMap<Artiste, String>();
+    private Album album = null;
 
     public long getId() {
         return id;
@@ -66,9 +69,28 @@ public class Piste {
         return this.categoriesMusique.get(index);
     }
 
-    @Override
-    public String toString() {
-        return "Piste [categoriesMusique=" + categoriesMusique + ", duree=" + duree + ", id=" + id + ", num=" + num
-                + ", titre=" + titre + "]";
+    public HashMap<Artiste, String> getArtistes() {
+        return artistes;
     }
+
+    public void setArtistes(HashMap<Artiste, String> artistes) {
+        this.artistes = artistes;
+    }
+
+    public void addArtiste(Artiste artiste, String role) {
+        this.artistes.put(artiste, role);
+    }
+
+    public String getRole(Artiste artiste) {
+        return this.artistes.get(artiste);
+    }
+
+    public Album getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(Album album) {
+        this.album = album;
+    }
+
 }
