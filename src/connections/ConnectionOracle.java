@@ -10,6 +10,7 @@ public class ConnectionOracle {
     private static final String url = "jdbc:oracle:thin:@oracle1.ensimag.fr:" + "1521:oracle1";
     private static final String user = "vincentn";
     private static final String passwd = "vincentn";
+
     private static Connection connection = null;
 
     // only gets called once, when the class itself is initialized, no matter how
