@@ -33,6 +33,7 @@ public class TestDAO {
             try (Statement statement = connection.createStatement()) {
                 for (String tableName : tables) {
                     statement.executeUpdate(JDBCUtilities.dropIfExist(tableName));
+                    connection.commit();
                 }
             }
             JDBCUtilities.loadFile(sr, "ressources/CreateTables.sql");

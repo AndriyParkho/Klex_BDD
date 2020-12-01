@@ -69,6 +69,7 @@ public class JDBCUtilities {
                 System.out.println(dumpResultSet(rs));
             }
         }
+        connection.commit();
     }
 
     public static String dumpResultSet(ResultSet rs) throws SQLException {

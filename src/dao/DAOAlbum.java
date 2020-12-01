@@ -13,10 +13,6 @@ public class DAOAlbum extends DAO<Album> {
 
     @Override
     public Album create(Album album) throws SQLException {
-        this.connection.setAutoCommit(false);
-        // this.connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-        System.out.println(this.connection.getTransactionIsolation());
-
         String insertAlbumQuery = "INSERT INTO Album (titreAlbum, nomGroupe, dateSortieAlbum, urlImagePochette) VALUES (?, ?, TO_DATE(?, 'dd/mm/yyyy'), ?)";
 
         try (PreparedStatement statementAlbum = this.connection.prepareStatement(insertAlbumQuery,
@@ -65,7 +61,6 @@ public class DAOAlbum extends DAO<Album> {
         }
 
         connection.commit();
-        connection.setAutoCommit(true);
 
         return album;
     }
@@ -94,15 +89,13 @@ public class DAOAlbum extends DAO<Album> {
                         rs.getString("dateSortieAlbum"), rs.getString("urlImagePochette"), categoriesMusique);
             }
         }
+        connection.commit();
 
         return album;
     }
 
     @Override
     public Album update(Album album) throws SQLException {
-        this.connection.setAutoCommit(false);
-        // this.connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-
         String query = "UPDATE Album SET titreAlbum = '" + album.getTitre() + "', nomGroupe = '" + album.getGroupe()
                 + "', dateSortieAlbum = TO_DATE('" + album.getDateSortie() + "', 'YYYY-MM-DD HH24:MI:SS'), urlImagePochette = '"
                 + album.getUrlImagePochette() + "' WHERE idAlbum = " + album.getId();
@@ -135,16 +128,12 @@ public class DAOAlbum extends DAO<Album> {
         }
 
         connection.commit();
-        connection.setAutoCommit(true);
 
         return album;
     }
 
     @Override
     public void delete(Album album) throws SQLException {
-        this.connection.setAutoCommit(false);
-        // this.connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-
         String queryAlbumAPourCategorie = "DELETE FROM AlbumAPourCategorie WHERE idAlbum = " + album.getId();
         String queryAlbum = "DELETE FROM Album WHERE idAlbum = " + album.getId();
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
@@ -153,7 +142,6 @@ public class DAOAlbum extends DAO<Album> {
                 .executeUpdate(queryAlbum);
 
         connection.commit();
-        connection.setAutoCommit(true);
     }
 
 }

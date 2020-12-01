@@ -10,10 +10,6 @@ public class DAOCategorieMusique extends DAO<CategorieMusique> {
 
     @Override
     public CategorieMusique create(CategorieMusique categorieMusique) throws SQLException {
-        // this.connection.setAutoCommit(false);
-        // this.connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-        System.out.println(this.connection.getTransactionIsolation());
-
         String query = "INSERT INTO CategorieMusique VALUES (?)";
 
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
@@ -29,8 +25,7 @@ public class DAOCategorieMusique extends DAO<CategorieMusique> {
             categorieMusique = this.find(categorie);
         }
 
-        // connection.commit();
-        // connection.setAutoCommit(true);
+        connection.commit();
 
         return categorieMusique;
     }
@@ -44,6 +39,7 @@ public class DAOCategorieMusique extends DAO<CategorieMusique> {
                 categorieMusique = new CategorieMusique(categorie);
             }
         }
+        connection.commit();
 
         return categorieMusique;
     }
@@ -57,6 +53,7 @@ public class DAOCategorieMusique extends DAO<CategorieMusique> {
     public void delete(CategorieMusique categorieMusique) throws SQLException {
         String query = "DELETE FROM CategorieMusique WHERE typeCategorieMusique = '" + categorieMusique.getCategorie() + "'";
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE).executeUpdate(query);
+        connection.commit();
     }
     
 }

@@ -4,12 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConnectionOracle {
+public final class ConnectionOracle {
     private static final String url = "jdbc:oracle:thin:@oracle1.ensimag.fr:" + "1521:oracle1";
     private static final String user = "vincentn";
     private static final String passwd = "vincentn";
 
-    private static Connection connection = null;
+    private static volatile Connection connection = null;
 
     // only gets called once, when the class itself is initialized, no matter how
     // many objects of that type you create.
@@ -18,7 +18,7 @@ public class ConnectionOracle {
         System.out.println("Loading Oracle thin driver...");
         try {
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-        } catch (SQLException e) {
+        } catch (final SQLException e) {
             System.err.println("sql error !");
             JDBCUtilities.printSQLException(e);
         }
@@ -31,8 +31,9 @@ public class ConnectionOracle {
             System.out.println("Connecting to the database...");
             try {
                 connection = DriverManager.getConnection(url, user, passwd);
-                // connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-            } catch (SQLException e) {
+                connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+                connection.setAutoCommit(false);
+            } catch (final SQLException e) {
                 System.err.println("sql error !");
                 JDBCUtilities.printSQLException(e);
             }
