@@ -13,6 +13,8 @@ import java.util.List;
 
 import org.apache.ibatis.jdbc.ScriptRunner;
 
+import src.JDBCUtilities;
+
 /**
  * Connection
  */
@@ -148,29 +150,29 @@ public class TestJDBC {
 
             // Running the script
             loadFile(sr, "ressources/CreateTables.sql");
-            loadFile(sr, "ressources/InsertCategorieMusique.sql");
-            loadFile(sr, "ressources/InsertAlbum.sql");
-            loadFile(sr, "ressources/InsertAlbumAPourCategorie.sql");
-            loadFile(sr, "ressources/InsertArtiste.sql");
-            loadFile(sr, "ressources/InsertFilm.sql");
-            loadFile(sr, "ressources/InsertUtilisateur.sql");
-            loadFile(sr, "ressources/InsertFichier.sql");
-            loadFile(sr, "ressources/InsertPiste.sql");
-            loadFile(sr, "ressources/InsertClient.sql");
-            loadFile(sr, "ressources/InsertCodec.sql");
-            loadFile(sr, "ressources/InsertAPourInstrument.sql");
-            loadFile(sr, "ressources/InsertAPourRole.sql");
-            loadFile(sr, "ressources/InsertEstUnePiste.sql");
-            loadFile(sr, "ressources/InsertEstUnFilm.sql");
-            loadFile(sr, "ressources/InsertCategorieFilm.sql");
-            loadFile(sr, "ressources/InsertFilmAPourCategorie.sql");
-            loadFile(sr, "ressources/InsertImgExtraiteFilm.sql");
-            loadFile(sr, "ressources/InsertPisteAPourCategorie.sql");
-            loadFile(sr, "ressources/InsertSupporteCodec.sql");
-            loadFile(sr, "ressources/InsertFlux.sql");
-            loadFile(sr, "ressources/InsertFluxTexte.sql");
-            loadFile(sr, "ressources/InsertFluxAudio.sql");
-            loadFile(sr, "ressources/InsertFluxVideo.sql");
+            loadFile(sr, "ressources/inserts/InsertCategorieMusique.sql");
+            loadFile(sr, "ressources/inserts/InsertAlbum.sql");
+            loadFile(sr, "ressources/inserts/InsertAlbumAPourCategorie.sql");
+            loadFile(sr, "ressources/inserts/InsertArtiste.sql");
+            loadFile(sr, "ressources/inserts/InsertFilm.sql");
+            loadFile(sr, "ressources/inserts/InsertUtilisateur.sql");
+            loadFile(sr, "ressources/inserts/InsertFichier.sql");
+            loadFile(sr, "ressources/inserts/InsertPiste.sql");
+            loadFile(sr, "ressources/inserts/InsertClient.sql");
+            loadFile(sr, "ressources/inserts/InsertCodec.sql");
+            loadFile(sr, "ressources/inserts/InsertAPourInstrument.sql");
+            loadFile(sr, "ressources/inserts/InsertAPourRole.sql");
+            loadFile(sr, "ressources/inserts/InsertEstUnePiste.sql");
+            loadFile(sr, "ressources/inserts/InsertEstUnFilm.sql");
+            loadFile(sr, "ressources/inserts/InsertCategorieFilm.sql");
+            loadFile(sr, "ressources/inserts/InsertFilmAPourCategorie.sql");
+            loadFile(sr, "ressources/inserts/InsertImgExtraiteFilm.sql");
+            loadFile(sr, "ressources/inserts/InsertPisteAPourCategorie.sql");
+            loadFile(sr, "ressources/inserts/InsertSupporteCodec.sql");
+            loadFile(sr, "ressources/inserts/InsertFlux.sql");
+            loadFile(sr, "ressources/inserts/InsertFluxTexte.sql");
+            loadFile(sr, "ressources/inserts/InsertFluxAudio.sql");
+            loadFile(sr, "ressources/inserts/InsertFluxVideo.sql");
 
             selectAll(connection, "CategorieMusique");
             selectAll(connection, "Album");
