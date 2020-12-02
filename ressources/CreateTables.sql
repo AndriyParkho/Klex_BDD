@@ -89,8 +89,9 @@ CREATE TABLE SupporteCodec(
 CREATE TABLE Artiste(
   idArtiste integer GENERATED ALWAYS AS IDENTITY,
   nomArtiste varchar(50) NOT NULL,
-  dateNaissance date, urlPhoto varchar(150) NOT NULL,
-  Specialite varchar(50) NOT NULL,
+  dateNaissance date,
+  urlPhoto varchar(150) NOT NULL,
+  specialite varchar(50) NOT NULL,
   biographie CLOB,
   CONSTRAINT pkArtiste PRIMARY KEY (idArtiste)
 );

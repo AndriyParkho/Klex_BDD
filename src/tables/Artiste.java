@@ -8,7 +8,19 @@ public class Artiste {
     private String specialite = "";
     private String biographie = "";
 
-    public long getId() {
+    public Artiste(long id, String nom, String dateNaissance, String urlPhoto, String specialite, String biographie) {
+        this.id = id;
+        this.nom = nom;
+        this.dateNaissance = dateNaissance;
+        this.urlPhoto = urlPhoto;
+        this.specialite = specialite;
+        this.biographie = biographie;
+    }
+
+    public Artiste() {
+	}
+
+	public long getId() {
         return id;
     }
 
@@ -54,5 +66,11 @@ public class Artiste {
 
     public void setBiographie(String biographie) {
         this.biographie = biographie;
+    }
+
+    @Override
+    public String toString() {
+        return "Artiste [biographie=" + biographie + ", dateNaissance=" + dateNaissance + ", id=" + id + ", nom=" + nom
+                + ", specialite=" + specialite + ", urlPhoto=" + urlPhoto + "]";
     }
 }
