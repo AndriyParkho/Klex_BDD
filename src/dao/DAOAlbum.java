@@ -97,8 +97,9 @@ public class DAOAlbum extends DAO<Album> {
     @Override
     public Album update(Album album) throws SQLException {
         String query = "UPDATE Album SET titreAlbum = '" + album.getTitre() + "', nomGroupe = '" + album.getGroupe()
-                + "', dateSortieAlbum = TO_DATE('" + album.getDateSortie() + "', 'YYYY-MM-DD HH24:MI:SS'), urlImagePochette = '"
-                + album.getUrlImagePochette() + "' WHERE idAlbum = " + album.getId();
+                + "', dateSortieAlbum = TO_DATE('" + album.getDateSortie()
+                + "', 'YYYY-MM-DD HH24:MI:SS'), urlImagePochette = '" + album.getUrlImagePochette()
+                + "' WHERE idAlbum = " + album.getId();
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.executeUpdate();
             connection.commit();
@@ -107,18 +108,27 @@ public class DAOAlbum extends DAO<Album> {
             // si elle(s) n'existe(nt) pas on le(s) crèe(s)
             for (CategorieMusique categorieMusique : album.getCategoriesMusique()) {
                 DAOCategorieMusique categorieMusiqueDAO = new DAOCategorieMusique();
-                // Si l'objet n'existe pas, on le créé avec sa jointure
+                // Si la catégorie n'existe pas, on la crèe
                 try {
                     categorieMusique = categorieMusiqueDAO.create(categorieMusique);
+                } catch (SQLException e) {
+                    // si la catégorie existe déjà alors ne rien faire
+                    if (!e.getSQLState().equalsIgnoreCase("23000")) {
+                        JDBCUtilities.printSQLException(e);
+                    }
+                }
+                // si l'album n'est pas relié à la catégorie, on le relie
+                try {
                     String insertAlbumAPourCategorieQuery = "INSERT INTO AlbumAPourCategorie VALUES (?, ?)";
-                    try (PreparedStatement statementAlbumAPourCategorie = this.connection.prepareStatement(insertAlbumAPourCategorieQuery)) {
+                    try (PreparedStatement statementAlbumAPourCategorie = this.connection
+                            .prepareStatement(insertAlbumAPourCategorieQuery)) {
                         statementAlbumAPourCategorie.setLong(1, album.getId());
                         statementAlbumAPourCategorie.setString(2, categorieMusique.getCategorie());
                         statementAlbumAPourCategorie.executeUpdate();
                         connection.commit();
                     }
                 } catch (SQLException e) {
-                    // si la catégorie existe déjà alors ne rien faire
+                    // si le couple existe déjà dans AlbumAPourCategorie alors ne rien faire
                     if (!e.getSQLState().equalsIgnoreCase("23000")) {
                         JDBCUtilities.printSQLException(e);
                     }

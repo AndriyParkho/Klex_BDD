@@ -124,6 +124,16 @@ public class TestDAOAlbum {
             JDBCUtilities.selectAll(connection, "CategorieMusique");
             JDBCUtilities.selectAll(connection, "AlbumAPourCategorie");
 
+            album.addCategorieMusique(new CategorieMusique("electro"));
+            albumDAO.update(album);
+
+            JDBCUtilities.selectAll(connection, "Album");
+            JDBCUtilities.selectAll(connection, "CategorieMusique");
+            JDBCUtilities.selectAll(connection, "AlbumAPourCategorie");
+
+            System.out.println("\nAprès update d'une catégorie d'un album :");
+            System.out.println(albumDAO.find(album.getId()));
+
         } catch (SQLException e) {
             System.err.println("sql error !");
             JDBCUtilities.printSQLException(e);
