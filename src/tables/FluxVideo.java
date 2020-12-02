@@ -1,8 +1,6 @@
 package tables;
 
-import java.util.ArrayList;
-
-public class FluxVideo extends Flux{
+public class FluxVideo extends Flux {
     private int largeur = 0;
     private int hauteur = 0;
     

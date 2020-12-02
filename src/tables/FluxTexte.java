@@ -1,8 +1,6 @@
 package tables;
 
-import java.util.ArrayList;
-
-public class FluxTexte extends Flux{
+public class FluxTexte extends Flux {
     private String langue = "";
 
     public FluxTexte(long id, int debit, String langue) {

@@ -1,8 +1,6 @@
 package tables;
 
-import java.util.ArrayList;
-
-public class FluxAudio extends Flux{
+public class FluxAudio extends Flux {
     private int echantillonnage = 0;
     private String langue = "";
 
@@ -17,7 +15,7 @@ public class FluxAudio extends Flux{
     }
 
     public void setEchantillonnage(int echantillonnage) {
-        this.langue = langue;
+        this.echantillonnage = echantillonnage;
     }
     
     public String getLangue() {

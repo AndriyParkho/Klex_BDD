@@ -15,7 +15,7 @@ import dao.DAOCategorieMusique;
 import tables.Album;
 import tables.CategorieMusique;
 
-public class TestDAO {
+public class TestDAOAlbum {
     static List<String> tables = List.of("Flux", "FluxTexte", "FluxAudio", "FluxVideo", "Dept", "Emp",
             "PisteAPourCategorie", "Album", "AlbumAPourCategorie", "Codec", "Client", "SupporteCodec",
             "CategorieMusique", "Artiste", "APourRole", "Piste", "APourInstrument", "Utilisateur", "Fichier", "Film",
