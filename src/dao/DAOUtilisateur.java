@@ -13,7 +13,7 @@ public class DAOUtilisateur extends DAO<Utilisateur> {
 
     @Override
     public Utilisateur create(Utilisateur utilisateur) throws SQLException {
-        String insertUtilisateurQuery = "INSERT INTO Utilisateur VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Utilisateur SELECT ?, ?, ?, ?, ?, ? FROM dual WHERE NOT EXISTS (SELECT NULL FROM Utilisateur WHERE email = ?)";
 
         if (utilisateur.getNom() == "")
             utilisateur.setNom("default_name");
@@ -26,18 +26,16 @@ public class DAOUtilisateur extends DAO<Utilisateur> {
         if (utilisateur.getCode() == 0)
             utilisateur.setCode(9999);
 
-        try (PreparedStatement statementAlbum = this.connection.prepareStatement(insertUtilisateurQuery)) {
-            statementAlbum.setString(1, utilisateur.getEmail());
-            statementAlbum.setString(2, utilisateur.getNom());
-            statementAlbum.setString(3, utilisateur.getPrenom());
-            statementAlbum.setInt(4, utilisateur.getAge());
-            statementAlbum.setString(5, utilisateur.getLangueDiffusion());
-            statementAlbum.setInt(6, utilisateur.getCode());
+        try (PreparedStatement statement = this.connection.prepareStatement(query)) {
+            statement.setString(1, utilisateur.getEmail());
+            statement.setString(2, utilisateur.getNom());
+            statement.setString(3, utilisateur.getPrenom());
+            statement.setInt(4, utilisateur.getAge());
+            statement.setString(5, utilisateur.getLangueDiffusion());
+            statement.setInt(6, utilisateur.getCode());
+            statement.setString(7, utilisateur.getEmail());
 
-            int nbRowsAffected = statementAlbum.executeUpdate();
-            if (nbRowsAffected != 1) {
-                throw new SQLException("no rows affected");
-            }
+            statement.executeUpdate();
 
             // on doit créer les fichiers
             for (Fichier fichier : utilisateur.getFichiers()) {
@@ -121,7 +119,6 @@ public class DAOUtilisateur extends DAO<Utilisateur> {
         String queryUtilisateur = "DELETE FROM Utilisateur WHERE email = '" + utilisateur.getEmail() + "'";
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeUpdate(queryUtilisateur);
-
         connection.commit();
     }
 

@@ -27,8 +27,6 @@ public class DAOArtiste extends DAO<Artiste> {
                     createdId = rs.getLong(1);
                     artiste.setId(createdId);
                 }
-            } else {
-                throw new SQLException("no rows affected");
             }
 
             artiste = this.find(createdId);
@@ -72,8 +70,6 @@ public class DAOArtiste extends DAO<Artiste> {
             artiste = this.find(artiste.getId());
         }
 
-        connection.commit();
-
         return artiste;
     }
 
@@ -82,7 +78,6 @@ public class DAOArtiste extends DAO<Artiste> {
         String queryArtiste = "DELETE FROM Artiste WHERE idArtiste = " + artiste.getId();
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeUpdate(queryArtiste);
-        
         connection.commit();
     }
 

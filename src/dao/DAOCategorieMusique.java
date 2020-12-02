@@ -10,21 +10,18 @@ public class DAOCategorieMusique extends DAO<CategorieMusique> {
 
     @Override
     public CategorieMusique create(CategorieMusique categorieMusique) throws SQLException {
-        String query = "INSERT INTO CategorieMusique VALUES (?)";
+        String query = "INSERT INTO CategorieMusique SELECT ? FROM dual WHERE NOT EXISTS (SELECT NULL FROM CategorieMusique WHERE typeCategorieMusique = ?)";
 
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
             String categorie = categorieMusique.getCategorie();
 
             statement.setString(1, categorie);
+            statement.setString(2, categorie);
 
-            int nbRowsAffected = statement.executeUpdate();
-            if (nbRowsAffected != 1) {
-                throw new SQLException("no rows affected");
-            }
+            statement.executeUpdate();
 
             categorieMusique = this.find(categorie);
         }
-
         connection.commit();
 
         return categorieMusique;

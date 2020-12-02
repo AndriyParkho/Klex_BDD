@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import connections.JDBCUtilities;
 import tables.Album;
 import tables.CategorieMusique;
 
@@ -30,24 +29,15 @@ public class DAOAlbum extends DAO<Album> {
                     createdId = rs.getLong(1);
                     album.setId(createdId);
                 }
-            } else {
-                throw new SQLException("no rows affected");
             }
 
             // on doit créer les liens entre albums et catégories
             for (CategorieMusique categorieMusique : album.getCategoriesMusique()) {
 
                 DAO<CategorieMusique> categorieMusiqueDAO = new DAOCategorieMusique();
-                try {
-                    categorieMusique = categorieMusiqueDAO.create(categorieMusique);
-                } catch (SQLException e) {
-                    // si la catégorie existe déjà alors ne rien faire
-                    if (!e.getSQLState().equalsIgnoreCase("23000")) {
-                        JDBCUtilities.printSQLException(e);
-                    }
-                }
+                categorieMusique = categorieMusiqueDAO.create(categorieMusique);
 
-                // insertion dans la table intermédiaire
+                // insertion dans la table intermédiaire, c'est un nouvel album donc on est sur que le couple n'existe pas
                 String insertAlbumAPourCategorieQuery = "INSERT INTO AlbumAPourCategorie VALUES (?, ?)";
                 try (PreparedStatement statementAlbumAPourCategorie = this.connection
                         .prepareStatement(insertAlbumAPourCategorieQuery)) {
@@ -59,7 +49,6 @@ public class DAOAlbum extends DAO<Album> {
             }
             album = this.find(createdId);
         }
-
         connection.commit();
 
         return album;
@@ -101,7 +90,10 @@ public class DAOAlbum extends DAO<Album> {
                 + "', 'YYYY-MM-DD HH24:MI:SS'), urlImagePochette = '" + album.getUrlImagePochette()
                 + "' WHERE idAlbum = " + album.getId();
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
-            statement.executeUpdate();
+            int nbRowsAffected = statement.executeUpdate();
+            if (nbRowsAffected != 1) {
+                throw new SQLException("not only one row affected");
+            }
             connection.commit();
 
             // on crè les liens pour les catégories de musiques
@@ -109,35 +101,22 @@ public class DAOAlbum extends DAO<Album> {
             for (CategorieMusique categorieMusique : album.getCategoriesMusique()) {
                 DAOCategorieMusique categorieMusiqueDAO = new DAOCategorieMusique();
                 // Si la catégorie n'existe pas, on la crèe
-                try {
-                    categorieMusique = categorieMusiqueDAO.create(categorieMusique);
-                } catch (SQLException e) {
-                    // si la catégorie existe déjà alors ne rien faire
-                    if (!e.getSQLState().equalsIgnoreCase("23000")) {
-                        JDBCUtilities.printSQLException(e);
-                    }
-                }
+                categorieMusique = categorieMusiqueDAO.create(categorieMusique);
+                
                 // si l'album n'est pas relié à la catégorie, on le relie
-                try {
-                    String insertAlbumAPourCategorieQuery = "INSERT INTO AlbumAPourCategorie VALUES (?, ?)";
-                    try (PreparedStatement statementAlbumAPourCategorie = this.connection
-                            .prepareStatement(insertAlbumAPourCategorieQuery)) {
-                        statementAlbumAPourCategorie.setLong(1, album.getId());
-                        statementAlbumAPourCategorie.setString(2, categorieMusique.getCategorie());
-                        statementAlbumAPourCategorie.executeUpdate();
-                        connection.commit();
-                    }
-                } catch (SQLException e) {
-                    // si le couple existe déjà dans AlbumAPourCategorie alors ne rien faire
-                    if (!e.getSQLState().equalsIgnoreCase("23000")) {
-                        JDBCUtilities.printSQLException(e);
-                    }
+                String insertAlbumAPourCategorieQuery = "INSERT INTO AlbumAPourCategorie SELECT ?, ? FROM dual WHERE NOT EXISTS (SELECT NULL FROM AlbumAPourCategorie WHERE idAlbum = ? AND typeCategorieMusique = ?)";
+                try (PreparedStatement statementAlbumAPourCategorie = this.connection
+                        .prepareStatement(insertAlbumAPourCategorieQuery)) {
+                    statementAlbumAPourCategorie.setLong(1, album.getId());
+                    statementAlbumAPourCategorie.setString(2, categorieMusique.getCategorie());
+                    statementAlbumAPourCategorie.setLong(3, album.getId());
+                    statementAlbumAPourCategorie.setString(4, categorieMusique.getCategorie());
+                    statementAlbumAPourCategorie.executeUpdate();
+                    connection.commit();
                 }
             }
             album = this.find(album.getId());
         }
-
-        connection.commit();
 
         return album;
     }
@@ -147,7 +126,6 @@ public class DAOAlbum extends DAO<Album> {
         String queryAlbum = "DELETE FROM Album WHERE idAlbum = " + album.getId();
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeUpdate(queryAlbum);
-
         connection.commit();
     }
 
