@@ -24,4 +24,17 @@ public class Codec {
     public void setType(String type) {
         this.type = type;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Codec c = (Codec) o;
+        return nom == c.getNom() && type == c.getType();
+    }
+
+    @Override
+    public int hashCode() {
+        return 31 + (nom == null ? 0 : nom.hashCode()) + (type == null ? 0 : type.hashCode());
+    }
 }
