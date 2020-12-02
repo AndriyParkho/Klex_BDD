@@ -2,7 +2,7 @@ package tables;
 
 import java.util.ArrayList;
 
-public class Flux {
+public abstract class Flux {
     private long id = 0;
     private int debit = 0;
     private ArrayList<Codec> codecs = new ArrayList<Codec>();
@@ -38,6 +38,10 @@ public class Flux {
     
     public void addCodec(Codec codec) {
     	this.codecs.add(codec);
+    }
+
+    public Codec getCodec(int index) {
+        return this.codecs.get(index);
     }
 
     @Override

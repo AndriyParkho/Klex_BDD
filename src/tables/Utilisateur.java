@@ -6,10 +6,28 @@ public class Utilisateur {
     private String email = "";
     private String nom = "";
     private String prenom = "";
-    private String age = "";
+    private int age = 0;
     private String langueDiffusion = "";
     private int code = 0;
     private ArrayList<Fichier> fichiers = new ArrayList<Fichier>();
+
+    public Utilisateur(String email, String nom, String prenom, int age, String langueDiffusion, int code,
+            ArrayList<Fichier> fichiers) {
+        this.email = email;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.age = age;
+        this.langueDiffusion = langueDiffusion;
+        this.code = code;
+        this.fichiers = fichiers;
+    }
+
+    public Utilisateur(String email) {
+        this.email = email;
+    }
+
+    public Utilisateur() {
+    }
 
     public String getEmail() {
         return email;
@@ -35,11 +53,11 @@ public class Utilisateur {
         this.prenom = prenom;
     }
 
-    public String getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
@@ -68,10 +86,18 @@ public class Utilisateur {
     }
 
     public void addFichier(Fichier fichier) {
-        this.fichiers.add(fichier);
+        if (!this.fichiers.contains(fichier)) {
+            this.fichiers.add(fichier);
+        }
     }
 
     public Fichier getFichier(int index) {
         return this.fichiers.get(index);
+    }
+
+    @Override
+    public String toString() {
+        return "Utilisateur [age=" + age + ", code=" + code + ", email=" + email + ", fichiers=" + fichiers
+                + ", langueDiffusion=" + langueDiffusion + ", nom=" + nom + ", prenom=" + prenom + "]";
     }
 }

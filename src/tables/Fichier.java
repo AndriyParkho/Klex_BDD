@@ -4,9 +4,19 @@ public class Fichier {
     private long id;
     private long taille;
     private String dateDepot = "";
-    // private Utilisateur utilisateur = new Utilisateur();
+    private String email = "";
 
-    public long getId() {
+    public Fichier(long id, long taille, String dateDepot, String email) {
+        this.id = id;
+        this.taille = taille;
+        this.dateDepot = dateDepot;
+        this.email = email;
+    }
+    
+    public Fichier() {
+	}
+
+	public long getId() {
         return id;
     }
 
@@ -30,11 +40,16 @@ public class Fichier {
         this.dateDepot = dateDepot;
     }
 
-    /* public Utilisateur getUtilisateur() {
-        return utilisateur;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUtilisateur(Utilisateur utilisateur) {
-        this.utilisateur = utilisateur;
-    } */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "Fichier [dateDepot=" + dateDepot + ", email=" + email + ", id=" + id + ", taille=" + taille + "]";
+    }
 }

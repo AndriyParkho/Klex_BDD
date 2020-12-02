@@ -16,7 +16,7 @@ CREATE TABLE Utilisateur(
   email varchar(255) NOT NULL,
   nom varchar(50) NOT NULL,
   prenom varchar(30) NOT NULL,
-  age integer NOT NULL check(age > 0),
+  age integer NOT NULL CHECK (age > 0),
   langueDiffusion varchar(100) NOT NULL CHECK (langueDiffusion in ('Français', 'Anglais', 'Italien', 'Espagnol', 'Allemand')),
   code integer NOT NULL CHECK (code BETWEEN 0000 AND 9999), -- check que le code est bien constitué que de 4 chiffres
   CONSTRAINT pkUtilisateur PRIMARY KEY (email)
