@@ -70,14 +70,37 @@ public class DAOFichier extends DAO<Fichier> {
 
     @Override
     public Fichier update(Fichier fichier) throws SQLException {
-        // TODO Auto-generated method stub
-        return null;
+        String query = "UPDATE Fichier SET taille = " + fichier.getTaille() + ", dateDepot = TO_DATE('"
+                + fichier.getDateDepot() + "', 'YYYY-MM-DD HH24:MI:SS'), email = '" + fichier.getEmail()
+                + "' WHERE idFichier = " + fichier.getId();
+        
+        // création de l'utilisateur s'il n'existe pas
+        Utilisateur utilisateur = new Utilisateur(fichier.getEmail());
+        DAO<Utilisateur> utilisateurDAO = new DAOUtilisateur();
+        try {
+            utilisateur = utilisateurDAO.create(utilisateur);
+        } catch (SQLException e) {
+            // si l'utilisateur existe déjà alors ne rien faire
+            if (!e.getSQLState().equalsIgnoreCase("23000")) {
+                JDBCUtilities.printSQLException(e);
+            }
+        }
+        
+        try (PreparedStatement statement = this.connection.prepareStatement(query)) {
+            statement.executeUpdate();
+            connection.commit();
+            fichier = this.find(fichier.getId());
+        }
+        connection.commit();
+
+        return fichier;
     }
 
     @Override
     public void delete(Fichier fichier) throws SQLException {
-        // TODO Auto-generated method stub
-
+        String queryFichier = "DELETE FROM Fichier WHERE email = '" + fichier.getEmail() + "'";
+        this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
+                .executeUpdate(queryFichier);
     }
 
 }

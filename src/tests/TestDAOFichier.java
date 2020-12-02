@@ -60,11 +60,65 @@ public class TestDAOFichier {
             System.out.println("\nAprès création d'un fichier :");
             System.out.println(fichierDAO.find(fichier.getId()));
             System.out.println(utilisateurDAO.find(fichier.getEmail()));
-
             JDBCUtilities.selectAll(connection, "Fichier");
             JDBCUtilities.selectAll(connection, "Utilisateur");
 
-            System.out.println(utilisateur);
+            fichier.setDateDepot("05/01/2017");
+            fichier.setTaille(35000);
+            fichier.setEmail("me@gre.fr");
+
+            fichier = fichierDAO.create(fichier);
+
+            System.out.println("\nAprès création d'un fichier :");
+            System.out.println(fichierDAO.find(fichier.getId()));
+            System.out.println(utilisateurDAO.find(fichier.getEmail()));
+            JDBCUtilities.selectAll(connection, "Fichier");
+            JDBCUtilities.selectAll(connection, "Utilisateur");
+
+            fichier.setEmail("theo.manfredi@grenoble-inp.fr"); 
+            fichierDAO.update(fichier);
+
+            System.out.println("\nAprès changement d'ownership (utilisateur existant) :");
+            System.out.println(fichierDAO.find(fichier.getId()));
+            System.out.println(utilisateurDAO.find(fichier.getEmail()));
+            JDBCUtilities.selectAll(connection, "Fichier");
+            JDBCUtilities.selectAll(connection, "Utilisateur");
+
+            fichier.setEmail("new@gmail.com"); 
+            fichierDAO.update(fichier);
+
+            System.out.println("\nAprès changement d'ownership (utilisateur inexistant):");
+            System.out.println(fichierDAO.find(fichier.getId()));
+            System.out.println(utilisateurDAO.find(fichier.getEmail()));
+            JDBCUtilities.selectAll(connection, "Fichier");
+            JDBCUtilities.selectAll(connection, "Utilisateur");
+
+            utilisateur.setEmail("new@gmail.com");
+            utilisateurDAO.delete(utilisateur);
+
+            System.out.println("\nAprès suppression de l'utilisateur (avec fichier(s)):");
+            System.out.println(fichierDAO.find(fichier.getId()));
+            System.out.println(utilisateurDAO.find(fichier.getEmail()));
+            JDBCUtilities.selectAll(connection, "Fichier");
+            JDBCUtilities.selectAll(connection, "Utilisateur");
+
+            utilisateur.setEmail("me@gre.fr");
+            utilisateurDAO.delete(utilisateur);
+
+            System.out.println("\nAprès suppression de l'utilisateur (sans fichier(s)):");
+            System.out.println(fichierDAO.find(fichier.getId()));
+            System.out.println(utilisateurDAO.find(fichier.getEmail()));
+            JDBCUtilities.selectAll(connection, "Fichier");
+            JDBCUtilities.selectAll(connection, "Utilisateur");
+
+            fichier = fichierDAO.find(1);
+            fichierDAO.delete(fichier);
+
+            System.out.println("\nAprès suppression du fichier :");
+            System.out.println(fichierDAO.find(fichier.getId()));
+            System.out.println(utilisateurDAO.find(fichier.getEmail()));
+            JDBCUtilities.selectAll(connection, "Fichier");
+            JDBCUtilities.selectAll(connection, "Utilisateur");
 
         } catch (SQLException e) {
             System.err.println("sql error !");

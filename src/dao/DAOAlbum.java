@@ -144,10 +144,7 @@ public class DAOAlbum extends DAO<Album> {
 
     @Override
     public void delete(Album album) throws SQLException {
-        String queryAlbumAPourCategorie = "DELETE FROM AlbumAPourCategorie WHERE idAlbum = " + album.getId();
         String queryAlbum = "DELETE FROM Album WHERE idAlbum = " + album.getId();
-        this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
-                .executeUpdate(queryAlbumAPourCategorie);
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeUpdate(queryAlbum);
 

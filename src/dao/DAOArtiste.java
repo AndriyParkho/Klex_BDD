@@ -58,8 +58,10 @@ public class DAOArtiste extends DAO<Artiste> {
 
     @Override
     public Artiste update(Artiste artiste) throws SQLException {
+        // attributs optionnels
         if (artiste.getDateNaissance() == null) artiste.setDateNaissance("");
         if (artiste.getBiographie() == null) artiste.setBiographie("");
+
         String query = "UPDATE Artiste SET nomArtiste = '" + artiste.getNom() + "', dateNaissance = TO_DATE('"
                 + artiste.getDateNaissance() + "', 'YYYY-MM-DD HH24:MI:SS'), urlPhoto = '" + artiste.getUrlPhoto()
                 + "', specialite = '" + artiste.getSpecialite() + "', biographie = '" + artiste.getBiographie()
@@ -77,13 +79,7 @@ public class DAOArtiste extends DAO<Artiste> {
 
     @Override
     public void delete(Artiste artiste) throws SQLException {
-        String queryArtisteAPourRole = "DELETE FROM APourRole WHERE idArtiste = " + artiste.getId();
-        String queryArtisteAPourInstrument = "DELETE FROM APourInstrument WHERE idArtiste = " + artiste.getId();
         String queryArtiste = "DELETE FROM Artiste WHERE idArtiste = " + artiste.getId();
-        this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
-                .executeUpdate(queryArtisteAPourRole);
-        this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
-                .executeUpdate(queryArtisteAPourInstrument);
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeUpdate(queryArtiste);
         
