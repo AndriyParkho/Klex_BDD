@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import controller.AcceuilControl;
 
 public class Acceuil extends View {
-	private AcceuilControl controler = new AcceuilControl();
+	private AcceuilControl controler = new AcceuilControl(this);
 	private JPanel container = new JPanel(new GridBagLayout());
 	private JButton connectButton = new JButton("Se connecter");
 	private JButton signUpButton = new JButton("S'inscrire");
@@ -46,4 +46,38 @@ public class Acceuil extends View {
 			controler.clicSignUp();
 		}
 	}
+
+	public AcceuilControl getControler() {
+		return controler;
+	}
+
+	public void setControler(AcceuilControl controler) {
+		this.controler = controler;
+	}
+
+	public JPanel getContainer() {
+		return container;
+	}
+
+	public void setContainer(JPanel container) {
+		this.container = container;
+	}
+
+	public JButton getConnectButton() {
+		return connectButton;
+	}
+
+	public void setConnectButton(JButton connectButton) {
+		this.connectButton = connectButton;
+	}
+
+	public JButton getSignUpButton() {
+		return signUpButton;
+	}
+
+	public void setSignUpButton(JButton signUpButton) {
+		this.signUpButton = signUpButton;
+	}
+	
+	
 }
