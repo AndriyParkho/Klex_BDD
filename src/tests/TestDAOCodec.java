@@ -10,8 +10,10 @@ import org.apache.ibatis.jdbc.ScriptRunner;
 
 import connections.ConnectionOracle;
 import connections.JDBCUtilities;
+import dao.DAOClient;
 import dao.DAOCodec;
 import dao.DAOFactory;
+import tables.Client;
 import tables.Codec;
 
 public class TestDAOCodec {
@@ -48,31 +50,31 @@ public class TestDAOCodec {
             codec2 = codecDAO.create(codec2);
 
             System.out.println("\nAprès création d'un codec :");
-            System.out.println(codecDAO.find("MPEG2", "video"));   
-            System.out.println(codecDAO.find("ACC", "audio"));   
+            System.out.println(codecDAO.find("MPEG2", "video"));
+            System.out.println(codecDAO.find("ACC", "audio"));
 
             JDBCUtilities.selectAll(connection, "Codec");
 
             codecDAO.delete(codec);
 
             System.out.println("\nAprès suppression d'un codec :");
-            System.out.println(codecDAO.find("MPEG2", "video"));   
-            System.out.println(codecDAO.find("ACC", "audio")); 
+            System.out.println(codecDAO.find("MPEG2", "video"));
+            System.out.println(codecDAO.find("ACC", "audio"));
             JDBCUtilities.selectAll(connection, "Codec");
 
             codec2.setNom("ACC3");
             codecDAO.update(codec2);
 
             System.out.println("\nAprès update d'un codec :");
-            System.out.println(codecDAO.find("MPEG2", "video"));   
-            System.out.println(codecDAO.find("ACC", "audio")); 
+            System.out.println(codecDAO.find("MPEG2", "video"));
+            System.out.println(codecDAO.find("ACC", "audio"));
             JDBCUtilities.selectAll(connection, "Codec");
 
             codec.setType("bad_type");
 
             System.out.println("\nEssaie d'insertion d'un codec n'ayant pas le bon type :");
             System.out.println(codec);
-            
+
             try {
                 codecDAO.create(codec);
             } catch (SQLIntegrityConstraintViolationException e) {
@@ -80,6 +82,50 @@ public class TestDAOCodec {
             }
 
             JDBCUtilities.selectAll(connection, "Codec");
+
+            DAOClient clientDAO = DAOFactory.getClientDAO();
+            Client client = new Client();
+            client.setMarque("Sony");
+            client.setModele("M5");
+            client.setLargeurMax(400);
+            client.setHauteurMax(100);
+            codec.setType("audio");
+            client.addCodec(codec);
+
+            clientDAO.create(client);
+
+            System.out.println("\nAprès création d'un client :");
+            System.out.println(clientDAO.find("Sony", "M5"));
+
+            client.addCodec(new Codec("MP3", "audio"));
+            clientDAO.update(client);
+
+            System.out.println("\nAprès update d'un client :");
+            System.out.println(clientDAO.find("Sony", "M5"));
+
+            client.addCodec(new Codec("MP4", "video"));
+            clientDAO.createOrUpdate(client);
+
+            System.out.println("\nAprès update d'un client :");
+            System.out.println(clientDAO.find("Sony", "M5"));
+            JDBCUtilities.selectAll(connection, "Codec");
+
+            codecDAO.delete(codec);
+
+            System.out.println("\nAprès delete d'un codec :");
+            JDBCUtilities.selectAll(connection, "Codec");
+            JDBCUtilities.selectAll(connection, "Client");
+            JDBCUtilities.selectAll(connection, "SupporteCodec");
+            System.out.println(clientDAO.find("Sony", "M5"));
+
+            clientDAO.delete(client);
+
+            System.out.println("\nAprès delete d'un client :");
+            JDBCUtilities.selectAll(connection, "Codec");
+            JDBCUtilities.selectAll(connection, "Client");
+            JDBCUtilities.selectAll(connection, "SupporteCodec");
+            System.out.println(clientDAO.find("Sony", "M5"));
+
         } catch (SQLException e) {
             System.err.println("sql error !");
             JDBCUtilities.printSQLException(e);

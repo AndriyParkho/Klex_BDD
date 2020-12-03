@@ -47,6 +47,8 @@ public class DAOFichier extends DAO<Fichier> {
         } catch (final SQLIntegrityConstraintViolationException e) {
             if (e.getErrorCode() != 1) {
                 JDBCUtilities.printSQLException(e);
+            } else {
+                this.update(fichier);
             }
         }
         return fichier;
@@ -94,9 +96,9 @@ public class DAOFichier extends DAO<Fichier> {
 
     @Override
     public void delete(final Fichier fichier) throws SQLException {
-        final String queryFichier = "DELETE FROM Fichier WHERE email = '" + fichier.getEmail() + "'";
+        final String query = "DELETE FROM Fichier WHERE email = '" + fichier.getEmail() + "'";
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
-                .executeUpdate(queryFichier);
+                .executeUpdate(query);
         this.connection.commit();
     }
 

@@ -45,6 +45,8 @@ public class DAOUtilisateur extends DAO<Utilisateur> {
         } catch (final SQLIntegrityConstraintViolationException e) {
             if (e.getErrorCode() != 1) {
                 JDBCUtilities.printSQLException(e);
+            } else {
+                this.update(utilisateur);
             }
         }
         return utilisateur;
@@ -106,9 +108,9 @@ public class DAOUtilisateur extends DAO<Utilisateur> {
 
     @Override
     public void delete(final Utilisateur utilisateur) throws SQLException {
-        final String queryUtilisateur = "DELETE FROM Utilisateur WHERE email = '" + utilisateur.getEmail() + "'";
+        final String query = "DELETE FROM Utilisateur WHERE email = '" + utilisateur.getEmail() + "'";
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
-                .executeUpdate(queryUtilisateur);
+                .executeUpdate(query);
         connection.commit();
     }
 

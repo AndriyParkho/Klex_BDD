@@ -17,6 +17,9 @@ public class Client {
         this.codecs = codecs;
     }
 	
+	public Client() {
+	}
+
 	public String getMarque() {
         return marque;
     }
@@ -65,5 +68,11 @@ public class Client {
 
     public Codec getCodec(int index) {
         return this.codecs.get(index);
+    }
+
+    @Override
+    public String toString() {
+        return "Client [codecs=" + codecs + ", hauteurMax=" + hauteurMax + ", largeurMax=" + largeurMax + ", marque="
+                + marque + ", modele=" + modele + "]";
     }
 }

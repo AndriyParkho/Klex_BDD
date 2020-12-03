@@ -45,6 +45,8 @@ public class DAOArtiste extends DAO<Artiste> {
         } catch (final SQLIntegrityConstraintViolationException e) {
             if (e.getErrorCode() != 1) {
                 JDBCUtilities.printSQLException(e);
+            } else {
+                artiste = this.update(artiste);
             }
         }
         return artiste;
@@ -95,9 +97,9 @@ public class DAOArtiste extends DAO<Artiste> {
 
     @Override
     public void delete(final Artiste artiste) throws SQLException {
-        final String queryArtiste = "DELETE FROM Artiste WHERE idArtiste = " + artiste.getId();
+        final String query = "DELETE FROM Artiste WHERE idArtiste = " + artiste.getId();
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
-                .executeUpdate(queryArtiste);
+                .executeUpdate(query);
         connection.commit();
     }
 }
