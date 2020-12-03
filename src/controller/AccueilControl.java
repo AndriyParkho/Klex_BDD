@@ -2,6 +2,7 @@ package controller;
 
 import views.Accueil;
 import views.Connexion;
+import views.SignUp;
 
 public class AccueilControl {
 	private Accueil view;
@@ -15,6 +16,6 @@ public class AccueilControl {
 	}
 	
 	public void clicSignUp() {
-		// On switch sur la view pour s'inscrire
+		new SignUp(view.getFenetre(), view.getSwitcherView(), view.getContainerView());
 	}
 }

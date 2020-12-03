@@ -14,7 +14,7 @@ public class ConnectControl {
 	public ConnectControl(Connexion view) {
 		this.viewCnx = view;
 	}
-	
+
 	public void clicToConnect() {
 		String email = viewCnx.getMailField().getText();
 		int code = Integer.parseInt(viewCnx.getCodeField().getText());
