@@ -3,6 +3,7 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 
 import connections.JDBCUtilities;
@@ -13,7 +14,7 @@ public class DAOAlbum extends DAO<Album> {
 
     @Override
     public Album create(Album album) throws SQLException {
-        String insertAlbumQuery = "INSERT INTO Album (titreAlbum, nomGroupe, dateSortieAlbum, urlImagePochette) VALUES (?, ?, TO_DATE(?, 'dd/mm/yyyy'), ?)";
+        final String insertAlbumQuery = "INSERT INTO Album (titreAlbum, nomGroupe, dateSortieAlbum, urlImagePochette) VALUES (?, ?, TO_DATE(?, 'dd/mm/yyyy'), ?)";
 
         try (PreparedStatement statementAlbum = this.connection.prepareStatement(insertAlbumQuery,
                 new String[] { "idAlbum" })) {
@@ -22,7 +23,7 @@ public class DAOAlbum extends DAO<Album> {
             statementAlbum.setString(3, album.getDateSortie());
             statementAlbum.setString(4, album.getUrlImagePochette());
 
-            int nbRowsAffected = statementAlbum.executeUpdate();
+            final int nbRowsAffected = statementAlbum.executeUpdate();
             Long createdId = null;
             if (nbRowsAffected == 1) {
                 try (ResultSet rs = statementAlbum.getGeneratedKeys()) {
@@ -30,25 +31,15 @@ public class DAOAlbum extends DAO<Album> {
                     createdId = rs.getLong(1);
                     album.setId(createdId);
                 }
-            } else {
-                throw new SQLException("no rows affected");
             }
 
             // on doit créer les liens entre albums et catégories
             for (CategorieMusique categorieMusique : album.getCategoriesMusique()) {
+                categorieMusique = DAOFactory.getCategorieMusiqueDAO().createOrUpdate(categorieMusique);
 
-                DAO<CategorieMusique> categorieMusiqueDAO = new DAOCategorieMusique();
-                try {
-                    categorieMusique = categorieMusiqueDAO.create(categorieMusique);
-                } catch (SQLException e) {
-                    // si la catégorie existe déjà alors ne rien faire
-                    if (!e.getSQLState().equalsIgnoreCase("23000")) {
-                        JDBCUtilities.printSQLException(e);
-                    }
-                }
-
-                // insertion dans la table intermédiaire
-                String insertAlbumAPourCategorieQuery = "INSERT INTO AlbumAPourCategorie VALUES (?, ?)";
+                // insertion dans la table intermédiaire, c'est un nouvel album donc on est sur
+                // que le couple n'existe pas
+                final String insertAlbumAPourCategorieQuery = "INSERT INTO AlbumAPourCategorie VALUES (?, ?)";
                 try (PreparedStatement statementAlbumAPourCategorie = this.connection
                         .prepareStatement(insertAlbumAPourCategorieQuery)) {
                     statementAlbumAPourCategorie.setLong(1, createdId);
@@ -57,17 +48,33 @@ public class DAOAlbum extends DAO<Album> {
                     connection.commit();
                 }
             }
-            album = this.find(createdId);
+            album = this.find(album);
         }
-
         connection.commit();
 
         return album;
     }
 
-    public Album find(long id) throws SQLException {
+    @Override
+    public Album createOrUpdate(Album album) throws SQLException {
+        try {
+            album = this.create(album);
+        } catch (final SQLIntegrityConstraintViolationException e) {
+            if (e.getErrorCode() != 1) {
+                JDBCUtilities.printSQLException(e);
+            }
+        }
+        return album;
+    }
+
+    @Override
+    public Album find(final Album album) throws SQLException {
+        return this.find(album.getId());
+    }
+
+    public Album find(final long id) throws SQLException {
         Album album = null;
-        String query = "SELECT * FROM Album LEFT JOIN AlbumAPourCategorie ON Album.idAlbum = AlbumAPourCategorie.idAlbum AND Album.idAlbum = "
+        final String query = "SELECT * FROM Album LEFT JOIN AlbumAPourCategorie ON Album.idAlbum = AlbumAPourCategorie.idAlbum AND Album.idAlbum = "
                 + id
                 + " INNER JOIN CategorieMusique ON CategorieMusique.typeCategorieMusique = AlbumAPourCategorie.typeCategorieMusique";
         try (ResultSet rs = this.connection
@@ -75,12 +82,12 @@ public class DAOAlbum extends DAO<Album> {
             // le ResultSet n'est pas vide, on construit un nouvel objet qui contient les
             // attributs de la ligne
             if (rs.first()) {
-                ArrayList<CategorieMusique> categoriesMusique = new ArrayList<CategorieMusique>();
-                DAOCategorieMusique categorieMusiqueDAO = new DAOCategorieMusique();
+                final ArrayList<CategorieMusique> categoriesMusique = new ArrayList<CategorieMusique>();
 
                 rs.beforeFirst();
                 while (rs.next() && rs.getString("typeCategorieMusique") != null) {
-                    categoriesMusique.add(categorieMusiqueDAO.find(rs.getString("typeCategorieMusique")));
+                    categoriesMusique.add(DAOFactory.getCategorieMusiqueDAO()
+                            .find(rs.getString("typeCategorieMusique")));
                 }
                 // on se replace
                 rs.first();
@@ -96,30 +103,26 @@ public class DAOAlbum extends DAO<Album> {
 
     @Override
     public Album update(Album album) throws SQLException {
-        String query = "UPDATE Album SET titreAlbum = '" + album.getTitre() + "', nomGroupe = '" + album.getGroupe()
-                + "', dateSortieAlbum = TO_DATE('" + album.getDateSortie()
+        final String query = "UPDATE Album SET titreAlbum = '" + album.getTitre() + "', nomGroupe = '"
+                + album.getGroupe() + "', dateSortieAlbum = TO_DATE('" + album.getDateSortie()
                 + "', 'YYYY-MM-DD HH24:MI:SS'), urlImagePochette = '" + album.getUrlImagePochette()
                 + "' WHERE idAlbum = " + album.getId();
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
-            statement.executeUpdate();
+            final int nbRowsAffected = statement.executeUpdate();
+            if (nbRowsAffected != 1) {
+                throw new SQLException("not only one row affected");
+            }
             connection.commit();
 
             // on crè les liens pour les catégories de musiques
             // si elle(s) n'existe(nt) pas on le(s) crèe(s)
             for (CategorieMusique categorieMusique : album.getCategoriesMusique()) {
-                DAOCategorieMusique categorieMusiqueDAO = new DAOCategorieMusique();
                 // Si la catégorie n'existe pas, on la crèe
-                try {
-                    categorieMusique = categorieMusiqueDAO.create(categorieMusique);
-                } catch (SQLException e) {
-                    // si la catégorie existe déjà alors ne rien faire
-                    if (!e.getSQLState().equalsIgnoreCase("23000")) {
-                        JDBCUtilities.printSQLException(e);
-                    }
-                }
+                categorieMusique = DAOFactory.getCategorieMusiqueDAO().createOrUpdate(categorieMusique);
+
                 // si l'album n'est pas relié à la catégorie, on le relie
                 try {
-                    String insertAlbumAPourCategorieQuery = "INSERT INTO AlbumAPourCategorie VALUES (?, ?)";
+                    final String insertAlbumAPourCategorieQuery = "INSERT INTO AlbumAPourCategorie VALUES (?, ?)";
                     try (PreparedStatement statementAlbumAPourCategorie = this.connection
                             .prepareStatement(insertAlbumAPourCategorieQuery)) {
                         statementAlbumAPourCategorie.setLong(1, album.getId());
@@ -127,31 +130,22 @@ public class DAOAlbum extends DAO<Album> {
                         statementAlbumAPourCategorie.executeUpdate();
                         connection.commit();
                     }
-                } catch (SQLException e) {
-                    // si le couple existe déjà dans AlbumAPourCategorie alors ne rien faire
-                    if (!e.getSQLState().equalsIgnoreCase("23000")) {
+                } catch (final SQLIntegrityConstraintViolationException e) {
+                    if (e.getErrorCode() != 1) {
                         JDBCUtilities.printSQLException(e);
                     }
                 }
             }
-            album = this.find(album.getId());
+            album = this.find(album);
         }
-
-        connection.commit();
-
         return album;
     }
 
     @Override
-    public void delete(Album album) throws SQLException {
-        String queryAlbumAPourCategorie = "DELETE FROM AlbumAPourCategorie WHERE idAlbum = " + album.getId();
-        String queryAlbum = "DELETE FROM Album WHERE idAlbum = " + album.getId();
-        this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
-                .executeUpdate(queryAlbumAPourCategorie);
+    public void delete(final Album album) throws SQLException {
+        final String queryAlbum = "DELETE FROM Album WHERE idAlbum = " + album.getId();
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeUpdate(queryAlbum);
-
         connection.commit();
     }
-
 }

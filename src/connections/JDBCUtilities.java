@@ -11,9 +11,9 @@ import java.sql.Statement;
 
 import org.apache.ibatis.jdbc.ScriptRunner;
 
-public class JDBCUtilities {
-    public static void printSQLException(SQLException ex) {
-        for (Throwable e : ex) {
+public final class JDBCUtilities {
+    public static void printSQLException(final SQLException ex) {
+        for (final Throwable e : ex) {
             if (e instanceof SQLException) {
                 if (ignoreSQLException(((SQLException) e).getSQLState()) == false) {
                     e.printStackTrace(System.err);
@@ -30,7 +30,7 @@ public class JDBCUtilities {
         }
     }
 
-    public static boolean ignoreSQLException(String sqlState) {
+    public static boolean ignoreSQLException(final String sqlState) {
         if (sqlState == null) {
             System.out.println("The SQL state is not defined!");
             return false;
@@ -44,22 +44,22 @@ public class JDBCUtilities {
         return false;
     }
 
-    public static void loadFile(ScriptRunner sr, String fileName) {
+    public static void loadFile(final ScriptRunner sr, final String fileName) {
         try {
             sr.runScript(new BufferedReader(new FileReader(fileName)));
-        } catch (FileNotFoundException e) {
+        } catch (final FileNotFoundException e) {
             System.err.println("file not found !");
             e.printStackTrace();
         }
     }
 
-    public static String dropIfExist(String tableName) {
+    public static String dropIfExist(final String tableName) {
         return "BEGIN EXECUTE IMMEDIATE 'DROP TABLE " + tableName
                 + " CASCADE CONSTRAINTS'; EXCEPTION WHEN OTHERS THEN IF SQLCODE != -942 THEN RAISE; END IF; END;";
     }
 
-    public static void selectAll(Connection connection, String tableName) throws SQLException {
-        String query = "select * from " + tableName;
+    public static void selectAll(final Connection connection, final String tableName) throws SQLException {
+        final String query = "select * from " + tableName;
         // automatically close Statement and ResultSet objects, regardless of whether an
         // SQLException has been thrown.
         try (Statement statement = connection.createStatement()) {
@@ -72,21 +72,15 @@ public class JDBCUtilities {
         connection.commit();
     }
 
-    public static String dumpResultSet(ResultSet rs) throws SQLException {
+    public static String dumpResultSet(final ResultSet rs) throws SQLException {
         String result = "\n";
-        /*
-         * while (rs.next()) { for (String columnName : columns) { // les méthodes
-         * getString et getObject sont des méthodes génériques qui peuvent être //
-         * employées quel que soit le type SQL de la valeur recherchée. result +=
-         * rs.getString(columnName) + " "; } result += '\n'; }
-         */
-        ResultSetMetaData rsmd = rs.getMetaData();
-        int columnsNumber = rsmd.getColumnCount();
+        final ResultSetMetaData rsmd = rs.getMetaData();
+        final int columnsNumber = rsmd.getColumnCount();
         while (rs.next()) {
             for (int i = 1; i <= columnsNumber; i++) {
                 if (i > 1)
                     result += ",  \n";
-                String columnValue = rs.getString(i);
+                final String columnValue = rs.getString(i);
                 result += columnValue + " " + rsmd.getColumnName(i);
             }
             result += "\n";

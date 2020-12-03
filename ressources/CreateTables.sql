@@ -26,7 +26,7 @@ CREATE TABLE Fichier(
   idFichier integer GENERATED ALWAYS AS IDENTITY,
   taille integer NOT NULL,
   dateDepot DATE NOT NULL,
-  email varchar(255) NOT NULL REFERENCES Utilisateur (email),
+  email varchar(255) NOT NULL REFERENCES Utilisateur (email) ON DELETE CASCADE, -- la suppression d'un utilisateur supprime ses fichiers
   CONSTRAINT pkFichier PRIMARY KEY (idFichier)
 );
 
@@ -35,30 +35,30 @@ CREATE TABLE Piste(
   numPiste integer NOT NULL,
   titrePiste varchar(50) NOT NULL,
   dureePiste interval day (0) to second(0) NOT NULL, -- select only hour-min-seconds, see REGEXP_SUBSTR
-  idAlbum integer NOT NULL REFERENCES Album (idAlbum),
-  idFichier integer NOT NULL REFERENCES Fichier (idFichier),
+  idAlbum integer NOT NULL REFERENCES Album (idAlbum) ON DELETE CASCADE, -- la suppression d'un album supprime ses pistes
+  idFichier integer NOT NULL REFERENCES Fichier (idFichier) ON DELETE CASCADE, -- la suppression d'un fichier supprime la piste associée
   CONSTRAINT pkPiste PRIMARY KEY (idPiste, idAlbum)
 );
 
 CREATE TABLE PisteAPourCategorie(
   idPiste integer NOT NULL,
   idAlbum integer NOT NULL,
-  typeCategorieMusique varchar(20) NOT NULL REFERENCES CategorieMusique (typeCategorieMusique),
-  CONSTRAINT fkPisteAPourCategoriePiste FOREIGN KEY (idPiste, idAlbum) REFERENCES Piste (idPiste, idAlbum),
+  typeCategorieMusique varchar(20) NOT NULL REFERENCES CategorieMusique (typeCategorieMusique) ON DELETE CASCADE,
+  CONSTRAINT fkPisteAPourCategoriePiste FOREIGN KEY (idPiste, idAlbum) REFERENCES Piste (idPiste, idAlbum) ON DELETE CASCADE,
   CONSTRAINT pkPisteAPourCategorie PRIMARY KEY (idPiste, idAlbum, typeCategorieMusique)
 );
 
 CREATE TABLE EstUnePiste(
-  idFichier integer NOT NULL REFERENCES Fichier (idFichier),
+  idFichier integer NOT NULL REFERENCES Fichier (idFichier) ON DELETE CASCADE,
   idPiste integer NOT NULL,
   idAlbum integer NOT NULL,
-  CONSTRAINT fkEstUnePistePiste FOREIGN KEY (idPiste, idAlbum) REFERENCES Piste (idPiste, idAlbum),
+  CONSTRAINT fkEstUnePistePiste FOREIGN KEY (idPiste, idAlbum) REFERENCES Piste (idPiste, idAlbum) ON DELETE CASCADE,
   CONSTRAINT pkEstUnePiste PRIMARY KEY (idFichier)
 );
 
 CREATE TABLE AlbumAPourCategorie(
-  idAlbum integer NOT NULL REFERENCES Album (idAlbum),
-  typeCategorieMusique varchar(20) NOT NULL REFERENCES CategorieMusique (typeCategorieMusique),
+  idAlbum integer NOT NULL REFERENCES Album (idAlbum) ON DELETE CASCADE,
+  typeCategorieMusique varchar(20) NOT NULL REFERENCES CategorieMusique (typeCategorieMusique) ON DELETE CASCADE,
   CONSTRAINT pkAlbumAPourCategorie PRIMARY KEY (idAlbum, typeCategorieMusique)
 );
 
@@ -82,8 +82,8 @@ CREATE TABLE SupporteCodec(
   nomCodec varchar(20) NOT NULL,
   typeCodec varchar(20) NOT NULL, 
   CONSTRAINT pkSupporteCodec PRIMARY KEY (marque, modele, nomCodec, typeCodec),
-  CONSTRAINT fkClient FOREIGN KEY (marque, modele) REFERENCES Client (marque, modele),
-  CONSTRAINT fkCodecSupporteCodec FOREIGN KEY (nomCodec, typeCodec) REFERENCES Codec (nomCodec, typeCodec)
+  CONSTRAINT fkClient FOREIGN KEY (marque, modele) REFERENCES Client (marque, modele) ON DELETE CASCADE,
+  CONSTRAINT fkCodecSupporteCodec FOREIGN KEY (nomCodec, typeCodec) REFERENCES Codec (nomCodec, typeCodec) ON DELETE CASCADE
 );
 
 CREATE TABLE Artiste(
@@ -119,16 +119,16 @@ CREATE TABLE Film(
 CREATE TABLE FilmAPourCategorie(
   titreFilm varchar(1000) NOT NULL,
   anneeSortie date NOT NULL,
-  typeCategorieFilm varchar(255) NOT NULL REFERENCES CategorieFilm (typeCategorieFilm),
-  CONSTRAINT fkFilmAPourCategorie FOREIGN KEY (titreFilm, anneeSortie) REFERENCES Film (titreFilm, anneeSortie),
+  typeCategorieFilm varchar(255) NOT NULL REFERENCES CategorieFilm (typeCategorieFilm) ON DELETE CASCADE,
+  CONSTRAINT fkFilmAPourCategorie FOREIGN KEY (titreFilm, anneeSortie) REFERENCES Film (titreFilm, anneeSortie) ON DELETE CASCADE,
   CONSTRAINT pkFilmAPourCategorie PRIMARY KEY (titreFilm, anneeSortie, typeCategorieFilm)
 );
 
 CREATE TABLE EstUnFilm(
-  idFichier integer NOT NULL REFERENCES Fichier (idFichier),
+  idFichier integer NOT NULL REFERENCES Fichier (idFichier) ON DELETE CASCADE,
   titreFilm varchar(1000) NOT NULL,
   anneeSortie date NOT NULL,
-  CONSTRAINT fkEstUnFilmFilm FOREIGN KEY (titreFilm, anneeSortie) REFERENCES Film (titreFilm, anneeSortie),
+  CONSTRAINT fkEstUnFilmFilm FOREIGN KEY (titreFilm, anneeSortie) REFERENCES Film (titreFilm, anneeSortie) ON DELETE CASCADE,
   CONSTRAINT pkEstUnFilm PRIMARY KEY (idFichier)
 );
 
@@ -136,7 +136,7 @@ CREATE TABLE ImgExtraiteFilm(
   urlImage varchar(1000) NOT NULL,
   titreFilm varchar(1000) NOT NULL,
   anneeSortie date NOT NULL,
-  CONSTRAINT fkImgExtraiteFilmFilm FOREIGN KEY (titreFilm, anneeSortie) REFERENCES Film (titreFilm, anneeSortie),
+  CONSTRAINT fkImgExtraiteFilmFilm FOREIGN KEY (titreFilm, anneeSortie) REFERENCES Film (titreFilm, anneeSortie) ON DELETE CASCADE,
   CONSTRAINT pkImgExtraiteFilm PRIMARY KEY (urlImage)
 );
 
@@ -148,8 +148,8 @@ CREATE TABLE APourRole(
   roleFilm varchar(50) NOT NULL,
   titreFilm varchar(50) NOT NULL,
   anneeSortie date NOT NULL,
-  idArtiste integer NOT NULL REFERENCES Artiste (idArtiste),
-  CONSTRAINT fkAPourRoleFilm FOREIGN KEY (titreFilm, anneeSortie) REFERENCES Film (titreFilm, anneeSortie),
+  idArtiste integer NOT NULL REFERENCES Artiste (idArtiste) ON DELETE CASCADE,
+  CONSTRAINT fkAPourRoleFilm FOREIGN KEY (titreFilm, anneeSortie) REFERENCES Film (titreFilm, anneeSortie) ON DELETE CASCADE,
   CONSTRAINT pkAPourRole PRIMARY KEY (titreFilm, anneeSortie, idArtiste)
 );
 
@@ -157,8 +157,8 @@ CREATE TABLE APourInstrument(
   instrument varchar(50) NOT NULL,
   idArtiste integer NOT NULL,
   idAlbum integer NOT NULL,
-  idPiste integer NOT NULL REFERENCES Artiste (idArtiste),
-  CONSTRAINT fkAPourInstrumentPiste FOREIGN KEY (idPiste, idAlbum) REFERENCES Piste (idPiste, idAlbum),
+  idPiste integer NOT NULL REFERENCES Artiste (idArtiste) ON DELETE CASCADE,
+  CONSTRAINT fkAPourInstrumentPiste FOREIGN KEY (idPiste, idAlbum) REFERENCES Piste (idPiste, idAlbum) ON DELETE CASCADE,
   CONSTRAINT pkAPourInstrument PRIMARY KEY (idArtiste, idPiste)
 );
 
@@ -166,16 +166,16 @@ CREATE TABLE APourInstrument(
 CREATE TABLE Flux(
   idFlux integer GENERATED ALWAYS AS IDENTITY,
   debit float NOT NULL CHECK (debit > 0),
-  idFichier integer NOT NULL REFERENCES Fichier (idFichier),
+  idFichier integer NOT NULL REFERENCES Fichier (idFichier) ON DELETE CASCADE,
   nomCodec varchar(20) NOT NULL,
   typeCodec varchar(20) NOT NULL,
   CONSTRAINT pkFlux PRIMARY KEY (idFlux),
-  CONSTRAINT fkCodecFlux FOREIGN KEY (nomCodec, typeCodec) REFERENCES Codec (nomCodec, typeCodec)
+  CONSTRAINT fkCodecFlux FOREIGN KEY (nomCodec, typeCodec) REFERENCES Codec (nomCodec, typeCodec) ON DELETE CASCADE
 );
 
 /* references pour idFichier, debit et nomCodec ? */
 CREATE TABLE FluxTexte(
-  idFlux integer NOT NULL REFERENCES Flux (idFlux),
+  idFlux integer NOT NULL REFERENCES Flux (idFlux) ON DELETE CASCADE,
   debit float NOT NULL CHECK (debit > 0),
   idFichier integer NOT NULL,
   nomCodec varchar(20) NOT NULL,
@@ -187,7 +187,7 @@ CREATE TABLE FluxTexte(
 
 /* references pour idFichier, debit et nomCodec ? */
 CREATE TABLE FluxAudio(
-  idFlux integer NOT NULL REFERENCES Flux (idFlux),
+  idFlux integer NOT NULL REFERENCES Flux (idFlux) ON DELETE CASCADE,
   debit float NOT NULL CHECK (debit > 0),
   idFichier integer NOT NULL,
   nomCodec varchar(20) NOT NULL,
@@ -199,7 +199,7 @@ CREATE TABLE FluxAudio(
 
 /* references pour idFichier, debit et nomCodec ? */
 CREATE TABLE FluxVideo(
-  idFlux integer NOT NULL REFERENCES Flux (idFlux),
+  idFlux integer NOT NULL REFERENCES Flux (idFlux) ON DELETE CASCADE,
   debit float NOT NULL CHECK (debit > 0),
   idFichier integer NOT NULL,
   nomCodec varchar(20) NOT NULL,

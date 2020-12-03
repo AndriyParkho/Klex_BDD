@@ -57,4 +57,16 @@ public class DAOCodec extends DAO<Codec> {
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE).executeUpdate(query);
         connection.commit();
     }
+
+    @Override
+    public Codec createOrUpdate(Codec obj) throws SQLException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Codec find(Codec obj) throws SQLException {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

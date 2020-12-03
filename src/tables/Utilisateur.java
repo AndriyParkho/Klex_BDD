@@ -4,11 +4,12 @@ import java.util.ArrayList;
 
 public class Utilisateur {
     private String email = "";
-    private String nom = "";
-    private String prenom = "";
-    private int age = 0;
-    private String langueDiffusion = "";
-    private int code = 0;
+    // champs par défaut NOT null
+    private String nom = "default_name";
+    private String prenom = "default_surname";
+    private int age = 30;
+    private String langueDiffusion = "Français";
+    private int code = 9999;
     private ArrayList<Fichier> fichiers = new ArrayList<Fichier>();
 
     public Utilisateur(String email, String nom, String prenom, int age, String langueDiffusion, int code,

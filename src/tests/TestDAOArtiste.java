@@ -80,6 +80,8 @@ public class TestDAOArtiste {
             System.out.println(artisteDAO.find(artiste.getId()));
 
             JDBCUtilities.selectAll(connection, "Artiste");
+            JDBCUtilities.selectAll(connection, "APourRole");
+            JDBCUtilities.selectAll(connection, "APourInstrument");
 
         } catch (SQLException e) {
             System.err.println("sql error !");

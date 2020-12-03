@@ -1,8 +1,8 @@
 package tables;
 
 public class Fichier {
-    private long id;
-    private long taille;
+    private long id = 0;
+    private long taille = 0;
     private String dateDepot = "";
     private String email = "";
 

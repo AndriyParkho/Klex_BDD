@@ -1,45 +1,38 @@
 package dao;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
-import connections.JDBCUtilities;
-import tables.*;
+import tables.ImgExtraiteFilm;
 
 public class DAOImgExtraiteFilm extends DAO<ImgExtraiteFilm> {
 
     @Override
-    public ImgExtraiteFilm create(ImgExtraiteFilm obj) {
-        try {
-            connection.setAutoCommit(false);
-            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-
-
-            connection.commit();
-        } catch (SQLException e) {
-            System.err.println("sql error !");
-            JDBCUtilities.printSQLException(e);
-        }
-        
-
-        return null;
-    }
-
-    @Override
-    public ImgExtraiteFilm update(ImgExtraiteFilm obj) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-    
-    public ImgExtraiteFilm find(String urlImg) {
+    public ImgExtraiteFilm create(ImgExtraiteFilm obj) throws SQLException {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public void delete(ImgExtraiteFilm obj) {
+    public ImgExtraiteFilm createOrUpdate(ImgExtraiteFilm obj) throws SQLException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public ImgExtraiteFilm find(ImgExtraiteFilm obj) throws SQLException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public ImgExtraiteFilm update(ImgExtraiteFilm obj) throws SQLException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void delete(ImgExtraiteFilm obj) throws SQLException {
         // TODO Auto-generated method stub
 
     }
-    
 }

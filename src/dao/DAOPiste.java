@@ -1,45 +1,38 @@
 package dao;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
-import connections.JDBCUtilities;
-import tables.*;
+import tables.Piste;
 
 public class DAOPiste extends DAO<Piste> {
 
     @Override
-    public Piste create(Piste obj) {
-        try {
-            connection.setAutoCommit(false);
-            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-
-
-            connection.commit();
-        } catch (SQLException e) {
-            System.err.println("sql error !");
-            JDBCUtilities.printSQLException(e);
-        }
-        
-
-        return null;
-    }
-
-    @Override
-    public Piste update(Piste obj) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-    
-    public Piste find(int id) {
+    public Piste create(Piste obj) throws SQLException {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public void delete(Piste obj) {
+    public Piste createOrUpdate(Piste obj) throws SQLException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Piste find(Piste obj) throws SQLException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Piste update(Piste obj) throws SQLException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void delete(Piste obj) throws SQLException {
         // TODO Auto-generated method stub
 
     }
-    
 }
