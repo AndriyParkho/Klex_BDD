@@ -41,4 +41,14 @@ public final class ConnectionOracle {
         }
         return connection;
     }
+
+    public static void closeInstance() {
+        try {
+            connection.close();
+            System.out.println("Closed.");
+        } catch (SQLException e) {
+            System.err.println("sql error !");
+            JDBCUtilities.printSQLException(e);
+        }
+    }
 }

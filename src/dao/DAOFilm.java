@@ -32,7 +32,7 @@ public class DAOFilm extends DAO<Film> {
         connection.commit(); // because idArtiste RETURNED INTO :6
         // on doit créer les artistes
         for (Artiste artiste : film.getArtistes().keySet()) {
-            DAOFactory.getArtisteDAO().createOrUpdate(artiste);
+            DAOFactory.getArtisteDAO().create(artiste);
         }
 
         // on doit créer les catégories
@@ -51,17 +51,17 @@ public class DAOFilm extends DAO<Film> {
         }
         connection.commit();
 
-        for (CategorieFilm categorieFilm : film.getCategoriesFilm()) {
-            // insertion dans la table intermédiaire, c'est un nouveau film mais la
-            // catégorie peut exister
-            createFilmAPourCategorie(film, categorieFilm);
-        }
-        connection.commit();
-
         for (Map.Entry<Artiste, String> entry : film.getArtistes().entrySet()) {
             // insertion dans la table intermédiaire, c'est un nouveau film donc on est sur
             // que le couple n'existe pas
             createAPourRole(entry.getValue(), film, entry.getKey());
+        }
+        connection.commit();
+
+        for (CategorieFilm categorieFilm : film.getCategoriesFilm()) {
+            // insertion dans la table intermédiaire, c'est un nouveau film mais la
+            // catégorie peut exister
+            createFilmAPourCategorie(film, categorieFilm);
         }
     }
 

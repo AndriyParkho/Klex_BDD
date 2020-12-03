@@ -11,7 +11,7 @@ import tables.Artiste;
 public class DAOArtiste extends DAO<Artiste> {
 
     @Override
-    public void create(Artiste artiste) throws SQLException {
+    public void create(Artiste artiste) throws SQLException { 
         final String query = "INSERT INTO Artiste (nomArtiste, dateNaissance, urlPhoto, specialite, biographie) VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = this.connection.prepareStatement(query, new String[] { "idArtiste" })) {
