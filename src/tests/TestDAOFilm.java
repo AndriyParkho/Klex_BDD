@@ -10,7 +10,10 @@ import org.apache.ibatis.jdbc.ScriptRunner;
 import connections.ConnectionOracle;
 import connections.JDBCUtilities;
 import dao.DAOCategorieFilm;
+import dao.DAOFactory;
+import dao.DAOImgExtraiteFilm;
 import tables.CategorieFilm;
+import tables.ImgExtraiteFilm;
 
 public class TestDAOFilm {
     static List<String> tables = List.of("Flux", "FluxTexte", "FluxAudio", "FluxVideo", "Dept", "Emp",
@@ -35,7 +38,7 @@ public class TestDAOFilm {
             }
             JDBCUtilities.loadFile(sr, "ressources/CreateTables.sql");
 
-            DAOCategorieFilm categorieFilmDAO = new DAOCategorieFilm();
+            DAOCategorieFilm categorieFilmDAO = DAOFactory.getCategorieFilmDAO();
 
             System.out.println("\nAvant création d'une catégorie :");
             System.out.println(categorieFilmDAO.find("horreur"));
@@ -72,6 +75,9 @@ public class TestDAOFilm {
             System.out.println(categorieFilmDAO.find("action"));
 
             JDBCUtilities.selectAll(connection, "categorieFilm");
+
+            DAOImgExtraiteFilm imgExtraiteFilmDAO = DAOFactory.getImgExtraiteFilmDAO();
+            ImgExtraiteFilm imgExtraiteFilm = new ImgExtraiteFilm();
 
         } catch (SQLException e) {
             System.err.println("sql error !");

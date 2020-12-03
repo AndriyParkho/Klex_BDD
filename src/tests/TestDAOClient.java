@@ -16,7 +16,7 @@ import dao.DAOFactory;
 import tables.Client;
 import tables.Codec;
 
-public class TestDAOCodec {
+public class TestDAOClient {
     static List<String> tables = List.of("Flux", "FluxTexte", "FluxAudio", "FluxVideo", "Dept", "Emp",
             "PisteAPourCategorie", "Album", "AlbumAPourCategorie", "Codec", "Client", "SupporteCodec",
             "CategorieMusique", "Artiste", "APourRole", "Piste", "APourInstrument", "Utilisateur", "Fichier", "Film",
