@@ -13,7 +13,7 @@ import tables.Utilisateur;
 public class DAOUtilisateur extends DAO<Utilisateur> {
 
     @Override
-    public Utilisateur create(Utilisateur utilisateur) throws SQLException {
+    public void create(Utilisateur utilisateur) throws SQLException {
         final String query = "INSERT INTO Utilisateur VALUES (?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
@@ -28,20 +28,19 @@ public class DAOUtilisateur extends DAO<Utilisateur> {
 
             // on doit créer les fichiers
             for (Fichier fichier : utilisateur.getFichiers()) {
-                fichier = DAOFactory.getFichierDAO().createOrUpdate(fichier);
+                DAOFactory.getFichierDAO().createOrUpdate(fichier);
+                fichier = DAOFactory.getFichierDAO().find(fichier);
             }
             utilisateur = this.find(utilisateur);
         }
 
         connection.commit();
-
-        return utilisateur;
     }
 
     @Override
-    public Utilisateur createOrUpdate(Utilisateur utilisateur) throws SQLException {
+    public void createOrUpdate(Utilisateur utilisateur) throws SQLException {
         try {
-            utilisateur = this.create(utilisateur);
+            this.create(utilisateur);
         } catch (final SQLIntegrityConstraintViolationException e) {
             if (e.getErrorCode() != 1) {
                 JDBCUtilities.printSQLException(e);
@@ -49,7 +48,6 @@ public class DAOUtilisateur extends DAO<Utilisateur> {
                 this.update(utilisateur);
             }
         }
-        return utilisateur;
     }
 
     @Override
@@ -85,7 +83,7 @@ public class DAOUtilisateur extends DAO<Utilisateur> {
     }
 
     @Override
-    public Utilisateur update(Utilisateur utilisateur) throws SQLException {
+    public void update(Utilisateur utilisateur) throws SQLException {
         final String query = "UPDATE Utilisateur SET nom = '" + utilisateur.getNom() + "', prenom = '"
                 + utilisateur.getPrenom() + "', age = " + utilisateur.getAge() + ", langueDiffusion = '"
                 + utilisateur.getLangueDiffusion() + "', code = " + utilisateur.getCode() + " WHERE email = '"
@@ -95,15 +93,13 @@ public class DAOUtilisateur extends DAO<Utilisateur> {
             connection.commit();
 
             for (Fichier fichier : utilisateur.getFichiers()) {
-                final DAOFichier fichierDAO = new DAOFichier();
+                final DAOFichier fichierDAO = DAOFactory.getFichierDAO();
                 // Si le fichier n'existe pas, on le crè
-                fichier = fichierDAO.createOrUpdate(fichier);
+                fichierDAO.createOrUpdate(fichier);
+                fichier = fichierDAO.find(fichier);
             }
-            utilisateur = this.find(utilisateur);
         }
         connection.commit();
-
-        return utilisateur;
     }
 
     @Override

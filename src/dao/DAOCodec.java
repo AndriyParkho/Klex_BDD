@@ -11,7 +11,7 @@ import tables.Codec;
 public class DAOCodec extends DAO<Codec> {
 
     @Override
-    public Codec create(Codec codec) throws SQLException {
+    public void create(Codec codec) throws SQLException {
         final String query = "INSERT INTO Codec VALUES (?, ?)";
 
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
@@ -21,20 +21,17 @@ public class DAOCodec extends DAO<Codec> {
             codec = this.find(codec);
         }
         connection.commit();
-
-        return codec;
     }
 
     @Override
-    public Codec createOrUpdate(Codec codec) throws SQLException {
+    public void createOrUpdate(Codec codec) throws SQLException {
         try {
-            codec = this.create(codec);
+            this.create(codec);
         } catch (final SQLIntegrityConstraintViolationException e) {
             if (e.getErrorCode() != 1) {
                 JDBCUtilities.printSQLException(e);
             }
         }
-        return codec;
     }
 
     @Override
@@ -59,8 +56,8 @@ public class DAOCodec extends DAO<Codec> {
     }
 
     @Override
-    public Codec update(final Codec codec) throws SQLException {
-        return this.createOrUpdate(codec);
+    public void update(final Codec codec) throws SQLException {
+        this.createOrUpdate(codec);
     }
 
     @Override

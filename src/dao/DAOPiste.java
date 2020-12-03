@@ -7,15 +7,12 @@ import tables.Piste;
 public class DAOPiste extends DAO<Piste> {
 
     @Override
-    public Piste create(Piste obj) throws SQLException {
+    public void create(Piste obj) throws SQLException {
         // TODO Auto-generated method stub
-        return null;
     }
 
     @Override
-    public Piste createOrUpdate(Piste obj) throws SQLException {
-        // TODO Auto-generated method stub
-        return null;
+    public void createOrUpdate(Piste obj) throws SQLException {
     }
 
     @Override
@@ -25,9 +22,7 @@ public class DAOPiste extends DAO<Piste> {
     }
 
     @Override
-    public Piste update(Piste obj) throws SQLException {
-        // TODO Auto-generated method stub
-        return null;
+    public void update(Piste obj) throws SQLException {
     }
 
     @Override

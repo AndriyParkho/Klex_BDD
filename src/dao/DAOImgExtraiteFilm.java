@@ -14,7 +14,7 @@ public class DAOImgExtraiteFilm extends DAO<ImgExtraiteFilm> {
      * @throws SQLIntegrityConstraintViolationException if the film doesn't exist
      */
     @Override
-    public ImgExtraiteFilm create(ImgExtraiteFilm imgExtraiteFilm) throws SQLException {
+    public void create(ImgExtraiteFilm imgExtraiteFilm) throws SQLException {
         final String query = "INSERT INTO ImgExtraiteFilm VALUES (?, ?, TO_DATE(?, 'dd/mm/yyyy'))";
 
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
@@ -25,25 +25,22 @@ public class DAOImgExtraiteFilm extends DAO<ImgExtraiteFilm> {
             imgExtraiteFilm = this.find(imgExtraiteFilm);
         }
         connection.commit();
-
-        return imgExtraiteFilm;
     }
 
     /**
      * @throws SQLIntegrityConstraintViolationException if the film doesn't exist
      */
     @Override
-    public ImgExtraiteFilm createOrUpdate(ImgExtraiteFilm imgExtraiteFilm) throws SQLException {
+    public void createOrUpdate(ImgExtraiteFilm imgExtraiteFilm) throws SQLException {
         try {
-            imgExtraiteFilm = this.create(imgExtraiteFilm);
+            this.create(imgExtraiteFilm);
         } catch (final SQLIntegrityConstraintViolationException e) {
             if (e.getErrorCode() != 1) {
                 JDBCUtilities.printSQLException(e);
             } else {
-                imgExtraiteFilm = this.update(imgExtraiteFilm);
+                this.update(imgExtraiteFilm);
             }
         }
-        return imgExtraiteFilm;
     }
 
     @Override
@@ -70,7 +67,7 @@ public class DAOImgExtraiteFilm extends DAO<ImgExtraiteFilm> {
      * @throws SQLIntegrityConstraintViolationException if the film doesn't exist
      */
     @Override
-    public ImgExtraiteFilm update(ImgExtraiteFilm imgExtraiteFilm) throws SQLException {
+    public void update(ImgExtraiteFilm imgExtraiteFilm) throws SQLException {
         final String query = "UPDATE ImgExtraiteFilm SET titreFilm = '" + imgExtraiteFilm.getTitreFilm() + "', anneeSortie = '"
                 + imgExtraiteFilm.getAnneeSortie() + "' WHERE urlImage = '" + imgExtraiteFilm.getUrlImg() + "'";
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
@@ -79,9 +76,7 @@ public class DAOImgExtraiteFilm extends DAO<ImgExtraiteFilm> {
                 throw new SQLException("not only one row affected");
             }
             connection.commit();
-            imgExtraiteFilm = this.find(imgExtraiteFilm);
         }
-        return imgExtraiteFilm;
     }
 
     @Override

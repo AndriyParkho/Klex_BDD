@@ -7,15 +7,12 @@ import tables.FluxAudio;
 public class DAOFluxAudio extends DAO<FluxAudio> {
 
     @Override
-    public FluxAudio create(FluxAudio obj) throws SQLException {
+    public void create(FluxAudio obj) throws SQLException {
         // TODO Auto-generated method stub
-        return null;
     }
 
     @Override
-    public FluxAudio createOrUpdate(FluxAudio obj) throws SQLException {
-        // TODO Auto-generated method stub
-        return null;
+    public void createOrUpdate(FluxAudio obj) throws SQLException {
     }
 
     @Override
@@ -25,9 +22,7 @@ public class DAOFluxAudio extends DAO<FluxAudio> {
     }
 
     @Override
-    public FluxAudio update(FluxAudio obj) throws SQLException {
-        // TODO Auto-generated method stub
-        return null;
+    public void update(FluxAudio obj) throws SQLException {
     }
 
     @Override

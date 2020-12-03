@@ -7,15 +7,12 @@ import tables.FluxTexte;
 public class DAOFluxTexte extends DAO<FluxTexte> {
 
     @Override
-    public FluxTexte create(FluxTexte obj) throws SQLException {
+    public void create(FluxTexte obj) throws SQLException {
         // TODO Auto-generated method stub
-        return null;
     }
 
     @Override
-    public FluxTexte createOrUpdate(FluxTexte obj) throws SQLException {
-        // TODO Auto-generated method stub
-        return null;
+    public void createOrUpdate(FluxTexte obj) throws SQLException {
     }
 
     @Override
@@ -25,9 +22,7 @@ public class DAOFluxTexte extends DAO<FluxTexte> {
     }
 
     @Override
-    public FluxTexte update(FluxTexte obj) throws SQLException {
-        // TODO Auto-generated method stub
-        return null;
+    public void update(FluxTexte obj) throws SQLException {
     }
 
     @Override

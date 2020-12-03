@@ -47,21 +47,21 @@ public class TestDAOFilm {
             System.out.println(categorieFilmDAO.find("comédie"));
 
             CategorieFilm categorieFilm = new CategorieFilm("comédie");
-            categorieFilm = categorieFilmDAO.create(categorieFilm);
+            categorieFilmDAO.create(categorieFilm);
 
             System.out.println("\nAprès création d'une catégorie :");
             System.out.println(categorieFilmDAO.find("horreur"));
             System.out.println(categorieFilmDAO.find("comédie"));
 
             categorieFilm = new CategorieFilm("horreur");
-            categorieFilm = categorieFilmDAO.create(categorieFilm);
+            categorieFilmDAO.create(categorieFilm);
 
             System.out.println("\nAprès création d'une catégorie :");
             System.out.println(categorieFilmDAO.find("horreur"));
             System.out.println(categorieFilmDAO.find("comédie"));
 
             categorieFilm.setCategorie("action");
-            categorieFilm = categorieFilmDAO.update(categorieFilm);
+            categorieFilmDAO.update(categorieFilm);
 
             System.out.println("\nAprès update d'une catégorie :");
             System.out.println(categorieFilmDAO.find("horreur"));

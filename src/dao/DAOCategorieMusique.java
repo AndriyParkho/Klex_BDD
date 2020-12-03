@@ -11,29 +11,25 @@ import tables.CategorieMusique;
 public class DAOCategorieMusique extends DAO<CategorieMusique> {
 
     @Override
-    public CategorieMusique create(CategorieMusique categorieMusique) throws SQLException {
+    public void create(CategorieMusique categorieMusique) throws SQLException {
         final String query = "INSERT INTO CategorieMusique VALUES (?)";
 
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setString(1, categorieMusique.getCategorie());
             statement.executeUpdate();
-            categorieMusique = this.find(categorieMusique);
         }
-        connection.commit();
-
-        return categorieMusique;
     }
 
     @Override
-    public CategorieMusique createOrUpdate(CategorieMusique categorieMusique) throws SQLException {
+    public void createOrUpdate(CategorieMusique categorieMusique) throws SQLException {
         try {
-            categorieMusique = this.create(categorieMusique);
+            this.create(categorieMusique);
         } catch (final SQLIntegrityConstraintViolationException e) {
+            System.out.println(categorieMusique + " est déjà dans la BDD");
             if (e.getErrorCode() != 1) {
                 JDBCUtilities.printSQLException(e);
             }
         }
-        return categorieMusique;
     }
 
     @Override
@@ -58,8 +54,8 @@ public class DAOCategorieMusique extends DAO<CategorieMusique> {
     }
 
     @Override
-    public CategorieMusique update(final CategorieMusique categorieMusique) throws SQLException {
-        return this.createOrUpdate(categorieMusique);
+    public void update(final CategorieMusique categorieMusique) throws SQLException {
+        this.createOrUpdate(categorieMusique);
     }
 
     @Override
@@ -67,7 +63,6 @@ public class DAOCategorieMusique extends DAO<CategorieMusique> {
         final String query = "DELETE FROM CategorieMusique WHERE typeCategorieMusique = '"
                 + categorieMusique.getCategorie() + "'";
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE).executeUpdate(query);
-        connection.commit();
     }
     
 }

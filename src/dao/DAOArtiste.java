@@ -11,7 +11,7 @@ import tables.Artiste;
 public class DAOArtiste extends DAO<Artiste> {
 
     @Override
-    public Artiste create(Artiste artiste) throws SQLException {
+    public void create(Artiste artiste) throws SQLException {
         final String query = "INSERT INTO Artiste (nomArtiste, dateNaissance, urlPhoto, specialite, biographie) VALUES (?, TO_DATE(?, 'dd/mm/yyyy'), ?, ?, ?)";
 
         try (PreparedStatement statement = this.connection.prepareStatement(query, new String[] { "idArtiste" })) {
@@ -30,26 +30,21 @@ public class DAOArtiste extends DAO<Artiste> {
                     artiste.setId(createdId);
                 }
             }
-            artiste = this.find(artiste);
         }
-
         connection.commit();
-
-        return artiste;
     }
 
     @Override
-    public Artiste createOrUpdate(Artiste artiste) throws SQLException {
+    public void createOrUpdate(Artiste artiste) throws SQLException {
         try {
-            artiste = this.create(artiste);
+            this.create(artiste);
         } catch (final SQLIntegrityConstraintViolationException e) {
             if (e.getErrorCode() != 1) {
                 JDBCUtilities.printSQLException(e);
             } else {
-                artiste = this.update(artiste);
+                this.update(artiste);
             }
         }
-        return artiste;
     }
 
     @Override
@@ -75,7 +70,7 @@ public class DAOArtiste extends DAO<Artiste> {
     }
 
     @Override
-    public Artiste update(Artiste artiste) throws SQLException {
+    public void update(Artiste artiste) throws SQLException {
         // attributs optionnels
         if (artiste.getDateNaissance() == null)
             artiste.setDateNaissance("");
@@ -89,10 +84,7 @@ public class DAOArtiste extends DAO<Artiste> {
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.executeUpdate();
             connection.commit();
-            artiste = this.find(artiste);
         }
-
-        return artiste;
     }
 
     @Override

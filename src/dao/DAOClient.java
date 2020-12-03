@@ -13,7 +13,7 @@ import tables.Codec;
 public class DAOClient extends DAO<Client> {
 
     @Override
-    public Client create(Client client) throws SQLException {
+    public void create(Client client) throws SQLException {
         final String insertClientQuery = "INSERT INTO Client VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement statementClient = this.connection.prepareStatement(insertClientQuery)) {
@@ -25,31 +25,27 @@ public class DAOClient extends DAO<Client> {
 
             // on doit créer les liens entre albums et catégories
             for (Codec codec : client.getCodecs()) {
-                codec = DAOFactory.getCodecDAO().createOrUpdate(codec);
-
+                DAOFactory.getCodecDAO().createOrUpdate(codec);
+                codec = DAOFactory.getCodecDAO().find(codec);
                 // insertion dans la table intermédiaire, c'est un nouveau client donc on est
                 // sur que le couple n'existe pas
                 createSupporteCodec(client, codec);
             }
-            client = this.find(client);
         }
         connection.commit();
-
-        return client;
     }
 
     @Override
-    public Client createOrUpdate(Client client) throws SQLException {
+    public void createOrUpdate(Client client) throws SQLException {
         try {
-            client = this.create(client);
+            this.create(client);
         } catch (final SQLIntegrityConstraintViolationException e) {
             if (e.getErrorCode() != 1) {
                 JDBCUtilities.printSQLException(e);
             } else {
-                client = this.update(client);
+                this.update(client);
             }
         }
-        return client;
     }
 
     @Override
@@ -86,7 +82,7 @@ public class DAOClient extends DAO<Client> {
     }
 
     @Override
-    public Client update(Client client) throws SQLException {
+    public void update(Client client) throws SQLException {
         final String query = "UPDATE Client SET largeurMax = " + client.getLargeurMax() + ", hauteurMax = "
                 + client.getHauteurMax() + " WHERE marque = '" + client.getMarque() + "' AND modele = '"
                 + client.getModele() + "'";
@@ -98,14 +94,13 @@ public class DAOClient extends DAO<Client> {
             connection.commit();
 
             for (Codec codec : client.getCodecs()) {
-                codec = DAOFactory.getCodecDAO().createOrUpdate(codec);
+                DAOFactory.getCodecDAO().createOrUpdate(codec);
+                codec = DAOFactory.getCodecDAO().find(codec);
 
                 // insertion dans la table intermédiaire
                 createOrUpdateSupporteCodec(client, codec);
             }
-            client = this.find(client);
         }
-        return client;
     }
 
     @Override

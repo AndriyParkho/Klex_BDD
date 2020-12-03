@@ -1,16 +1,17 @@
 package tables;
 
+import java.sql.Date;
 import java.util.HashSet;
 
 public class Album {
     private long id = 0;
     private String titre = "";
     private String groupe = "";
-    private String dateSortie = "";
+    private Date dateSortie = null;
     private String urlImagePochette = "";
     private HashSet<CategorieMusique> categoriesMusique = new HashSet<CategorieMusique>();
 
-    public Album(long id, String titre, String groupe, String dateSortie, String urlImagePochette,
+    public Album(long id, String titre, String groupe, Date dateSortie, String urlImagePochette,
             HashSet<CategorieMusique> categoriesMusique) {
         this.id = id;
         this.titre = titre;
@@ -47,11 +48,11 @@ public class Album {
         this.groupe = groupe;
     }
 
-    public String getDateSortie() {
+    public Date getDateSortie() {
         return dateSortie;
     }
 
-    public void setDateSortie(String dateSortie) {
+    public void setDateSortie(Date dateSortie) {
         this.dateSortie = dateSortie;
     }
 

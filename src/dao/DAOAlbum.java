@@ -13,14 +13,14 @@ import tables.CategorieMusique;
 public class DAOAlbum extends DAO<Album> {
 
     @Override
-    public Album create(Album album) throws SQLException {
-        final String insertAlbumQuery = "INSERT INTO Album (titreAlbum, nomGroupe, dateSortieAlbum, urlImagePochette) VALUES (?, ?, TO_DATE(?, 'dd/mm/yyyy'), ?)";
+    public void create(Album album) throws SQLException {
+        final String insertAlbumQuery = "INSERT INTO Album (titreAlbum, nomGroupe, dateSortieAlbum, urlImagePochette) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement statementAlbum = this.connection.prepareStatement(insertAlbumQuery,
                 new String[] { "idAlbum" })) {
             statementAlbum.setString(1, album.getTitre());
             statementAlbum.setString(2, album.getGroupe());
-            statementAlbum.setString(3, album.getDateSortie());
+            statementAlbum.setDate(3, album.getDateSortie());
             statementAlbum.setString(4, album.getUrlImagePochette());
 
             final int nbRowsAffected = statementAlbum.executeUpdate();
@@ -32,34 +32,31 @@ public class DAOAlbum extends DAO<Album> {
                     album.setId(createdId);
                 }
             }
-
-            // on doit créer les liens entre albums et catégories
-            for (CategorieMusique categorieMusique : album.getCategoriesMusique()) {
-                categorieMusique = DAOFactory.getCategorieMusiqueDAO().createOrUpdate(categorieMusique);
-
-                // insertion dans la table intermédiaire, c'est un nouvel album donc on est sur
-                // que le couple n'existe pas
-                createAlbumAPourCategorieQuery(album, categorieMusique);
-            }
-            album = this.find(album);
         }
-        connection.commit();
+        // on doit créer les catégories
+        for (CategorieMusique categorieMusique : album.getCategoriesMusique()) {
+            DAOFactory.getCategorieMusiqueDAO().createOrUpdate(categorieMusique);
+        }
+        connection.commit(); // NECESSARY
 
-        return album;
+        for (CategorieMusique categorieMusique : album.getCategoriesMusique()) {
+            // insertion dans la table intermédiaire, c'est un nouvel album donc on est sur
+            // que le couple n'existe pas
+            createAlbumAPourCategorieQuery(album, categorieMusique);
+        }
     }
 
     @Override
-    public Album createOrUpdate(Album album) throws SQLException {
+    public void createOrUpdate(Album album) throws SQLException {
         try {
-            album = this.create(album);
+            this.create(album);
         } catch (final SQLIntegrityConstraintViolationException e) {
             if (e.getErrorCode() != 1) {
                 JDBCUtilities.printSQLException(e);
             } else {
-                album = this.update(album);
+                this.update(album);
             }
         }
-        return album;
     }
 
     @Override
@@ -85,10 +82,10 @@ public class DAOAlbum extends DAO<Album> {
                             .add(DAOFactory.getCategorieMusiqueDAO().find(rs.getString("typeCategorieMusique")));
                 }
                 // on se replace
-                rs.first();
+                rs.first(); 
 
                 album = new Album(id, rs.getString("titreAlbum"), rs.getString("nomGroupe"),
-                        rs.getString("dateSortieAlbum"), rs.getString("urlImagePochette"), categoriesMusique);
+                        rs.getDate("dateSortieAlbum"), rs.getString("urlImagePochette"), categoriesMusique);
             }
         }
         connection.commit();
@@ -97,30 +94,29 @@ public class DAOAlbum extends DAO<Album> {
     }
 
     @Override
-    public Album update(Album album) throws SQLException {
+    public void update(Album album) throws SQLException {
         final String query = "UPDATE Album SET titreAlbum = '" + album.getTitre() + "', nomGroupe = '"
                 + album.getGroupe() + "', dateSortieAlbum = TO_DATE('" + album.getDateSortie()
-                + "', 'YYYY-MM-DD HH24:MI:SS'), urlImagePochette = '" + album.getUrlImagePochette()
+                + "', 'YYYY-MM-DD'), urlImagePochette = '" + album.getUrlImagePochette()
                 + "' WHERE idAlbum = " + album.getId();
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
             final int nbRowsAffected = statement.executeUpdate();
             if (nbRowsAffected != 1) {
                 throw new SQLException("not only one row affected");
             }
-            connection.commit();
-
-            // on crè les liens pour les catégories de musiques
-            // si elle(s) n'existe(nt) pas on le(s) crèe(s)
-            for (CategorieMusique categorieMusique : album.getCategoriesMusique()) {
-                // Si la catégorie n'existe pas, on la crèe
-                categorieMusique = DAOFactory.getCategorieMusiqueDAO().createOrUpdate(categorieMusique);
-
-                // si l'album n'est pas relié à la catégorie, on le relie
-                createOrUpdateAlbumAPourCategorieQuery(album, categorieMusique);
-            }
-            album = this.find(album);
         }
-        return album;
+        for (CategorieMusique categorieMusique : album.getCategoriesMusique()) {
+            // Si la catégorie n'existe pas, on la crèe
+            DAOFactory.getCategorieMusiqueDAO().createOrUpdate(categorieMusique);
+        }
+
+        final String deleteAlbumAPourCategorieQuery = "DELETE FROM AlbumAPourCategorie WHERE idAlbum = " + album.getId();
+        this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
+                .executeUpdate(deleteAlbumAPourCategorieQuery);
+        for (CategorieMusique categorieMusique : album.getCategoriesMusique()) {
+            // si l'album n'est pas relié à la catégorie, on le relie
+            createOrUpdateAlbumAPourCategorieQuery(album, categorieMusique);
+        }
     }
 
     @Override
@@ -128,7 +124,6 @@ public class DAOAlbum extends DAO<Album> {
         final String query = "DELETE FROM Album WHERE idAlbum = " + album.getId();
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeUpdate(query);
-        connection.commit();
     }
 
     private void createAlbumAPourCategorieQuery(Album album, CategorieMusique categorieMusique) throws SQLException {
@@ -138,11 +133,11 @@ public class DAOAlbum extends DAO<Album> {
             statementAlbumAPourCategorie.setLong(1, album.getId());
             statementAlbumAPourCategorie.setString(2, categorieMusique.getCategorie());
             statementAlbumAPourCategorie.executeUpdate();
-            connection.commit();
         }
     }
 
-    private void createOrUpdateAlbumAPourCategorieQuery(Album album, CategorieMusique categorieMusique) throws SQLException {
+    private void createOrUpdateAlbumAPourCategorieQuery(Album album, CategorieMusique categorieMusique)
+            throws SQLException {
         try {
             createAlbumAPourCategorieQuery(album, categorieMusique);
         } catch (final SQLIntegrityConstraintViolationException e) {

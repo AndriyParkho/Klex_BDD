@@ -44,7 +44,7 @@ public class TestDAOArtiste {
             artiste.setSpecialite("Chanteur");
             artiste.setBiographie("Plus besoin de présenter ce chanteur !!");
 
-            artiste = artisteDAO.create(artiste);
+            artisteDAO.create(artiste);
 
             System.out.println("\nAprès création d'un artiste :");
             System.out.println(artisteDAO.find(artiste.getId()));
@@ -54,7 +54,7 @@ public class TestDAOArtiste {
             artiste.setUrlPhoto("https://");
             artiste.setSpecialite("Programmeur");
 
-            artiste = artisteDAO.create(artiste);
+            artisteDAO.create(artiste);
 
             System.out.println("\nAprès création d'un artiste :");
             System.out.println(artisteDAO.find(artiste.getId()));
@@ -63,13 +63,13 @@ public class TestDAOArtiste {
 
             artiste = artisteDAO.find(1);
             artiste.setDateNaissance("");
-            artiste = artisteDAO.update(artiste);
+            artisteDAO.update(artiste);
 
             System.out.println("\nAprès update d'un artiste :");
             System.out.println(artisteDAO.find(artiste.getId()));
 
             artiste.setBiographie(null);
-            artiste = artisteDAO.update(artiste);
+            artisteDAO.update(artiste);
 
             System.out.println("\nAprès update d'un artiste :");
             System.out.println(artisteDAO.find(artiste.getId()));

@@ -48,14 +48,14 @@ public class TestDAOFichier {
             utilisateur.setLangueDiffusion("Français");
             utilisateur.setCode(1234);
 
-            utilisateur = utilisateurDAO.create(utilisateur); // A COMMENTER pour tester la création d'un utilisateur par défaut
+            utilisateurDAO.create(utilisateur); // A COMMENTER pour tester la création d'un utilisateur par défaut
 
             Fichier fichier = new Fichier();
             fichier.setDateDepot("13/04/2019");
             fichier.setTaille(76000);
             fichier.setEmail("theo.manfredi@grenoble-inp.fr");
 
-            fichier = fichierDAO.create(fichier);
+            fichierDAO.create(fichier);
 
             System.out.println("\nAprès création d'un fichier :");
             System.out.println(fichierDAO.find(fichier.getId()));
@@ -67,7 +67,7 @@ public class TestDAOFichier {
             fichier.setTaille(35000);
             fichier.setEmail("me@gre.fr");
 
-            fichier = fichierDAO.create(fichier);
+            fichierDAO.create(fichier);
 
             System.out.println("\nAprès création d'un fichier :");
             System.out.println(fichierDAO.find(fichier.getId()));

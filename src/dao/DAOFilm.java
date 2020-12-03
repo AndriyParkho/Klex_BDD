@@ -17,7 +17,7 @@ import tables.ImgExtraiteFilm;
 public class DAOFilm extends DAO<Film> {
 
     @Override
-    public Film create(Film film) throws SQLException {
+    public void create(Film film) throws SQLException {
         final String insertFilmQuery = "INSERT INTO Film VALUES (?, TO_DATE(?, 'dd/mm/yyyy'), ?, ?, ?)";
 
         try (PreparedStatement statementFilm = this.connection.prepareStatement(insertFilmQuery)) {
@@ -31,7 +31,8 @@ public class DAOFilm extends DAO<Film> {
 
             // on doit créer les liens entre films et catégories
             for (CategorieFilm categorieFilm : film.getCategoriesFilm()) {
-                categorieFilm = DAOFactory.getCategorieFilmDAO().createOrUpdate(categorieFilm);
+                DAOFactory.getCategorieFilmDAO().createOrUpdate(categorieFilm);
+                categorieFilm = DAOFactory.getCategorieFilmDAO().find(categorieFilm);
                 // System.out.println(categorieFilm);
                 // problème possible si la catégorie est déja présente
                 // insertion dans la table intermédiaire
@@ -40,12 +41,14 @@ public class DAOFilm extends DAO<Film> {
 
             // on doit créer les liens entre films et ImgExtraitesFilm
             for (ImgExtraiteFilm imgExtraiteFilm : film.getImgExtraitesFilm()) {
-                imgExtraiteFilm = DAOFactory.getImgExtraiteFilmDAO().createOrUpdate(imgExtraiteFilm);
+                DAOFactory.getImgExtraiteFilmDAO().createOrUpdate(imgExtraiteFilm);
+                imgExtraiteFilm = DAOFactory.getImgExtraiteFilmDAO().find(imgExtraiteFilm);
             }
 
             // on doit créer les liens entre films et artistes
             for (Map.Entry<Artiste, String> entry : film.getArtistes().entrySet()) {
-                Artiste artiste = DAOFactory.getArtisteDAO().createOrUpdate(entry.getKey());
+                DAOFactory.getArtisteDAO().createOrUpdate(entry.getKey());
+                Artiste artiste = DAOFactory.getArtisteDAO().find(entry.getKey());
                 String role = entry.getValue();
 
                 // insertion dans la table intermédiaire, c'est un nouveau film donc on est sur
@@ -56,22 +59,19 @@ public class DAOFilm extends DAO<Film> {
             film = this.find(film);
         }
         connection.commit();
-
-        return film;
     }
 
     @Override
-    public Film createOrUpdate(Film film) throws SQLException {
+    public void createOrUpdate(Film film) throws SQLException {
         try {
-            film = this.create(film);
+            this.create(film);
         } catch (final SQLIntegrityConstraintViolationException e) {
             if (e.getErrorCode() != 1) {
                 JDBCUtilities.printSQLException(e);
             } else {
-                film = this.update(film);
+                this.update(film);
             }
         }
-        return film;
     }
 
     @Override
@@ -125,9 +125,8 @@ public class DAOFilm extends DAO<Film> {
     }
 
     @Override
-    public Film update(Film film) throws SQLException {
+    public void update(Film film) throws SQLException {
         // TODO Auto-generated method stub
-        return null;
     }
 
     @Override

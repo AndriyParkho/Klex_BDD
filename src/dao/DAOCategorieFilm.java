@@ -11,32 +11,26 @@ import tables.CategorieFilm;
 public class DAOCategorieFilm extends DAO<CategorieFilm> {
 
     @Override
-    public CategorieFilm create(CategorieFilm categorieFilm) throws SQLException {
+    public void create(CategorieFilm categorieFilm) throws SQLException {
         final String query = "INSERT INTO CategorieFilm VALUES (?)";
 
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setString(1, categorieFilm.getCategorie());
             statement.executeUpdate();
-            categorieFilm = this.find(categorieFilm);
         }
-
-        connection.commit();
-
-        return categorieFilm;
     }
 
     @Override
-    public CategorieFilm createOrUpdate(CategorieFilm categorieFilm) throws SQLException {
+    public void createOrUpdate(CategorieFilm categorieFilm) throws SQLException {
         try {
-            categorieFilm = this.create(categorieFilm);
+            this.create(categorieFilm);
         } catch (final SQLIntegrityConstraintViolationException e) {
             if (e.getErrorCode() != 1) {
                 JDBCUtilities.printSQLException(e);
             } else {
-                categorieFilm = this.find(categorieFilm);
+                this.find(categorieFilm);
             }
         }
-        return categorieFilm;
     }
 
     @Override
@@ -61,8 +55,8 @@ public class DAOCategorieFilm extends DAO<CategorieFilm> {
     }
 
     @Override
-    public CategorieFilm update(final CategorieFilm categorieFilm) throws SQLException {
-        return this.createOrUpdate(categorieFilm);
+    public void update(final CategorieFilm categorieFilm) throws SQLException {
+        this.createOrUpdate(categorieFilm);
     }
 
     @Override

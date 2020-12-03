@@ -12,12 +12,13 @@ import tables.Utilisateur;
 public class DAOFichier extends DAO<Fichier> {
 
     @Override
-    public Fichier create(Fichier fichier) throws SQLException {
+    public void create(Fichier fichier) throws SQLException {
         final String query = "INSERT INTO Fichier (taille, dateDepot, email) VALUES (?, TO_DATE(?, 'dd/mm/yyyy'), ?)";
 
         // création de l'utilisateur s'il n'existe pas
         Utilisateur utilisateur = new Utilisateur(fichier.getEmail());
-        utilisateur = DAOFactory.getUtilisateurDAO().createOrUpdate(utilisateur);
+        DAOFactory.getUtilisateurDAO().createOrUpdate(utilisateur);
+        utilisateur = DAOFactory.getUtilisateurDAO().find(utilisateur);
 
         try (PreparedStatement statement = this.connection.prepareStatement(query, new String[] { "idFichier" })) {
             statement.setLong(1, fichier.getTaille());
@@ -37,13 +38,11 @@ public class DAOFichier extends DAO<Fichier> {
         }
 
         connection.commit();
-
-        return fichier;
     }
 
-    public Fichier createOrUpdate(Fichier fichier) throws SQLException {
+    public void createOrUpdate(Fichier fichier) throws SQLException {
         try {
-            fichier = this.create(fichier);
+            this.create(fichier);
         } catch (final SQLIntegrityConstraintViolationException e) {
             if (e.getErrorCode() != 1) {
                 JDBCUtilities.printSQLException(e);
@@ -51,7 +50,6 @@ public class DAOFichier extends DAO<Fichier> {
                 this.update(fichier);
             }
         }
-        return fichier;
     }
 
     @Override
@@ -76,22 +74,20 @@ public class DAOFichier extends DAO<Fichier> {
     }
 
     @Override
-    public Fichier update(Fichier fichier) throws SQLException {
+    public void update(Fichier fichier) throws SQLException {
         final String query = "UPDATE Fichier SET taille = " + fichier.getTaille() + ", dateDepot = TO_DATE('"
                 + fichier.getDateDepot() + "', 'YYYY-MM-DD HH24:MI:SS'), email = '" + fichier.getEmail()
                 + "' WHERE idFichier = " + fichier.getId();
 
         // création de l'utilisateur s'il n'existe pas
         Utilisateur utilisateur = new Utilisateur(fichier.getEmail());
-        utilisateur = DAOFactory.getUtilisateurDAO().createOrUpdate(utilisateur);
+        DAOFactory.getUtilisateurDAO().createOrUpdate(utilisateur);
+        utilisateur = DAOFactory.getUtilisateurDAO().find(utilisateur);
 
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.executeUpdate();
             connection.commit();
-            fichier = this.find(fichier.getId());
         }
-
-        return fichier;
     }
 
     @Override

@@ -46,8 +46,8 @@ public class TestDAOClient {
 
             Codec codec = new Codec("MPEG2", "video");
             Codec codec2 = new Codec("ACC", "audio");
-            codec = codecDAO.create(codec);
-            codec2 = codecDAO.create(codec2);
+            codecDAO.create(codec);
+            codecDAO.create(codec2);
 
             System.out.println("\nAprès création d'un codec :");
             System.out.println(codecDAO.find("MPEG2", "video"));
