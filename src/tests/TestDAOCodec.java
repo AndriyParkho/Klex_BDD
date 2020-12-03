@@ -2,15 +2,16 @@ package tests;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.jdbc.ScriptRunner;
 
-import connections.JDBCUtilities;
 import connections.ConnectionOracle;
+import connections.JDBCUtilities;
 import dao.DAOCodec;
+import dao.DAOFactory;
 import tables.Codec;
 
 public class TestDAOCodec {
@@ -36,7 +37,7 @@ public class TestDAOCodec {
             }
             JDBCUtilities.loadFile(sr, "ressources/CreateTables.sql");
 
-            DAOCodec codecDAO = new DAOCodec();
+            DAOCodec codecDAO = DAOFactory.getCodecDAO();
 
             System.out.println("\nAvant création d'un codec :");
             System.out.println(codecDAO.find("MPEG2", "video"));
@@ -55,14 +56,30 @@ public class TestDAOCodec {
             codecDAO.delete(codec);
 
             System.out.println("\nAprès suppression d'un codec :");
+            System.out.println(codecDAO.find("MPEG2", "video"));   
+            System.out.println(codecDAO.find("ACC", "audio")); 
             JDBCUtilities.selectAll(connection, "Codec");
 
             codec2.setNom("ACC3");
             codecDAO.update(codec2);
 
             System.out.println("\nAprès update d'un codec :");
-            JDBCUtilities.selectAll(connection, "Codec");     
+            System.out.println(codecDAO.find("MPEG2", "video"));   
+            System.out.println(codecDAO.find("ACC", "audio")); 
+            JDBCUtilities.selectAll(connection, "Codec");
 
+            codec.setType("bad_type");
+
+            System.out.println("\nEssaie d'insertion d'un codec n'ayant pas le bon type :");
+            System.out.println(codec);
+            
+            try {
+                codecDAO.create(codec);
+            } catch (SQLIntegrityConstraintViolationException e) {
+                JDBCUtilities.printSQLException(e);
+            }
+
+            JDBCUtilities.selectAll(connection, "Codec");
         } catch (SQLException e) {
             System.err.println("sql error !");
             JDBCUtilities.printSQLException(e);

@@ -1,8 +1,8 @@
 package tables;
 
 public class Codec {
-	private String nom = "";
-	private String type = "";
+	private String nom = null;
+	private String type = null;
 	
 	public Codec(String nom, String type) {
 		this.nom = nom;
@@ -26,15 +26,7 @@ public class Codec {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Codec c = (Codec) o;
-        return nom == c.getNom() && type == c.getType();
-    }
-
-    @Override
-    public int hashCode() {
-        return 31 + (nom == null ? 0 : nom.hashCode()) + (type == null ? 0 : type.hashCode());
+    public String toString() {
+        return "Codec [nom=" + nom + ", type=" + type + "]";
     }
 }

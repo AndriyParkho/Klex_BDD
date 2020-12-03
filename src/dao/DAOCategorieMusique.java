@@ -59,7 +59,7 @@ public class DAOCategorieMusique extends DAO<CategorieMusique> {
 
     @Override
     public CategorieMusique update(final CategorieMusique categorieMusique) throws SQLException {
-        return this.create(categorieMusique);
+        return this.createOrUpdate(categorieMusique);
     }
 
     @Override

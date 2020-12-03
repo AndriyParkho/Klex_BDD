@@ -15,15 +15,8 @@ public class DAOCategorieFilm extends DAO<CategorieFilm> {
         final String query = "INSERT INTO CategorieFilm VALUES (?)";
 
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
-            final String categorie = categorieFilm.getCategorie();
-
-            statement.setString(1, categorie);
-
-            final int nbRowsAffected = statement.executeUpdate();
-            if (nbRowsAffected != 1) {
-                throw new SQLException("no rows affected");
-            }
-
+            statement.setString(1, categorieFilm.getCategorie());
+            statement.executeUpdate();
             categorieFilm = this.find(categorieFilm);
         }
 
@@ -67,7 +60,7 @@ public class DAOCategorieFilm extends DAO<CategorieFilm> {
 
     @Override
     public CategorieFilm update(final CategorieFilm categorieFilm) throws SQLException {
-        return this.create(categorieFilm);
+        return this.createOrUpdate(categorieFilm);
     }
 
     @Override
