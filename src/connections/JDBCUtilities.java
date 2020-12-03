@@ -11,7 +11,7 @@ import java.sql.Statement;
 
 import org.apache.ibatis.jdbc.ScriptRunner;
 
-public class JDBCUtilities {
+public final class JDBCUtilities {
     public static void printSQLException(SQLException ex) {
         for (Throwable e : ex) {
             if (e instanceof SQLException) {
