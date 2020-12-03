@@ -2,6 +2,8 @@ package views;
 
 import java.awt.CardLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -9,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+
+import controller.SignUpControl;
 
 
 public class SignUp extends View {
@@ -19,7 +23,8 @@ public class SignUp extends View {
 	private JTextField codeField;
 	private JButton validButton = new JButton("Valider");
 	private JButton backButton = new JButton("<");
-	private JPanel container = new SignUpPanel();	
+	private JPanel container = new SignUpPanel();
+	private SignUpControl controller = new SignUpControl(this);
 	
 	public SignUp(JFrame fenetre, CardLayout switcherView, JPanel containerView) {
 		super(fenetre, switcherView, containerView, new String("Inscription"));
@@ -27,7 +32,7 @@ public class SignUp extends View {
 		super.getContainerView().add(container, "Inscription");
 		super.getSwitcherView().show(super.getContainerView() , "Inscription");
 
-		super.getFenetre().setSize(453, 350);
+		super.getFenetre().setSize(460, 350);
 		super.getFenetre().setLocationRelativeTo(null);
 	}
 	
@@ -77,7 +82,7 @@ public class SignUp extends View {
 			add(lblAge);
 			
 			JSpinner ageField = new JSpinner();
-			ageField.setBounds(322, 91, 30, 22);
+			ageField.setBounds(322, 91, 47, 22);
 			add(ageField);
 			
 			JLabel lblLangue = new JLabel("Langue :");
@@ -97,12 +102,23 @@ public class SignUp extends View {
 			codeField.setColumns(10);
 			codeField.setBounds(322, 188, 116, 22);
 			add(codeField);
+			validButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					controller.clicValid();
+				}
+			});
 			
 			validButton.setBounds(176, 249, 97, 25);
 			add(validButton);
 			
+			JButton backButton = new JButton("<");
+			backButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					controller.clicBack();
+				}
+			});
 			backButton.setIcon(null);
-			backButton.setBounds(12, 16, 47, 34);
+			backButton.setBounds(12, 13, 47, 34);
 			add(backButton);
 
 		}
