@@ -17,7 +17,7 @@ public class Connexion extends View {
 	private JTextField codeField;
 	private JButton connectButton = new JButton("Se connecter");
 	private JPanel container = new ConnexPanel();
-	private ConnectControl controller;
+	private ConnectControl controller = new ConnectControl(this);
 	
 	public Connexion(JFrame fenetre, CardLayout switcherView, JPanel containerView) {
 		super(fenetre, switcherView, containerView, new String("Se connecter"));
