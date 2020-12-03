@@ -12,16 +12,16 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import controller.AcceuilControl;
+import controller.AccueilControl;
 
-public class Acceuil extends View {
-	private AcceuilControl controler = new AcceuilControl();
+public class Accueil extends View {
+	private AccueilControl controler = new AccueilControl(this);
 	private JPanel container = new JPanel(new GridBagLayout());
 	private JButton connectButton = new JButton("Se connecter");
 	private JButton signUpButton = new JButton("S'inscrire");
 	
 	
-	public Acceuil(JFrame fenetre, CardLayout switcherView, JPanel containerView) {
+	public Accueil(JFrame fenetre, CardLayout switcherView, JPanel containerView) {
 		super(fenetre, switcherView, containerView, new String("Acceuil"));
 		container.setBackground(Color.WHITE);
 		
@@ -46,4 +46,38 @@ public class Acceuil extends View {
 			controler.clicSignUp();
 		}
 	}
+
+	public AccueilControl getControler() {
+		return controler;
+	}
+
+	public void setControler(AccueilControl controler) {
+		this.controler = controler;
+	}
+
+	public JPanel getContainer() {
+		return container;
+	}
+
+	public void setContainer(JPanel container) {
+		this.container = container;
+	}
+
+	public JButton getConnectButton() {
+		return connectButton;
+	}
+
+	public void setConnectButton(JButton connectButton) {
+		this.connectButton = connectButton;
+	}
+
+	public JButton getSignUpButton() {
+		return signUpButton;
+	}
+
+	public void setSignUpButton(JButton signUpButton) {
+		this.signUpButton = signUpButton;
+	}
+	
+	
 }

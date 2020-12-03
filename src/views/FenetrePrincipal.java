@@ -14,7 +14,7 @@ public class FenetrePrincipal {
 		CardLayout switcherView = new CardLayout();
 		containerView.setLayout(switcherView);
 		
-		new Acceuil(frame, switcherView, containerView);
+		new Accueil(frame, switcherView, containerView);
 		
 		frame.add(containerView);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
