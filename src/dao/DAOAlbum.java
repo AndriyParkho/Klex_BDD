@@ -37,7 +37,7 @@ public class DAOAlbum extends DAO<Album> {
         for (CategorieMusique categorieMusique : album.getCategoriesMusique()) {
             DAOFactory.getCategorieMusiqueDAO().createOrUpdate(categorieMusique);
         }
-        connection.commit(); // NECESSARY
+        connection.commit(); // NECESSARY because AlbumAPourCategorie references CategorieMusique.typeCategorieMusique and Album.idAlbum
 
         for (CategorieMusique categorieMusique : album.getCategoriesMusique()) {
             // insertion dans la table intermédiaire, c'est un nouvel album donc on est sur
@@ -54,6 +54,7 @@ public class DAOAlbum extends DAO<Album> {
             if (e.getErrorCode() != 1) {
                 JDBCUtilities.printSQLException(e);
             } else {
+                System.out.println(album + " est déjà dans la BDD. On l'update.");
                 this.update(album);
             }
         }

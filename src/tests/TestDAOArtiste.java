@@ -1,6 +1,7 @@
 package tests;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -19,9 +20,8 @@ public class TestDAOArtiste {
             "FilmAPourCategorie", "EstUnFilm", "EstUnePiste", "ImgExtraiteFilm", "CategorieFilm", "APourCategorie");
     
     public static void main(String[] args) {
+        Connection connection = ConnectionOracle.getInstance();
         try {
-            Connection connection = ConnectionOracle.getInstance();
-
             // Initialize the script runner
             ScriptRunner sr = new ScriptRunner(connection);
             sr.setEscapeProcessing(false);
@@ -39,12 +39,13 @@ public class TestDAOArtiste {
 
             Artiste artiste = new Artiste();
             artiste.setNom("Calvin Harris");
-            artiste.setDateNaissance("04/11/2014");
+            artiste.setDateNaissance(Date.valueOf("2014-11-04"));
             artiste.setUrlPhoto("https://www.journaldugeek.com/content/uploads/2019/06/supermariorunta.jpg");
             artiste.setSpecialite("Chanteur");
             artiste.setBiographie("Plus besoin de présenter ce chanteur !!");
 
             artisteDAO.create(artiste);
+            connection.commit();
 
             System.out.println("\nAprès création d'un artiste :");
             System.out.println(artisteDAO.find(artiste.getId()));
@@ -55,6 +56,7 @@ public class TestDAOArtiste {
             artiste.setSpecialite("Programmeur");
 
             artisteDAO.create(artiste);
+            connection.commit();
 
             System.out.println("\nAprès création d'un artiste :");
             System.out.println(artisteDAO.find(artiste.getId()));
@@ -62,22 +64,25 @@ public class TestDAOArtiste {
             JDBCUtilities.selectAll(connection, "Artiste");
 
             artiste = artisteDAO.find(1);
-            artiste.setDateNaissance("");
+            artiste.setDateNaissance(null);
             artisteDAO.update(artiste);
+            connection.commit();
 
             System.out.println("\nAprès update d'un artiste :");
             System.out.println(artisteDAO.find(artiste.getId()));
 
             artiste.setBiographie(null);
             artisteDAO.update(artiste);
+            connection.commit();
 
             System.out.println("\nAprès update d'un artiste :");
             System.out.println(artisteDAO.find(artiste.getId()));
 
             artisteDAO.delete(artiste);
+            connection.commit();
 
             System.out.println("\nAprès delete d'un artiste :");
-            System.out.println(artisteDAO.find(artiste.getId()));
+            System.out.println(artisteDAO.find(2));
 
             JDBCUtilities.selectAll(connection, "Artiste");
             JDBCUtilities.selectAll(connection, "APourRole");
@@ -86,6 +91,14 @@ public class TestDAOArtiste {
         } catch (SQLException e) {
             System.err.println("sql error !");
             JDBCUtilities.printSQLException(e);
+            if (connection != null) {
+                try {
+                    System.err.print("Transaction is being rolled back");
+                    connection.rollback();
+                } catch (SQLException excep) {
+                    JDBCUtilities.printSQLException(excep);
+                }
+            }
         }
     }
 }

@@ -12,11 +12,11 @@ public class DAOArtiste extends DAO<Artiste> {
 
     @Override
     public void create(Artiste artiste) throws SQLException {
-        final String query = "INSERT INTO Artiste (nomArtiste, dateNaissance, urlPhoto, specialite, biographie) VALUES (?, TO_DATE(?, 'dd/mm/yyyy'), ?, ?, ?)";
+        final String query = "INSERT INTO Artiste (nomArtiste, dateNaissance, urlPhoto, specialite, biographie) VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = this.connection.prepareStatement(query, new String[] { "idArtiste" })) {
             statement.setString(1, artiste.getNom());
-            statement.setString(2, artiste.getDateNaissance());
+            statement.setDate(2, artiste.getDateNaissance());
             statement.setString(3, artiste.getUrlPhoto());
             statement.setString(4, artiste.getSpecialite());
             statement.setString(5, artiste.getBiographie());
@@ -31,7 +31,6 @@ public class DAOArtiste extends DAO<Artiste> {
                 }
             }
         }
-        connection.commit();
     }
 
     @Override
@@ -42,6 +41,7 @@ public class DAOArtiste extends DAO<Artiste> {
             if (e.getErrorCode() != 1) {
                 JDBCUtilities.printSQLException(e);
             } else {
+                System.out.println(artiste + " est déjà dans la BDD. On l'update.");
                 this.update(artiste);
             }
         }
@@ -60,7 +60,7 @@ public class DAOArtiste extends DAO<Artiste> {
             // le ResultSet n'est pas vide, on construit un nouvel objet qui contient les
             // attributs de la ligne
             if (rs.first()) {
-                artiste = new Artiste(id, rs.getString("nomArtiste"), rs.getString("dateNaissance"),
+                artiste = new Artiste(id, rs.getString("nomArtiste"), rs.getDate("dateNaissance"),
                         rs.getString("urlPhoto"), rs.getString("specialite"), rs.getString("biographie"));
             }
         }
@@ -72,18 +72,18 @@ public class DAOArtiste extends DAO<Artiste> {
     @Override
     public void update(Artiste artiste) throws SQLException {
         // attributs optionnels
+        String dateNaissance = "TO_DATE('" + artiste.getDateNaissance() + "', 'YYYY-MM-DD')";
         if (artiste.getDateNaissance() == null)
-            artiste.setDateNaissance("");
+            dateNaissance = "NULL";
         if (artiste.getBiographie() == null)
             artiste.setBiographie("");
 
-        final String query = "UPDATE Artiste SET nomArtiste = '" + artiste.getNom() + "', dateNaissance = TO_DATE('"
-                + artiste.getDateNaissance() + "', 'YYYY-MM-DD HH24:MI:SS'), urlPhoto = '" + artiste.getUrlPhoto()
+        final String query = "UPDATE Artiste SET nomArtiste = '" + artiste.getNom() + "', dateNaissance = "
+                + dateNaissance + ", urlPhoto = '" + artiste.getUrlPhoto()
                 + "', specialite = '" + artiste.getSpecialite() + "', biographie = '" + artiste.getBiographie()
                 + "' WHERE idArtiste = " + artiste.getId();
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.executeUpdate();
-            connection.commit();
         }
     }
 
@@ -92,6 +92,5 @@ public class DAOArtiste extends DAO<Artiste> {
         final String query = "DELETE FROM Artiste WHERE idArtiste = " + artiste.getId();
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeUpdate(query);
-        connection.commit();
     }
 }

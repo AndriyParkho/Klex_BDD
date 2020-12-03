@@ -15,16 +15,14 @@ public class DAOImgExtraiteFilm extends DAO<ImgExtraiteFilm> {
      */
     @Override
     public void create(ImgExtraiteFilm imgExtraiteFilm) throws SQLException {
-        final String query = "INSERT INTO ImgExtraiteFilm VALUES (?, ?, TO_DATE(?, 'dd/mm/yyyy'))";
+        final String query = "INSERT INTO ImgExtraiteFilm VALUES (?, ?, ?)";
 
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setString(1, imgExtraiteFilm.getUrlImg());
             statement.setString(2, imgExtraiteFilm.getTitreFilm());
-            statement.setString(3, imgExtraiteFilm.getAnneeSortie());
+            statement.setDate(3, imgExtraiteFilm.getAnneeSortie());
             statement.executeUpdate();
-            imgExtraiteFilm = this.find(imgExtraiteFilm);
         }
-        connection.commit();
     }
 
     /**
@@ -38,6 +36,7 @@ public class DAOImgExtraiteFilm extends DAO<ImgExtraiteFilm> {
             if (e.getErrorCode() != 1) {
                 JDBCUtilities.printSQLException(e);
             } else {
+                System.out.println(imgExtraiteFilm + " est déjà dans la BDD. On l'update.");
                 this.update(imgExtraiteFilm);
             }
         }
@@ -56,7 +55,7 @@ public class DAOImgExtraiteFilm extends DAO<ImgExtraiteFilm> {
             // le ResultSet n'est pas vide, on construit un nouvel objet qui contient les
             // attributs de la ligne
             if (rs.first()) {
-                imgExtraiteFilm = new ImgExtraiteFilm(urlImage, rs.getString("titreFilm"), rs.getString("anneeSortie"));
+                imgExtraiteFilm = new ImgExtraiteFilm(urlImage, rs.getString("titreFilm"), rs.getDate("anneeSortie"));
             }
         }
         connection.commit();
@@ -68,22 +67,18 @@ public class DAOImgExtraiteFilm extends DAO<ImgExtraiteFilm> {
      */
     @Override
     public void update(ImgExtraiteFilm imgExtraiteFilm) throws SQLException {
-        final String query = "UPDATE ImgExtraiteFilm SET titreFilm = '" + imgExtraiteFilm.getTitreFilm() + "', anneeSortie = '"
-                + imgExtraiteFilm.getAnneeSortie() + "' WHERE urlImage = '" + imgExtraiteFilm.getUrlImg() + "'";
+        final String query = "UPDATE ImgExtraiteFilm SET titreFilm = '" + imgExtraiteFilm.getTitreFilm()
+                + "', anneeSortie = = TO_DATE('" + imgExtraiteFilm.getAnneeSortie()
+                + "', 'YYYY-MM-DD') WHERE urlImage = '" + imgExtraiteFilm.getUrlImg() + "'";
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
-            final int nbRowsAffected = statement.executeUpdate();
-            if (nbRowsAffected != 1) {
-                throw new SQLException("not only one row affected");
-            }
-            connection.commit();
+            statement.executeUpdate();
         }
     }
 
     @Override
     public void delete(ImgExtraiteFilm imgExtraiteFilm) throws SQLException {
-        final String query = "DELETE FROM ImgExtraiteFilm WHERE urlImage = '"
-                + imgExtraiteFilm.getUrlImg() + "'";
-        this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE).executeUpdate(query);
-        connection.commit();
+        final String query = "DELETE FROM ImgExtraiteFilm WHERE urlImage = '" + imgExtraiteFilm.getUrlImg() + "'";
+        this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
+                .executeUpdate(query);
     }
 }

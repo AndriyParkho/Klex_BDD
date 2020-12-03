@@ -1,14 +1,16 @@
 package tables;
 
+import java.sql.Date;
+
 public class Artiste {
     private long id = 0;
     private String nom = "";
-    private String dateNaissance = "";
+    private Date dateNaissance = null;
     private String urlPhoto = "";
     private String specialite = "";
     private String biographie = "";
 
-    public Artiste(long id, String nom, String dateNaissance, String urlPhoto, String specialite, String biographie) {
+    public Artiste(long id, String nom, Date dateNaissance, String urlPhoto, String specialite, String biographie) {
         this.id = id;
         this.nom = nom;
         this.dateNaissance = dateNaissance;
@@ -36,11 +38,11 @@ public class Artiste {
         this.nom = nom;
     }
 
-    public String getDateNaissance() {
+    public Date getDateNaissance() {
         return dateNaissance;
     }
 
-    public void setDateNaissance(String dateNaissance) {
+    public void setDateNaissance(Date dateNaissance) {
         this.dateNaissance = dateNaissance;
     }
 

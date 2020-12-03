@@ -1,11 +1,13 @@
 package tables;
 
+import java.sql.Date;
+
 public class ImgExtraiteFilm {
     private String urlImg = "";
     private String titreFilm = "";
-    private String anneeSortie = "";
+    private Date anneeSortie = null;
 
-    public ImgExtraiteFilm(final String urlImg, final String titreFilm, final String anneeSortie) {
+    public ImgExtraiteFilm(final String urlImg, final String titreFilm, final Date anneeSortie) {
         this.urlImg = urlImg;
         this.titreFilm = titreFilm;
         this.anneeSortie = anneeSortie;
@@ -30,11 +32,11 @@ public class ImgExtraiteFilm {
         this.titreFilm = titreFilm;
     }
 
-    public String getAnneeSortie() {
+    public Date getAnneeSortie() {
         return anneeSortie;
     }
 
-    public void setAnneeSortie(final String anneeSortie) {
+    public void setAnneeSortie(final Date anneeSortie) {
         this.anneeSortie = anneeSortie;
     }
 

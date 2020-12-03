@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 
@@ -25,8 +24,8 @@ public class TestDAOAlbum {
             "FilmAPourCategorie", "EstUnFilm", "EstUnePiste", "ImgExtraiteFilm", "CategorieFilm", "APourCategorie");
 
     public static void main(String[] args) {
+        Connection connection = ConnectionOracle.getInstance();
         try {
-            Connection connection = ConnectionOracle.getInstance();
 
             // Initialize the script runner
             ScriptRunner sr = new ScriptRunner(connection);
@@ -88,12 +87,7 @@ public class TestDAOAlbum {
             Album album = new Album();
             album.setTitre("Motion");
             album.setGroupe("Calvin Harris");
-            Calendar cal = Calendar.getInstance();
-            cal.set(Calendar.YEAR, 2014);
-            cal.set(Calendar.MONTH, Calendar.NOVEMBER);
-            cal.set(Calendar.DAY_OF_MONTH, 03);
-            Date date = new Date(cal.getTimeInMillis());
-            album.setDateSortie(date);
+            album.setDateSortie(Date.valueOf("2014-11-03"));
             album.setUrlImagePochette("https://fr.wikipedia.org/wiki/Motion_(album_de_Calvin_Harris)");
             album.addCategorieMusique(new CategorieMusique("pop"));
             album.addCategorieMusique(new CategorieMusique("electro"));
@@ -117,11 +111,7 @@ public class TestDAOAlbum {
 
             album.setTitre("18 Months");
             album.setGroupe("Calvin Harris");
-            cal.set(Calendar.YEAR, 2012);
-            cal.set(Calendar.MONTH, Calendar.SEPTEMBER);
-            cal.set(Calendar.DAY_OF_MONTH, 26);
-            date.setTime(cal.getTimeInMillis());
-            album.setDateSortie(date);
+            album.setDateSortie(Date.valueOf("2012-10-26"));
             album.setUrlImagePochette("https://fr.wikipedia.org/wiki/18_Months");
             album.setCategoriesMusique(new HashSet<CategorieMusique>());
             album.addCategorieMusique(new CategorieMusique("pop"));
@@ -150,16 +140,30 @@ public class TestDAOAlbum {
             albumDAO.update(album);
             connection.commit();
 
+            System.out.println("\nAprès update d'une catégorie d'un album :");
+            System.out.println(albumDAO.find(album));
             JDBCUtilities.selectAll(connection, "Album");
             JDBCUtilities.selectAll(connection, "CategorieMusique");
             JDBCUtilities.selectAll(connection, "AlbumAPourCategorie");
 
-            System.out.println("\nAprès update d'une catégorie d'un album :");
-            System.out.println(albumDAO.find(album));
-
         } catch (SQLException e) {
             System.err.println("sql error !");
             JDBCUtilities.printSQLException(e);
+
+            try {
+                JDBCUtilities.selectAll(connection, "Album");
+                JDBCUtilities.selectAll(connection, "CategorieMusique");
+                JDBCUtilities.selectAll(connection, "AlbumAPourCategorie");
+            } catch (SQLException ex) {
+            }
+            if (connection != null) {
+                try {
+                    System.err.print("Transaction is being rolled back");
+                    connection.rollback();
+                } catch (SQLException excep) {
+                    JDBCUtilities.printSQLException(excep);
+                }
+            }
         }
     }
 }

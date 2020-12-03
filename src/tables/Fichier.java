@@ -1,13 +1,15 @@
 package tables;
 
+import java.sql.Date;
+
 public class Fichier {
     private long id = 0;
     private long taille = 0;
-    private String dateDepot = "";
+    private Date dateDepot = null;
     private String email = "";
     private Contenu contenu = null; // film ou piste
 
-    public Fichier(final long id, final long taille, final String dateDepot, final String email,
+    public Fichier(final long id, final long taille, final Date dateDepot, final String email,
             final Contenu contenu) {
         this.id = id;
         this.taille = taille;
@@ -35,11 +37,11 @@ public class Fichier {
         this.taille = taille;
     }
 
-    public String getDateDepot() {
+    public Date getDateDepot() {
         return dateDepot;
     }
 
-    public void setDateDepot(final String dateDepot) {
+    public void setDateDepot(final Date dateDepot) {
         this.dateDepot = dateDepot;
     }
 

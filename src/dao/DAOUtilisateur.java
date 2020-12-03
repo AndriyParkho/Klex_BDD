@@ -25,16 +25,12 @@ public class DAOUtilisateur extends DAO<Utilisateur> {
             statement.setInt(6, utilisateur.getCode());
 
             statement.executeUpdate();
-
-            // on doit créer les fichiers
-            for (Fichier fichier : utilisateur.getFichiers()) {
-                DAOFactory.getFichierDAO().createOrUpdate(fichier);
-                fichier = DAOFactory.getFichierDAO().find(fichier);
-            }
-            utilisateur = this.find(utilisateur);
+        }
+        // on doit créer les fichiers
+        for (Fichier fichier : utilisateur.getFichiers()) {
+            DAOFactory.getFichierDAO().createOrUpdate(fichier);
         }
 
-        connection.commit();
     }
 
     @Override
@@ -45,6 +41,7 @@ public class DAOUtilisateur extends DAO<Utilisateur> {
             if (e.getErrorCode() != 1) {
                 JDBCUtilities.printSQLException(e);
             } else {
+                System.out.println(utilisateur + " est déjà dans la BDD. On l'update.");
                 this.update(utilisateur);
             }
         }
@@ -90,16 +87,11 @@ public class DAOUtilisateur extends DAO<Utilisateur> {
                 + utilisateur.getEmail() + "'";
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.executeUpdate();
-            connection.commit();
-
-            for (Fichier fichier : utilisateur.getFichiers()) {
-                final DAOFichier fichierDAO = DAOFactory.getFichierDAO();
-                // Si le fichier n'existe pas, on le crè
-                fichierDAO.createOrUpdate(fichier);
-                fichier = fichierDAO.find(fichier);
-            }
         }
-        connection.commit();
+        for (Fichier fichier : utilisateur.getFichiers()) {
+            // Si le fichier n'existe pas, on le crè
+            DAOFactory.getFichierDAO().createOrUpdate(fichier);
+        }
     }
 
     @Override
@@ -107,7 +99,6 @@ public class DAOUtilisateur extends DAO<Utilisateur> {
         final String query = "DELETE FROM Utilisateur WHERE email = '" + utilisateur.getEmail() + "'";
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeUpdate(query);
-        connection.commit();
     }
 
 }

@@ -1,18 +1,19 @@
 package tables;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
 public class Film extends Contenu {
     private String titreFilm = "";
-    private String anneeSortie = "";
+    private Date anneeSortie = null;
     private String resume = "";
     private int ageMin = 0;
     private String urlAffiche = "";
     private HashSet<CategorieFilm> categoriesFilm = new HashSet<CategorieFilm>();
     private HashSet<ImgExtraiteFilm> imgExtraitesFilm = new HashSet<ImgExtraiteFilm>();
 
-    public Film(final String titreFilm, final String anneeSortie, final String resume, final int ageMin,
+    public Film(final String titreFilm, final Date anneeSortie, final String resume, final int ageMin,
             final String urlAffiche, final HashSet<CategorieFilm> categoriesFilm,
             final HashSet<ImgExtraiteFilm> imgExtraitesFilm, final HashMap<Artiste, String> artistes) {
         super(artistes);
@@ -36,11 +37,11 @@ public class Film extends Contenu {
         this.titreFilm = titreFilm;
     }
 
-    public String getAnneeSortie() {
+    public Date getAnneeSortie() {
         return anneeSortie;
     }
 
-    public void setAnneeSortie(final String anneeSortie) {
+    public void setAnneeSortie(final Date anneeSortie) {
         this.anneeSortie = anneeSortie;
     }
 

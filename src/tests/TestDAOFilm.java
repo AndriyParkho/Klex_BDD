@@ -1,6 +1,7 @@
 package tests;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -24,9 +25,8 @@ public class TestDAOFilm {
             "FilmAPourCategorie", "EstUnFilm", "EstUnePiste", "ImgExtraiteFilm", "CategorieFilm", "APourCategorie");
     
     public static void main(String[] args) {
+        Connection connection = ConnectionOracle.getInstance();
         try {
-            Connection connection = ConnectionOracle.getInstance();
-
             // Initialize the script runner
             ScriptRunner sr = new ScriptRunner(connection);
             sr.setEscapeProcessing(false);
@@ -48,6 +48,7 @@ public class TestDAOFilm {
 
             CategorieFilm categorieFilm = new CategorieFilm("comédie");
             categorieFilmDAO.create(categorieFilm);
+            connection.commit();
 
             System.out.println("\nAprès création d'une catégorie :");
             System.out.println(categorieFilmDAO.find("horreur"));
@@ -55,6 +56,7 @@ public class TestDAOFilm {
 
             categorieFilm = new CategorieFilm("horreur");
             categorieFilmDAO.create(categorieFilm);
+            connection.commit();
 
             System.out.println("\nAprès création d'une catégorie :");
             System.out.println(categorieFilmDAO.find("horreur"));
@@ -62,6 +64,7 @@ public class TestDAOFilm {
 
             categorieFilm.setCategorie("action");
             categorieFilmDAO.update(categorieFilm);
+            connection.commit();
 
             System.out.println("\nAprès update d'une catégorie :");
             System.out.println(categorieFilmDAO.find("horreur"));
@@ -70,6 +73,7 @@ public class TestDAOFilm {
 
             categorieFilm.setCategorie("comédie");
             categorieFilmDAO.delete(categorieFilm);
+            connection.commit();
 
             System.out.println("\nAprès delete d'une catégorie :");
             System.out.println(categorieFilmDAO.find("horreur"));
@@ -80,7 +84,7 @@ public class TestDAOFilm {
 
             Film film = new Film();
             film.setAgeMin(18);
-            film.setAnneeSortie("23/11/2015");
+            film.setAnneeSortie(Date.valueOf("2015-11-23"));
             film.setResume("BLABLABLA");
             film.setTitreFilm("Le Dernier Voeux");
             film.setUrlAffiche("http://urlaffiche");
@@ -90,7 +94,7 @@ public class TestDAOFilm {
 
             Artiste artiste = new Artiste();
             artiste.setNom("Calvin Harris");
-            artiste.setDateNaissance("04/11/2014");
+            artiste.setDateNaissance(Date.valueOf("2014-11-04"));
             artiste.setUrlPhoto("https://www.journaldugeek.com/content/uploads/2019/06/supermariorunta.jpg");
             artiste.setSpecialite("Chanteur");
             artiste.setBiographie("Plus besoin de présenter ce chanteur !!");
@@ -122,6 +126,8 @@ public class TestDAOFilm {
 
             DAOFilm filmDAO = DAOFactory.getFilmDAO();
             filmDAO.create(film);
+            connection.commit();
+
             System.out.println("\nAprès création d'un film :");
             System.out.println(filmDAO.find(film));
             JDBCUtilities.selectAll(connection, "ImgExtraiteFilm");
@@ -132,6 +138,14 @@ public class TestDAOFilm {
         } catch (SQLException e) {
             System.err.println("sql error !");
             JDBCUtilities.printSQLException(e);
+            if (connection != null) {
+                try {
+                    System.err.print("Transaction is being rolled back");
+                    connection.rollback();
+                } catch (SQLException excep) {
+                    JDBCUtilities.printSQLException(excep);
+                }
+            }
         }
     }
 }

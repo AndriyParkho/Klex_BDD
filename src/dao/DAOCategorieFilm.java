@@ -25,10 +25,9 @@ public class DAOCategorieFilm extends DAO<CategorieFilm> {
         try {
             this.create(categorieFilm);
         } catch (final SQLIntegrityConstraintViolationException e) {
+            System.out.println(categorieFilm + " est déjà dans la BDD");
             if (e.getErrorCode() != 1) {
                 JDBCUtilities.printSQLException(e);
-            } else {
-                this.find(categorieFilm);
             }
         }
     }
@@ -64,6 +63,5 @@ public class DAOCategorieFilm extends DAO<CategorieFilm> {
         final String query = "DELETE FROM CategorieFilm WHERE typeCategorieFilm = '" + categorieFilm.getCategorie()
                 + "'";
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE).executeUpdate(query);
-        connection.commit();
     }    
 }

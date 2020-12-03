@@ -22,17 +22,16 @@ public class DAOClient extends DAO<Client> {
             statementClient.setInt(3, client.getLargeurMax());
             statementClient.setInt(4, client.getHauteurMax());
             statementClient.executeUpdate();
-
-            // on doit créer les liens entre albums et catégories
-            for (Codec codec : client.getCodecs()) {
-                DAOFactory.getCodecDAO().createOrUpdate(codec);
-                codec = DAOFactory.getCodecDAO().find(codec);
-                // insertion dans la table intermédiaire, c'est un nouveau client donc on est
-                // sur que le couple n'existe pas
-                createSupporteCodec(client, codec);
-            }
         }
-        connection.commit();
+        // on doit créer les codecs
+        for (Codec codec : client.getCodecs()) {
+            DAOFactory.getCodecDAO().createOrUpdate(codec);
+        }
+        connection.commit();  // NECESSARY because SupporteCodec references Client (marque, modele) and Codec (nomCodec, typeCodec)
+        for (Codec codec : client.getCodecs()) {
+            // insertion dans la table intermédiaire
+            createOrUpdateSupporteCodec(client, codec);
+        }
     }
 
     @Override
@@ -43,6 +42,7 @@ public class DAOClient extends DAO<Client> {
             if (e.getErrorCode() != 1) {
                 JDBCUtilities.printSQLException(e);
             } else {
+                System.out.println(client + " est déjà dans la BDD. On l'update.");
                 this.update(client);
             }
         }
@@ -91,12 +91,17 @@ public class DAOClient extends DAO<Client> {
             if (nbRowsAffected != 1) {
                 throw new SQLException("not only one row affected");
             }
-            connection.commit();
 
+            // on doit créer les codecs
             for (Codec codec : client.getCodecs()) {
                 DAOFactory.getCodecDAO().createOrUpdate(codec);
-                codec = DAOFactory.getCodecDAO().find(codec);
+            }
 
+            final String deleteSupporteCodecQuery = "DELETE FROM SupporteCodec WHERE marque = '" + client.getMarque() + "' AND modele = '"
+            + client.getModele() + "'";
+            this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
+                    .executeUpdate(deleteSupporteCodecQuery);
+            for (Codec codec : client.getCodecs()) {
                 // insertion dans la table intermédiaire
                 createOrUpdateSupporteCodec(client, codec);
             }
@@ -109,7 +114,6 @@ public class DAOClient extends DAO<Client> {
                 + client.getModele() + "'";
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeUpdate(query);
-        connection.commit();
     }
 
     private void createSupporteCodec(Client client, Codec codec) throws SQLException {
@@ -120,7 +124,6 @@ public class DAOClient extends DAO<Client> {
             statementSupporteCodec.setString(3, codec.getNom());
             statementSupporteCodec.setString(4, codec.getType());
             statementSupporteCodec.executeUpdate();
-            connection.commit();
         }
     }
 

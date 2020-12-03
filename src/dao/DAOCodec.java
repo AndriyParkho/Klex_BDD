@@ -18,9 +18,7 @@ public class DAOCodec extends DAO<Codec> {
             statement.setString(1, codec.getNom());
             statement.setString(2, codec.getType());
             statement.executeUpdate();
-            codec = this.find(codec);
         }
-        connection.commit();
     }
 
     @Override
@@ -28,6 +26,7 @@ public class DAOCodec extends DAO<Codec> {
         try {
             this.create(codec);
         } catch (final SQLIntegrityConstraintViolationException e) {
+            System.out.println(codec + " est déjà dans la BDD");
             if (e.getErrorCode() != 1) {
                 JDBCUtilities.printSQLException(e);
             }
@@ -65,6 +64,5 @@ public class DAOCodec extends DAO<Codec> {
         final String query = "DELETE FROM Codec WHERE nomCodec = '" + codec.getNom() + "' AND typeCodec = '"
                 + codec.getType() + "'";
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE).executeUpdate(query);
-        connection.commit();
     }
 }

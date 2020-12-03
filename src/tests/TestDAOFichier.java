@@ -1,6 +1,7 @@
 package tests;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -21,9 +22,8 @@ public class TestDAOFichier {
             "FilmAPourCategorie", "EstUnFilm", "EstUnePiste", "ImgExtraiteFilm", "CategorieFilm", "APourCategorie");
     
     public static void main(String[] args) {
+        Connection connection = ConnectionOracle.getInstance();
         try {
-            Connection connection = ConnectionOracle.getInstance();
-
             // Initialize the script runner
             ScriptRunner sr = new ScriptRunner(connection);
             sr.setEscapeProcessing(false);
@@ -49,13 +49,15 @@ public class TestDAOFichier {
             utilisateur.setCode(1234);
 
             utilisateurDAO.create(utilisateur); // A COMMENTER pour tester la création d'un utilisateur par défaut
+            connection.commit();
 
             Fichier fichier = new Fichier();
-            fichier.setDateDepot("13/04/2019");
+            fichier.setDateDepot(Date.valueOf("2019-04-13"));
             fichier.setTaille(76000);
             fichier.setEmail("theo.manfredi@grenoble-inp.fr");
 
             fichierDAO.create(fichier);
+            connection.commit();
 
             System.out.println("\nAprès création d'un fichier :");
             System.out.println(fichierDAO.find(fichier.getId()));
@@ -63,11 +65,12 @@ public class TestDAOFichier {
             JDBCUtilities.selectAll(connection, "Fichier");
             JDBCUtilities.selectAll(connection, "Utilisateur");
 
-            fichier.setDateDepot("05/01/2017");
+            fichier.setDateDepot(Date.valueOf("2017-01-05"));
             fichier.setTaille(35000);
             fichier.setEmail("me@gre.fr");
 
             fichierDAO.create(fichier);
+            connection.commit();
 
             System.out.println("\nAprès création d'un fichier :");
             System.out.println(fichierDAO.find(fichier.getId()));
@@ -77,6 +80,7 @@ public class TestDAOFichier {
 
             fichier.setEmail("theo.manfredi@grenoble-inp.fr"); 
             fichierDAO.update(fichier);
+            connection.commit();
 
             System.out.println("\nAprès changement d'ownership (utilisateur existant) :");
             System.out.println(fichierDAO.find(fichier.getId()));
@@ -86,6 +90,7 @@ public class TestDAOFichier {
 
             fichier.setEmail("new@gmail.com"); 
             fichierDAO.update(fichier);
+            connection.commit();
 
             System.out.println("\nAprès changement d'ownership (utilisateur inexistant):");
             System.out.println(fichierDAO.find(fichier.getId()));
@@ -95,6 +100,7 @@ public class TestDAOFichier {
 
             utilisateur.setEmail("new@gmail.com");
             utilisateurDAO.delete(utilisateur);
+            connection.commit();
 
             System.out.println("\nAprès suppression de l'utilisateur (avec fichier(s)):");
             System.out.println(fichierDAO.find(fichier.getId()));
@@ -104,6 +110,7 @@ public class TestDAOFichier {
 
             utilisateur.setEmail("me@gre.fr");
             utilisateurDAO.delete(utilisateur);
+            connection.commit();
 
             System.out.println("\nAprès suppression de l'utilisateur (sans fichier(s)):");
             System.out.println(fichierDAO.find(fichier.getId()));
@@ -113,6 +120,7 @@ public class TestDAOFichier {
 
             fichier = fichierDAO.find(1);
             fichierDAO.delete(fichier);
+            connection.commit();
 
             System.out.println("\nAprès suppression du fichier :");
             System.out.println(fichierDAO.find(fichier.getId()));
@@ -123,6 +131,14 @@ public class TestDAOFichier {
         } catch (SQLException e) {
             System.err.println("sql error !");
             JDBCUtilities.printSQLException(e);
+            if (connection != null) {
+                try {
+                    System.err.print("Transaction is being rolled back");
+                    connection.rollback();
+                } catch (SQLException excep) {
+                    JDBCUtilities.printSQLException(excep);
+                }
+            }
         }
     }
 }
