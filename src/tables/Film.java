@@ -1,17 +1,32 @@
 package tables;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
-public class Film {
+public class Film extends Contenu {
     private String titreFilm = "";
     private String anneeSortie = "";
     private String resume = "";
     private int ageMin = 0;
     private String urlAffiche = "";
-    private ArrayList<CategorieFilm> categoriesFilm = new ArrayList<CategorieFilm>();
-    private ArrayList<ImgExtraiteFilm> imgExtraitesFilm = new ArrayList<ImgExtraiteFilm>();
-    private HashMap<Artiste, String> artistes = new HashMap<Artiste, String>();
+    private HashSet<CategorieFilm> categoriesFilm = new HashSet<CategorieFilm>();
+    private HashSet<ImgExtraiteFilm> imgExtraitesFilm = new HashSet<ImgExtraiteFilm>();
+
+    public Film(String titreFilm, String anneeSortie, String resume, int ageMin, String urlAffiche,
+            HashSet<CategorieFilm> categoriesFilm, HashSet<ImgExtraiteFilm> imgExtraitesFilm,
+            HashMap<Artiste, String> artistes) {
+        super(artistes);
+        this.titreFilm = titreFilm;
+        this.anneeSortie = anneeSortie;
+        this.resume = resume;
+        this.ageMin = ageMin;
+        this.urlAffiche = urlAffiche;
+        this.categoriesFilm = categoriesFilm;
+        this.imgExtraitesFilm = imgExtraitesFilm;
+    }
+
+    public Film() {
+    }
 
     public String getTitreFilm() {
         return titreFilm;
@@ -53,11 +68,11 @@ public class Film {
         this.urlAffiche = urlAffiche;
     }
 
-    public ArrayList<CategorieFilm> getCategoriesFilm() {
+    public HashSet<CategorieFilm> getCategoriesFilm() {
         return categoriesFilm;
     }
 
-    public void setCategoriesFilm(ArrayList<CategorieFilm> categoriesFilm) {
+    public void setCategoriesFilm(HashSet<CategorieFilm> categoriesFilm) {
         this.categoriesFilm = categoriesFilm;
     }
 
@@ -65,15 +80,11 @@ public class Film {
         this.categoriesFilm.add(categorieFilm);
     }
 
-    public CategorieFilm getCategorieFilm(int index) {
-        return this.categoriesFilm.get(index);
-    }
-
-    public ArrayList<ImgExtraiteFilm> getImgExtraitesFilm() {
+    public HashSet<ImgExtraiteFilm> getImgExtraitesFilm() {
         return imgExtraitesFilm;
     }
 
-    public void setImgExtraitesFilm(ArrayList<ImgExtraiteFilm> imgExtraitesFilm) {
+    public void setImgExtraitesFilm(HashSet<ImgExtraiteFilm> imgExtraitesFilm) {
         this.imgExtraitesFilm = imgExtraitesFilm;
     }
 
@@ -81,23 +92,18 @@ public class Film {
         this.imgExtraitesFilm.add(imgExtraiteFilm);
     }
 
-    public ImgExtraiteFilm getImgExtraiteFilm(int index) {
-        return this.imgExtraitesFilm.get(index);
-    }
-
-    public HashMap<Artiste, String> getArtistes() {
-        return artistes;
-    }
-
-    public void setArtistes(HashMap<Artiste, String> artistes) {
-        this.artistes = artistes;
-    }
-
     public void addArtiste(Artiste artiste, String role) {
-        this.artistes.put(artiste, role);
+        this.artistes.putIfAbsent(artiste, role);
     }
 
     public String getRole(Artiste artiste) {
         return this.artistes.get(artiste);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\nFilm [ageMin=" + ageMin + ", anneeSortie=" + anneeSortie + ", categoriesFilm="
+                + categoriesFilm + ", imgExtraitesFilm=" + imgExtraitesFilm + ", resume=" + resume + ", titreFilm="
+                + titreFilm + ", urlAffiche=" + urlAffiche + "]";
     }
 }

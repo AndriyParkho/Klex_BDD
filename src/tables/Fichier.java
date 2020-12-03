@@ -5,22 +5,25 @@ public class Fichier {
     private long taille = 0;
     private String dateDepot = "";
     private String email = "";
+    private Contenu contenu = null; // film ou piste
 
-    public Fichier(long id, long taille, String dateDepot, String email) {
+    public Fichier(final long id, final long taille, final String dateDepot, final String email,
+            final Contenu contenu) {
         this.id = id;
         this.taille = taille;
         this.dateDepot = dateDepot;
         this.email = email;
+        this.contenu = contenu;
     }
-    
-    public Fichier() {
-	}
 
-	public long getId() {
+    public Fichier() {
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(final long id) {
         this.id = id;
     }
 
@@ -28,7 +31,7 @@ public class Fichier {
         return taille;
     }
 
-    public void setTaille(long taille) {
+    public void setTaille(final long taille) {
         this.taille = taille;
     }
 
@@ -36,7 +39,7 @@ public class Fichier {
         return dateDepot;
     }
 
-    public void setDateDepot(String dateDepot) {
+    public void setDateDepot(final String dateDepot) {
         this.dateDepot = dateDepot;
     }
 
@@ -44,12 +47,21 @@ public class Fichier {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(final String email) {
         this.email = email;
+    }
+
+    public Contenu getContenu() {
+        return contenu;
+    }
+
+    public void setContenu(final Contenu contenu) {
+        this.contenu = contenu;
     }
 
     @Override
     public String toString() {
-        return "Fichier [dateDepot=" + dateDepot + ", email=" + email + ", id=" + id + ", taille=" + taille + "]";
+        return "Fichier [contenu=" + contenu + ", dateDepot=" + dateDepot + ", email=" + email + ", id=" + id
+                + ", taille=" + taille + "]";
     }
 }

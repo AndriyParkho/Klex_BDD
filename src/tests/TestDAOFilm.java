@@ -11,8 +11,10 @@ import connections.ConnectionOracle;
 import connections.JDBCUtilities;
 import dao.DAOCategorieFilm;
 import dao.DAOFactory;
-import dao.DAOImgExtraiteFilm;
+import dao.DAOFilm;
+import tables.Artiste;
 import tables.CategorieFilm;
+import tables.Film;
 import tables.ImgExtraiteFilm;
 
 public class TestDAOFilm {
@@ -76,8 +78,56 @@ public class TestDAOFilm {
 
             JDBCUtilities.selectAll(connection, "categorieFilm");
 
-            DAOImgExtraiteFilm imgExtraiteFilmDAO = DAOFactory.getImgExtraiteFilmDAO();
+            Film film = new Film();
+            film.setAgeMin(18);
+            film.setAnneeSortie("23/11/2015");
+            film.setResume("BLABLABLA");
+            film.setTitreFilm("Le Dernier Voeux");
+            film.setUrlAffiche("http://urlaffiche");
+
+            film.addCategorie(categorieFilm);
+            film.addCategorie(new CategorieFilm("horreur"));
+
+            Artiste artiste = new Artiste();
+            artiste.setNom("Calvin Harris");
+            artiste.setDateNaissance("04/11/2014");
+            artiste.setUrlPhoto("https://www.journaldugeek.com/content/uploads/2019/06/supermariorunta.jpg");
+            artiste.setSpecialite("Chanteur");
+            artiste.setBiographie("Plus besoin de présenter ce chanteur !!");
+            film.addArtiste(artiste, "acteur");
+
+            Artiste newArtiste = new Artiste();
+            newArtiste.setDateNaissance(null);
+            newArtiste.setBiographie(null);
+            newArtiste.setNom("Théo Manfredi");
+            newArtiste.setUrlPhoto("https://theo.jpg");
+            newArtiste.setSpecialite("Manager");
+            film.addArtiste(newArtiste, "rédacteur");
+
             ImgExtraiteFilm imgExtraiteFilm = new ImgExtraiteFilm();
+            imgExtraiteFilm.setUrlImg("https://urlrandom");
+            imgExtraiteFilm.setAnneeSortie(film.getAnneeSortie());
+            imgExtraiteFilm.setTitreFilm(film.getTitreFilm());
+            film.addImgExtraiteFilm(imgExtraiteFilm);
+
+            ImgExtraiteFilm newImgExtraiteFilm = new ImgExtraiteFilm();
+            newImgExtraiteFilm.setUrlImg("https://anotherurlrandom");
+            newImgExtraiteFilm.setAnneeSortie(film.getAnneeSortie());
+            newImgExtraiteFilm.setTitreFilm(film.getTitreFilm());
+            film.addImgExtraiteFilm(newImgExtraiteFilm);
+            System.out.println(film);
+
+            JDBCUtilities.selectAll(connection, "CategorieFilm");
+            JDBCUtilities.selectAll(connection, "FilmAPourCategorie");
+
+            DAOFilm filmDAO = DAOFactory.getFilmDAO();
+            filmDAO.create(film);
+            System.out.println("\nAprès création d'un film :");
+            System.out.println(filmDAO.find(film));
+            JDBCUtilities.selectAll(connection, "ImgExtraiteFilm");
+            JDBCUtilities.selectAll(connection, "Film");
+            JDBCUtilities.selectAll(connection, "CategorieFilm");
+            JDBCUtilities.selectAll(connection, "FilmAPourCategorie");
 
         } catch (SQLException e) {
             System.err.println("sql error !");

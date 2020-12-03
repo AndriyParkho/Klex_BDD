@@ -32,6 +32,8 @@ public class DAOCategorieFilm extends DAO<CategorieFilm> {
         } catch (final SQLIntegrityConstraintViolationException e) {
             if (e.getErrorCode() != 1) {
                 JDBCUtilities.printSQLException(e);
+            } else {
+                categorieFilm = this.find(categorieFilm);
             }
         }
         return categorieFilm;

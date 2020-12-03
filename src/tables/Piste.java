@@ -3,15 +3,24 @@ package tables;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Piste {
+public class Piste extends Contenu {
     private long id = 0;
     private int num = 0;
     private String titre = "";
     private String duree = "";
-    private Fichier fichier = new Fichier();
     private ArrayList<CategorieMusique> categoriesMusique = new ArrayList<CategorieMusique>();
-    private HashMap<Artiste, String> artistes = new HashMap<Artiste, String>();
     private Album album = null;
+
+    public Piste(HashMap<Artiste, String> artistes, long id, int num, String titre, String duree,
+            ArrayList<CategorieMusique> categoriesMusique, Album album) {
+        super(artistes);
+        this.id = id;
+        this.num = num;
+        this.titre = titre;
+        this.duree = duree;
+        this.categoriesMusique = categoriesMusique;
+        this.album = album;
+    }
 
     public long getId() {
         return id;
@@ -45,14 +54,6 @@ public class Piste {
         this.duree = duree;
     }
 
-    public Fichier getFichier() {
-        return fichier;
-    }
-
-    public void setFichier(Fichier fichier) {
-        this.fichier = fichier;
-    }
-
     public ArrayList<CategorieMusique> getCategoriesMusique() {
         return categoriesMusique;
     }
@@ -69,19 +70,11 @@ public class Piste {
         return this.categoriesMusique.get(index);
     }
 
-    public HashMap<Artiste, String> getArtistes() {
-        return artistes;
+    public void addArtiste(Artiste artiste, String instrument) {
+        this.artistes.put(artiste, instrument);
     }
 
-    public void setArtistes(HashMap<Artiste, String> artistes) {
-        this.artistes = artistes;
-    }
-
-    public void addArtiste(Artiste artiste, String role) {
-        this.artistes.put(artiste, role);
-    }
-
-    public String getRole(Artiste artiste) {
+    public String getInstrument(Artiste artiste) {
         return this.artistes.get(artiste);
     }
 
@@ -92,5 +85,4 @@ public class Piste {
     public void setAlbum(Album album) {
         this.album = album;
     }
-
 }

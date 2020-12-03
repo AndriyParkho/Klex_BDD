@@ -73,4 +73,29 @@ public class Artiste {
         return "Artiste [biographie=" + biographie + ", dateNaissance=" + dateNaissance + ", id=" + id + ", nom=" + nom
                 + ", specialite=" + specialite + ", urlPhoto=" + urlPhoto + "]";
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((biographie == null) ? 0 : biographie.hashCode());
+        result = prime * result + ((dateNaissance == null) ? 0 : dateNaissance.hashCode());
+        result = prime * result + (int) (id ^ (id >>> 32));
+        result = prime * result + ((nom == null) ? 0 : nom.hashCode());
+        result = prime * result + ((specialite == null) ? 0 : specialite.hashCode());
+        result = prime * result + ((urlPhoto == null) ? 0 : urlPhoto.hashCode());
+        return result;
+    }
+    
+    @Override
+    public boolean equals(final Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj.getClass() != this.getClass()) {
+            return false;
+        }
+        final Artiste other = (Artiste) obj;
+        return (id == other.id);
+    }
 }

@@ -67,7 +67,7 @@ public class DAOFichier extends DAO<Fichier> {
             // le ResultSet n'est pas vide, on construit un nouvel objet qui contient les
             // attributs de la ligne
             if (rs.first()) {
-                fichier = new Fichier(id, rs.getLong("taille"), rs.getString("dateDepot"), rs.getString("email"));
+                fichier = new Fichier(id, rs.getLong("taille"), rs.getString("dateDepot"), rs.getString("email"), null);
             }
         }
         connection.commit();

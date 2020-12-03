@@ -72,7 +72,7 @@ public class DAOImgExtraiteFilm extends DAO<ImgExtraiteFilm> {
     @Override
     public ImgExtraiteFilm update(ImgExtraiteFilm imgExtraiteFilm) throws SQLException {
         final String query = "UPDATE ImgExtraiteFilm SET titreFilm = '" + imgExtraiteFilm.getTitreFilm() + "', anneeSortie = '"
-                + imgExtraiteFilm.getAnneeSortie() + " WHERE urlImage = '" + imgExtraiteFilm.getUrlImg() + "'";
+                + imgExtraiteFilm.getAnneeSortie() + "' WHERE urlImage = '" + imgExtraiteFilm.getUrlImg() + "'";
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
             final int nbRowsAffected = statement.executeUpdate();
             if (nbRowsAffected != 1) {
