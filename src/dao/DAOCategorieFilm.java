@@ -3,26 +3,28 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 
+import connections.JDBCUtilities;
 import tables.CategorieFilm;
 
 public class DAOCategorieFilm extends DAO<CategorieFilm> {
 
     @Override
     public CategorieFilm create(CategorieFilm categorieFilm) throws SQLException {
-        String query = "INSERT INTO CategorieFilm VALUES (?)";
+        final String query = "INSERT INTO CategorieFilm VALUES (?)";
 
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
-            String categorie = categorieFilm.getCategorie();
+            final String categorie = categorieFilm.getCategorie();
 
             statement.setString(1, categorie);
 
-            int nbRowsAffected = statement.executeUpdate();
+            final int nbRowsAffected = statement.executeUpdate();
             if (nbRowsAffected != 1) {
                 throw new SQLException("no rows affected");
             }
 
-            categorieFilm = this.find(categorie);
+            categorieFilm = this.find(categorieFilm);
         }
 
         connection.commit();
@@ -30,11 +32,30 @@ public class DAOCategorieFilm extends DAO<CategorieFilm> {
         return categorieFilm;
     }
 
-    public CategorieFilm find(String categorie) throws SQLException {
+    @Override
+    public CategorieFilm createOrUpdate(CategorieFilm categorieFilm) throws SQLException {
+        try {
+            categorieFilm = this.create(categorieFilm);
+        } catch (final SQLIntegrityConstraintViolationException e) {
+            if (e.getErrorCode() != 1) {
+                JDBCUtilities.printSQLException(e);
+            }
+        }
+        return categorieFilm;
+    }
+
+    @Override
+    public CategorieFilm find(final CategorieFilm categorieFilm) throws SQLException {
+        return this.find(categorieFilm.getCategorie());
+    }
+
+    public CategorieFilm find(final String categorie) throws SQLException {
         CategorieFilm categorieFilm = null;
-        String query = "SELECT * FROM CategorieFilm WHERE typeCategorieFilm = '" + categorie + "'";
-        try (ResultSet rs = this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE).executeQuery(query)) {
-            // le ResultSet n'est pas vide, on construit un nouvel objet qui contient les attributs de la ligne
+        final String query = "SELECT * FROM CategorieFilm WHERE typeCategorieFilm = '" + categorie + "'";
+        try (ResultSet rs = this.connection
+                .createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE).executeQuery(query)) {
+            // le ResultSet n'est pas vide, on construit un nouvel objet qui contient les
+            // attributs de la ligne
             if (rs.first()) {
                 categorieFilm = new CategorieFilm(categorie);
             }
@@ -45,15 +66,15 @@ public class DAOCategorieFilm extends DAO<CategorieFilm> {
     }
 
     @Override
-    public CategorieFilm update(CategorieFilm categorieFilm) throws SQLException {
+    public CategorieFilm update(final CategorieFilm categorieFilm) throws SQLException {
         return this.create(categorieFilm);
     }
 
     @Override
-    public void delete(CategorieFilm categorieFilm) throws SQLException {
-        String query = "DELETE FROM CategorieFilm WHERE typeCategorieFilm = '" + categorieFilm.getCategorie() + "'";
+    public void delete(final CategorieFilm categorieFilm) throws SQLException {
+        final String query = "DELETE FROM CategorieFilm WHERE typeCategorieFilm = '" + categorieFilm.getCategorie()
+                + "'";
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE).executeUpdate(query);
         connection.commit();
-    }
-    
+    }    
 }

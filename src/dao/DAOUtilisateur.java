@@ -3,6 +3,7 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 
 import connections.JDBCUtilities;
@@ -13,18 +14,7 @@ public class DAOUtilisateur extends DAO<Utilisateur> {
 
     @Override
     public Utilisateur create(Utilisateur utilisateur) throws SQLException {
-        String query = "INSERT INTO Utilisateur SELECT ?, ?, ?, ?, ?, ? FROM dual WHERE NOT EXISTS (SELECT NULL FROM Utilisateur WHERE email = ?)";
-
-        if (utilisateur.getNom() == "")
-            utilisateur.setNom("default_name");
-        if (utilisateur.getPrenom() == "")
-            utilisateur.setPrenom("default_surname");
-        if (utilisateur.getAge() == 0)
-            utilisateur.setAge(50);
-        if (utilisateur.getLangueDiffusion() == "")
-            utilisateur.setLangueDiffusion("Français");
-        if (utilisateur.getCode() == 0)
-            utilisateur.setCode(9999);
+        final String query = "INSERT INTO Utilisateur VALUES (?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setString(1, utilisateur.getEmail());
@@ -33,23 +23,14 @@ public class DAOUtilisateur extends DAO<Utilisateur> {
             statement.setInt(4, utilisateur.getAge());
             statement.setString(5, utilisateur.getLangueDiffusion());
             statement.setInt(6, utilisateur.getCode());
-            statement.setString(7, utilisateur.getEmail());
 
             statement.executeUpdate();
 
             // on doit créer les fichiers
             for (Fichier fichier : utilisateur.getFichiers()) {
-                DAO<Fichier> fichierDAO = new DAOFichier();
-                try {
-                    fichier = fichierDAO.create(fichier);
-                } catch (SQLException e) {
-                    // si le fichier existe déjà alors ne rien faire
-                    if (!e.getSQLState().equalsIgnoreCase("23000")) {
-                        JDBCUtilities.printSQLException(e);
-                    }
-                }
+                fichier = DAOFactory.getFichierDAO().createOrUpdate(fichier);
             }
-            utilisateur = this.find(utilisateur.getEmail());
+            utilisateur = this.find(utilisateur);
         }
 
         connection.commit();
@@ -57,21 +38,37 @@ public class DAOUtilisateur extends DAO<Utilisateur> {
         return utilisateur;
     }
 
-    public Utilisateur find(String email) throws SQLException {
+    @Override
+    public Utilisateur createOrUpdate(Utilisateur utilisateur) throws SQLException {
+        try {
+            utilisateur = this.create(utilisateur);
+        } catch (final SQLIntegrityConstraintViolationException e) {
+            if (e.getErrorCode() != 1) {
+                JDBCUtilities.printSQLException(e);
+            }
+        }
+        return utilisateur;
+    }
+
+    @Override
+    public Utilisateur find(final Utilisateur utilisateur) throws SQLException {
+        return this.find(utilisateur.getEmail());
+    }
+
+    public Utilisateur find(final String email) throws SQLException {
         Utilisateur utilisateur = null;
-        String query = "SELECT * FROM Utilisateur LEFT JOIN Fichier ON Utilisateur.email = Fichier.email AND Utilisateur.email = '"
+        final String query = "SELECT * FROM Utilisateur LEFT JOIN Fichier ON Utilisateur.email = Fichier.email AND Utilisateur.email = '"
                 + email + "'";
         try (ResultSet rs = this.connection
                 .createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE).executeQuery(query)) {
             // le ResultSet n'est pas vide, on construit un nouvel objet qui contient les
             // attributs de la ligne
             if (rs.first()) {
-                ArrayList<Fichier> fichiers = new ArrayList<Fichier>();
-                DAOFichier fichierDAO = new DAOFichier();
+                final ArrayList<Fichier> fichiers = new ArrayList<Fichier>();
 
                 rs.beforeFirst();
                 while (rs.next() && rs.getString("idFichier") != null) {
-                    fichiers.add(fichierDAO.find(rs.getLong("idFichier")));
+                    fichiers.add(DAOFactory.getFichierDAO().find(rs.getLong("idFichier")));
                 }
                 // on se replace
                 rs.first();
@@ -87,7 +84,7 @@ public class DAOUtilisateur extends DAO<Utilisateur> {
 
     @Override
     public Utilisateur update(Utilisateur utilisateur) throws SQLException {
-        String query = "UPDATE Utilisateur SET nom = '" + utilisateur.getNom() + "', prenom = '"
+        final String query = "UPDATE Utilisateur SET nom = '" + utilisateur.getNom() + "', prenom = '"
                 + utilisateur.getPrenom() + "', age = " + utilisateur.getAge() + ", langueDiffusion = '"
                 + utilisateur.getLangueDiffusion() + "', code = " + utilisateur.getCode() + " WHERE email = '"
                 + utilisateur.getEmail() + "'";
@@ -96,18 +93,11 @@ public class DAOUtilisateur extends DAO<Utilisateur> {
             connection.commit();
 
             for (Fichier fichier : utilisateur.getFichiers()) {
-                DAOFichier fichierDAO = new DAOFichier();
+                final DAOFichier fichierDAO = new DAOFichier();
                 // Si le fichier n'existe pas, on le crè
-                try {
-                    fichier = fichierDAO.create(fichier);
-                } catch (SQLException e) {
-                    // si le fichier existe déjà alors ne rien faire
-                    if (!e.getSQLState().equalsIgnoreCase("23000")) {
-                        JDBCUtilities.printSQLException(e);
-                    }
-                }
+                fichier = fichierDAO.createOrUpdate(fichier);
             }
-            utilisateur = this.find(utilisateur.getEmail());
+            utilisateur = this.find(utilisateur);
         }
         connection.commit();
 
@@ -115,8 +105,8 @@ public class DAOUtilisateur extends DAO<Utilisateur> {
     }
 
     @Override
-    public void delete(Utilisateur utilisateur) throws SQLException {
-        String queryUtilisateur = "DELETE FROM Utilisateur WHERE email = '" + utilisateur.getEmail() + "'";
+    public void delete(final Utilisateur utilisateur) throws SQLException {
+        final String queryUtilisateur = "DELETE FROM Utilisateur WHERE email = '" + utilisateur.getEmail() + "'";
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeUpdate(queryUtilisateur);
         connection.commit();
