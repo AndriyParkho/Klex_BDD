@@ -1,6 +1,6 @@
 package tables;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Album {
     private long id = 0;
@@ -8,11 +8,10 @@ public class Album {
     private String groupe = "";
     private String dateSortie = "";
     private String urlImagePochette = "";
-    // ou HashSet ?
-    private ArrayList<CategorieMusique> categoriesMusique = new ArrayList<CategorieMusique>();
+    private HashSet<CategorieMusique> categoriesMusique = new HashSet<CategorieMusique>();
 
     public Album(long id, String titre, String groupe, String dateSortie, String urlImagePochette,
-            ArrayList<CategorieMusique> categoriesMusique) {
+            HashSet<CategorieMusique> categoriesMusique) {
         this.id = id;
         this.titre = titre;
         this.groupe = groupe;
@@ -64,27 +63,73 @@ public class Album {
         this.urlImagePochette = urlImagePochette;
     }
 
-    public ArrayList<CategorieMusique> getCategoriesMusique() {
+    public HashSet<CategorieMusique> getCategoriesMusique() {
         return categoriesMusique;
     }
 
-    public void setCategoriesMusique(ArrayList<CategorieMusique> categoriesMusique) {
+    public void setCategoriesMusique(HashSet<CategorieMusique> categoriesMusique) {
         this.categoriesMusique = categoriesMusique;
     }
 
     public void addCategorieMusique(CategorieMusique categorieMusique) {
-        if (!this.categoriesMusique.contains(categorieMusique)) {
-            this.categoriesMusique.add(categorieMusique);
-        }
-    }
-
-    public CategorieMusique getCategorieMusique(int index) {
-        return this.categoriesMusique.get(index);
+        this.categoriesMusique.add(categorieMusique);
     }
 
     @Override
     public String toString() {
         return "Album [categoriesMusique=" + categoriesMusique + ", dateSortie=" + dateSortie + ", groupe=" + groupe
                 + ", id=" + id + ", titre=" + titre + ", urlImagePochette=" + urlImagePochette + "]";
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((categoriesMusique == null) ? 0 : categoriesMusique.hashCode());
+        result = prime * result + ((dateSortie == null) ? 0 : dateSortie.hashCode());
+        result = prime * result + ((groupe == null) ? 0 : groupe.hashCode());
+        result = prime * result + (int) (id ^ (id >>> 32));
+        result = prime * result + ((titre == null) ? 0 : titre.hashCode());
+        result = prime * result + ((urlImagePochette == null) ? 0 : urlImagePochette.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Album other = (Album) obj;
+        if (categoriesMusique == null) {
+            if (other.categoriesMusique != null)
+                return false;
+        } else if (!categoriesMusique.equals(other.categoriesMusique))
+            return false;
+        if (dateSortie == null) {
+            if (other.dateSortie != null)
+                return false;
+        } else if (!dateSortie.equals(other.dateSortie))
+            return false;
+        if (groupe == null) {
+            if (other.groupe != null)
+                return false;
+        } else if (!groupe.equals(other.groupe))
+            return false;
+        if (id != other.id)
+            return false;
+        if (titre == null) {
+            if (other.titre != null)
+                return false;
+        } else if (!titre.equals(other.titre))
+            return false;
+        if (urlImagePochette == null) {
+            if (other.urlImagePochette != null)
+                return false;
+        } else if (!urlImagePochette.equals(other.urlImagePochette))
+            return false;
+        return true;
     }
 }

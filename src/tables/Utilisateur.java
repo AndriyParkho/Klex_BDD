@@ -1,6 +1,6 @@
 package tables;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Utilisateur {
     private String email = "";
@@ -10,10 +10,10 @@ public class Utilisateur {
     private int age = 30;
     private String langueDiffusion = "Français";
     private int code = 9999;
-    private ArrayList<Fichier> fichiers = new ArrayList<Fichier>();
+    private HashSet<Fichier> fichiers = new HashSet<Fichier>();
 
     public Utilisateur(String email, String nom, String prenom, int age, String langueDiffusion, int code,
-            ArrayList<Fichier> fichiers) {
+            HashSet<Fichier> fichiers) {
         this.email = email;
         this.nom = nom;
         this.prenom = prenom;
@@ -78,22 +78,16 @@ public class Utilisateur {
         this.code = code;
     }
 
-    public ArrayList<Fichier> getFichiers() {
+    public HashSet<Fichier> getFichiers() {
         return fichiers;
     }
 
-    public void setFichiers(ArrayList<Fichier> fichiers) {
+    public void setFichiers(HashSet<Fichier> fichiers) {
         this.fichiers = fichiers;
     }
 
     public void addFichier(Fichier fichier) {
-        if (!this.fichiers.contains(fichier)) {
-            this.fichiers.add(fichier);
-        }
-    }
-
-    public Fichier getFichier(int index) {
-        return this.fichiers.get(index);
+        this.fichiers.add(fichier);
     }
 
     @Override

@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.ArrayList;
+import java.util.HashSet;
 
 import connections.JDBCUtilities;
 import tables.Album;
@@ -77,7 +77,7 @@ public class DAOAlbum extends DAO<Album> {
             // le ResultSet n'est pas vide, on construit un nouvel objet qui contient les
             // attributs de la ligne
             if (rs.first()) {
-                final ArrayList<CategorieMusique> categoriesMusique = new ArrayList<CategorieMusique>();
+                final HashSet<CategorieMusique> categoriesMusique = new HashSet<CategorieMusique>();
 
                 rs.beforeFirst();
                 while (rs.next() && rs.getString("typeCategorieMusique") != null) {

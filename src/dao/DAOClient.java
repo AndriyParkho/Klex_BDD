@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.ArrayList;
+import java.util.HashSet;
 
 import connections.JDBCUtilities;
 import tables.Client;
@@ -67,7 +67,7 @@ public class DAOClient extends DAO<Client> {
             // le ResultSet n'est pas vide, on construit un nouvel objet qui contient les
             // attributs de la ligne
             if (rs.first()) {
-                final ArrayList<Codec> codecs = new ArrayList<Codec>();
+                final HashSet<Codec> codecs = new HashSet<Codec>();
 
                 rs.beforeFirst();
                 while (rs.next() && rs.getString("nomCodec") != null && rs.getString("typeCodec") != null) {

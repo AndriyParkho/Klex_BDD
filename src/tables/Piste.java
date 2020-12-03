@@ -1,18 +1,18 @@
 package tables;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class Piste extends Contenu {
     private long id = 0;
     private int num = 0;
     private String titre = "";
     private String duree = "";
-    private ArrayList<CategorieMusique> categoriesMusique = new ArrayList<CategorieMusique>();
+    private HashSet<CategorieMusique> categoriesMusique = new HashSet<CategorieMusique>();
     private Album album = null;
 
     public Piste(HashMap<Artiste, String> artistes, long id, int num, String titre, String duree,
-            ArrayList<CategorieMusique> categoriesMusique, Album album) {
+            HashSet<CategorieMusique> categoriesMusique, Album album) {
         super(artistes);
         this.id = id;
         this.num = num;
@@ -54,20 +54,16 @@ public class Piste extends Contenu {
         this.duree = duree;
     }
 
-    public ArrayList<CategorieMusique> getCategoriesMusique() {
+    public HashSet<CategorieMusique> getCategoriesMusique() {
         return categoriesMusique;
     }
 
-    public void setCategoriesMusique(ArrayList<CategorieMusique> categoriesMusique) {
+    public void setCategoriesMusique(HashSet<CategorieMusique> categoriesMusique) {
         this.categoriesMusique = categoriesMusique;
     }
 
     public void addCategorieMusique(CategorieMusique categorieMusique) {
         this.categoriesMusique.add(categorieMusique);
-    }
-
-    public CategorieMusique getCategorieMusique(int index) {
-        return this.categoriesMusique.get(index);
     }
 
     public void addArtiste(Artiste artiste, String instrument) {
@@ -84,5 +80,55 @@ public class Piste extends Contenu {
 
     public void setAlbum(Album album) {
         this.album = album;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + ((album == null) ? 0 : album.hashCode());
+        result = prime * result + ((categoriesMusique == null) ? 0 : categoriesMusique.hashCode());
+        result = prime * result + ((duree == null) ? 0 : duree.hashCode());
+        result = prime * result + (int) (id ^ (id >>> 32));
+        result = prime * result + num;
+        result = prime * result + ((titre == null) ? 0 : titre.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!super.equals(obj))
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        if (!super.equals(obj)) return false;
+        Piste other = (Piste) obj;
+        if (album == null) {
+            if (other.album != null)
+                return false;
+        } else if (!album.equals(other.album))
+            return false;
+        if (categoriesMusique == null) {
+            if (other.categoriesMusique != null)
+                return false;
+        } else if (!categoriesMusique.equals(other.categoriesMusique))
+            return false;
+        if (duree == null) {
+            if (other.duree != null)
+                return false;
+        } else if (!duree.equals(other.duree))
+            return false;
+        if (id != other.id)
+            return false;
+        if (num != other.num)
+            return false;
+        if (titre == null) {
+            if (other.titre != null)
+                return false;
+        } else if (!titre.equals(other.titre))
+            return false;
+        return true;
     }
 }

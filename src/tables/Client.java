@@ -1,15 +1,15 @@
 package tables;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Client {
 	private String marque = "";
 	private String modele = "";
 	private int largeurMax = 0;
     private int hauteurMax = 0;
-    private ArrayList<Codec> codecs = new ArrayList<Codec>();
+    private HashSet<Codec> codecs = new HashSet<Codec>();
 	
-    public Client(String marque, String modele, int largeurMax, int hauteurMax, ArrayList<Codec> codecs) {
+    public Client(String marque, String modele, int largeurMax, int hauteurMax, HashSet<Codec> codecs) {
         this.marque = marque;
         this.modele = modele;
         this.largeurMax = largeurMax;
@@ -52,22 +52,16 @@ public class Client {
         this.hauteurMax = hauteurMax;
     }
 
-    public ArrayList<Codec> getCodecs() {
+    public HashSet<Codec> getCodecs() {
         return codecs;
     }
 
-    public void setCodecs(ArrayList<Codec> codecs) {
+    public void setCodecs(HashSet<Codec> codecs) {
         this.codecs = codecs;
     }
 
     public void addCodec(Codec codec) {
-        if (!this.codecs.contains(codec)) {
-            this.codecs.add(codec);
-        }
-    }
-
-    public Codec getCodec(int index) {
-        return this.codecs.get(index);
+        this.codecs.add(codec);
     }
 
     @Override

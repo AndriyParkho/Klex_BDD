@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.ArrayList;
+import java.util.HashSet;
 
 import connections.JDBCUtilities;
 import tables.Fichier;
@@ -66,7 +66,7 @@ public class DAOUtilisateur extends DAO<Utilisateur> {
             // le ResultSet n'est pas vide, on construit un nouvel objet qui contient les
             // attributs de la ligne
             if (rs.first()) {
-                final ArrayList<Fichier> fichiers = new ArrayList<Fichier>();
+                final HashSet<Fichier> fichiers = new HashSet<Fichier>();
 
                 rs.beforeFirst();
                 while (rs.next() && rs.getString("idFichier") != null) {

@@ -3,15 +3,16 @@ package tests;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.apache.ibatis.jdbc.ScriptRunner;
 
-import connections.JDBCUtilities;
 import connections.ConnectionOracle;
+import connections.JDBCUtilities;
 import dao.DAOAlbum;
 import dao.DAOCategorieMusique;
+import dao.DAOFactory;
 import tables.Album;
 import tables.CategorieMusique;
 
@@ -38,7 +39,7 @@ public class TestDAOAlbum {
             }
             JDBCUtilities.loadFile(sr, "ressources/CreateTables.sql");
 
-            DAOCategorieMusique categorieMusiqueDAO = new DAOCategorieMusique();
+            DAOCategorieMusique categorieMusiqueDAO = DAOFactory.getCategorieMusiqueDAO();
 
             System.out.println("\nAvant création d'une catégorie :");
             System.out.println(categorieMusiqueDAO.find("pop"));
@@ -105,7 +106,7 @@ public class TestDAOAlbum {
             album.setGroupe("Calvin Harris");
             album.setDateSortie("26/10/2012");
             album.setUrlImagePochette("https://fr.wikipedia.org/wiki/18_Months");
-            album.setCategoriesMusique(new ArrayList<CategorieMusique>());
+            album.setCategoriesMusique(new HashSet<CategorieMusique>());
             album.addCategorieMusique(new CategorieMusique("pop"));
             album.addCategorieMusique(new CategorieMusique("electro-dance"));
             album.addCategorieMusique(new CategorieMusique("EDM"));

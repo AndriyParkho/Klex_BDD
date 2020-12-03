@@ -12,9 +12,9 @@ public class Film extends Contenu {
     private HashSet<CategorieFilm> categoriesFilm = new HashSet<CategorieFilm>();
     private HashSet<ImgExtraiteFilm> imgExtraitesFilm = new HashSet<ImgExtraiteFilm>();
 
-    public Film(String titreFilm, String anneeSortie, String resume, int ageMin, String urlAffiche,
-            HashSet<CategorieFilm> categoriesFilm, HashSet<ImgExtraiteFilm> imgExtraitesFilm,
-            HashMap<Artiste, String> artistes) {
+    public Film(final String titreFilm, final String anneeSortie, final String resume, final int ageMin,
+            final String urlAffiche, final HashSet<CategorieFilm> categoriesFilm,
+            final HashSet<ImgExtraiteFilm> imgExtraitesFilm, final HashMap<Artiste, String> artistes) {
         super(artistes);
         this.titreFilm = titreFilm;
         this.anneeSortie = anneeSortie;
@@ -32,7 +32,7 @@ public class Film extends Contenu {
         return titreFilm;
     }
 
-    public void setTitreFilm(String titreFilm) {
+    public void setTitreFilm(final String titreFilm) {
         this.titreFilm = titreFilm;
     }
 
@@ -40,7 +40,7 @@ public class Film extends Contenu {
         return anneeSortie;
     }
 
-    public void setAnneeSortie(String anneeSortie) {
+    public void setAnneeSortie(final String anneeSortie) {
         this.anneeSortie = anneeSortie;
     }
 
@@ -48,7 +48,7 @@ public class Film extends Contenu {
         return resume;
     }
 
-    public void setResume(String resume) {
+    public void setResume(final String resume) {
         this.resume = resume;
     }
 
@@ -56,7 +56,7 @@ public class Film extends Contenu {
         return ageMin;
     }
 
-    public void setAgeMin(int ageMin) {
+    public void setAgeMin(final int ageMin) {
         this.ageMin = ageMin;
     }
 
@@ -64,7 +64,7 @@ public class Film extends Contenu {
         return urlAffiche;
     }
 
-    public void setUrlAffiche(String urlAffiche) {
+    public void setUrlAffiche(final String urlAffiche) {
         this.urlAffiche = urlAffiche;
     }
 
@@ -72,11 +72,11 @@ public class Film extends Contenu {
         return categoriesFilm;
     }
 
-    public void setCategoriesFilm(HashSet<CategorieFilm> categoriesFilm) {
+    public void setCategoriesFilm(final HashSet<CategorieFilm> categoriesFilm) {
         this.categoriesFilm = categoriesFilm;
     }
 
-    public void addCategorie(CategorieFilm categorieFilm) {
+    public void addCategorie(final CategorieFilm categorieFilm) {
         this.categoriesFilm.add(categorieFilm);
     }
 
@@ -84,19 +84,19 @@ public class Film extends Contenu {
         return imgExtraitesFilm;
     }
 
-    public void setImgExtraitesFilm(HashSet<ImgExtraiteFilm> imgExtraitesFilm) {
+    public void setImgExtraitesFilm(final HashSet<ImgExtraiteFilm> imgExtraitesFilm) {
         this.imgExtraitesFilm = imgExtraitesFilm;
     }
 
-    public void addImgExtraiteFilm(ImgExtraiteFilm imgExtraiteFilm) {
+    public void addImgExtraiteFilm(final ImgExtraiteFilm imgExtraiteFilm) {
         this.imgExtraitesFilm.add(imgExtraiteFilm);
     }
 
-    public void addArtiste(Artiste artiste, String role) {
+    public void addArtiste(final Artiste artiste, final String role) {
         this.artistes.putIfAbsent(artiste, role);
     }
 
-    public String getRole(Artiste artiste) {
+    public String getRole(final Artiste artiste) {
         return this.artistes.get(artiste);
     }
 
@@ -105,5 +105,64 @@ public class Film extends Contenu {
         return super.toString() + "\nFilm [ageMin=" + ageMin + ", anneeSortie=" + anneeSortie + ", categoriesFilm="
                 + categoriesFilm + ", imgExtraitesFilm=" + imgExtraitesFilm + ", resume=" + resume + ", titreFilm="
                 + titreFilm + ", urlAffiche=" + urlAffiche + "]";
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + ageMin;
+        result = prime * result + ((anneeSortie == null) ? 0 : anneeSortie.hashCode());
+        result = prime * result + ((categoriesFilm == null) ? 0 : categoriesFilm.hashCode());
+        result = prime * result + ((imgExtraitesFilm == null) ? 0 : imgExtraitesFilm.hashCode());
+        result = prime * result + ((resume == null) ? 0 : resume.hashCode());
+        result = prime * result + ((titreFilm == null) ? 0 : titreFilm.hashCode());
+        result = prime * result + ((urlAffiche == null) ? 0 : urlAffiche.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!super.equals(obj))
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        if (!super.equals(obj)) return false;
+        Film other = (Film) obj;
+        if (ageMin != other.ageMin)
+            return false;
+        if (anneeSortie == null) {
+            if (other.anneeSortie != null)
+                return false;
+        } else if (!anneeSortie.equals(other.anneeSortie))
+            return false;
+        if (categoriesFilm == null) {
+            if (other.categoriesFilm != null)
+                return false;
+        } else if (!categoriesFilm.equals(other.categoriesFilm))
+            return false;
+        if (imgExtraitesFilm == null) {
+            if (other.imgExtraitesFilm != null)
+                return false;
+        } else if (!imgExtraitesFilm.equals(other.imgExtraitesFilm))
+            return false;
+        if (resume == null) {
+            if (other.resume != null)
+                return false;
+        } else if (!resume.equals(other.resume))
+            return false;
+        if (titreFilm == null) {
+            if (other.titreFilm != null)
+                return false;
+        } else if (!titreFilm.equals(other.titreFilm))
+            return false;
+        if (urlAffiche == null) {
+            if (other.urlAffiche != null)
+                return false;
+        } else if (!urlAffiche.equals(other.urlAffiche))
+            return false;
+        return true;
     }
 }
