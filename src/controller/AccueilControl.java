@@ -1,12 +1,12 @@
 package controller;
 
-import views.Acceuil;
+import views.Accueil;
 import views.Connexion;
 
-public class AcceuilControl {
-	private Acceuil view;
+public class AccueilControl {
+	private Accueil view;
 	
-	public AcceuilControl(Acceuil view) {
+	public AccueilControl(Accueil view) {
 		this.view= view;
 	}
 	
