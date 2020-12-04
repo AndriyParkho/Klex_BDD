@@ -11,7 +11,7 @@ import org.apache.ibatis.jdbc.ScriptRunner;
 import connections.ConnectionOracle;
 import connections.JDBCUtilities;
 import dao.DAOArtiste;
-import tables.Artiste;
+import model.Artiste;
 
 public class TestDAOArtiste {
     static List<String> tables = List.of("Flux", "FluxTexte", "FluxAudio", "FluxVideo", "Dept", "Emp",
@@ -99,6 +99,8 @@ public class TestDAOArtiste {
                     JDBCUtilities.printSQLException(excep);
                 }
             }
+        } finally {
+            ConnectionOracle.closeInstance();
         }
     }
 }

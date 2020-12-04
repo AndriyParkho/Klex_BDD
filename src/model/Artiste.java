@@ -1,6 +1,7 @@
-package tables;
+package model;
 
 import java.sql.Date;
+import java.util.Objects;
 
 public class Artiste {
     private long id = 0;
@@ -78,15 +79,7 @@ public class Artiste {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((biographie == null) ? 0 : biographie.hashCode());
-        result = prime * result + ((dateNaissance == null) ? 0 : dateNaissance.hashCode());
-        result = prime * result + (int) (id ^ (id >>> 32));
-        result = prime * result + ((nom == null) ? 0 : nom.hashCode());
-        result = prime * result + ((specialite == null) ? 0 : specialite.hashCode());
-        result = prime * result + ((urlPhoto == null) ? 0 : urlPhoto.hashCode());
-        return result;
+        return Objects.hash(id, nom, dateNaissance, urlPhoto, biographie, specialite);
     }
     
     @Override

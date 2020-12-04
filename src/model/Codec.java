@@ -1,4 +1,6 @@
-package tables;
+package model;
+
+import java.util.Objects;
 
 public class Codec {
 	private String nom = null;
@@ -32,11 +34,7 @@ public class Codec {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((nom == null) ? 0 : nom.hashCode());
-        result = prime * result + ((type == null) ? 0 : type.hashCode());
-        return result;
+        return Objects.hash(nom, type);
     }
 
     @Override

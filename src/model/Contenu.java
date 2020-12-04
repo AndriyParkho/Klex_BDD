@@ -1,6 +1,7 @@
-package tables;
+package model;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public abstract class Contenu {
     protected HashMap<Artiste, String> artistes = new HashMap<Artiste, String>();
@@ -27,10 +28,7 @@ public abstract class Contenu {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((artistes == null) ? 0 : artistes.hashCode());
-        return result;
+        return Objects.hash(artistes);
     }
 
     @Override

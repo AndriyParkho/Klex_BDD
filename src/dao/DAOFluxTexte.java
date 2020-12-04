@@ -2,7 +2,7 @@ package dao;
 
 import java.sql.SQLException;
 
-import tables.FluxTexte;
+import model.FluxTexte;
 
 public class DAOFluxTexte extends DAO<FluxTexte> {
 

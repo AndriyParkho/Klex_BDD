@@ -14,8 +14,8 @@ import connections.JDBCUtilities;
 import dao.DAOClient;
 import dao.DAOCodec;
 import dao.DAOFactory;
-import tables.Client;
-import tables.Codec;
+import model.Client;
+import model.Codec;
 
 public class TestDAOClient {
     static List<String> tables = List.of("Flux", "FluxTexte", "FluxAudio", "FluxVideo", "Dept", "Emp",
@@ -156,6 +156,8 @@ public class TestDAOClient {
                     JDBCUtilities.printSQLException(excep);
                 }
             }
+        } finally {
+            ConnectionOracle.closeInstance();
         }
     }
 }

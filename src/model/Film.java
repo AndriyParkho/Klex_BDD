@@ -1,8 +1,9 @@
-package tables;
+package model;
 
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Objects;
 
 public class Film extends Contenu {
     private String titreFilm = "";
@@ -110,16 +111,7 @@ public class Film extends Contenu {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = super.hashCode();
-        result = prime * result + ageMin;
-        result = prime * result + ((anneeSortie == null) ? 0 : anneeSortie.hashCode());
-        result = prime * result + ((categoriesFilm == null) ? 0 : categoriesFilm.hashCode());
-        result = prime * result + ((imgExtraitesFilm == null) ? 0 : imgExtraitesFilm.hashCode());
-        result = prime * result + ((resume == null) ? 0 : resume.hashCode());
-        result = prime * result + ((titreFilm == null) ? 0 : titreFilm.hashCode());
-        result = prime * result + ((urlAffiche == null) ? 0 : urlAffiche.hashCode());
-        return result;
+        return Objects.hash(titreFilm, anneeSortie, ageMin, categoriesFilm, imgExtraitesFilm, resume, urlAffiche, super.getArtistes());
     }
 
     @Override

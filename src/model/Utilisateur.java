@@ -1,4 +1,4 @@
-package tables;
+package model;
 
 import java.util.HashSet;
 

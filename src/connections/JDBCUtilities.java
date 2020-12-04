@@ -58,7 +58,7 @@ public final class JDBCUtilities {
                 + " CASCADE CONSTRAINTS'; EXCEPTION WHEN OTHERS THEN IF SQLCODE != -942 THEN RAISE; END IF; END;";
     }
 
-    public static void selectAll(final Connection connection, final String tableName) throws SQLException {
+    public static void selectAll(Connection connection, final String tableName) throws SQLException {
         final String query = "select * from " + tableName;
         // automatically close Statement and ResultSet objects, regardless of whether an
         // SQLException has been thrown.

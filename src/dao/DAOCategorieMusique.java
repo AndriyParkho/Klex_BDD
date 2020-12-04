@@ -5,14 +5,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 
+import connections.ConnectionOracle;
 import connections.JDBCUtilities;
-import tables.CategorieMusique;
+import model.CategorieMusique;
 
 public class DAOCategorieMusique extends DAO<CategorieMusique> {
 
     @Override
     public void create(CategorieMusique categorieMusique) throws SQLException {
         final String query = "INSERT INTO CategorieMusique VALUES (?)";
+        this.connection = ConnectionOracle.getInstance();
 
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setString(1, categorieMusique.getCategorie());

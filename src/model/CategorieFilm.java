@@ -1,4 +1,6 @@
-package tables;
+package model;
+
+import java.util.Objects;
 
 public class CategorieFilm {
     private String categorie;
@@ -22,10 +24,7 @@ public class CategorieFilm {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((categorie == null) ? 0 : categorie.hashCode());
-        return result;
+        return Objects.hash(categorie);
     }
 
     @Override

@@ -14,8 +14,8 @@ import connections.JDBCUtilities;
 import dao.DAOAlbum;
 import dao.DAOCategorieMusique;
 import dao.DAOFactory;
-import tables.Album;
-import tables.CategorieMusique;
+import model.Album;
+import model.CategorieMusique;
 
 public class TestDAOAlbum {
     static List<String> tables = List.of("Flux", "FluxTexte", "FluxAudio", "FluxVideo", "Dept", "Emp",

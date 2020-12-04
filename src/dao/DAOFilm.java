@@ -10,17 +10,17 @@ import java.util.HashSet;
 import java.util.Map;
 
 import connections.JDBCUtilities;
-import tables.Artiste;
-import tables.CategorieFilm;
-import tables.Film;
-import tables.ImgExtraiteFilm;
+import model.Artiste;
+import model.CategorieFilm;
+import model.Film;
+import model.ImgExtraiteFilm;
 
 public class DAOFilm extends DAO<Film> {
 
     @Override
     public void create(Film film) throws SQLException {
         final String insertFilmQuery = "INSERT INTO Film VALUES (?, ?, ?, ?, ?)";
-        
+
         try (PreparedStatement statementFilm = this.connection.prepareStatement(insertFilmQuery)) {
             statementFilm.setString(1, film.getTitreFilm());
             statementFilm.setDate(2, film.getAnneeSortie());
@@ -29,34 +29,39 @@ public class DAOFilm extends DAO<Film> {
             statementFilm.setString(5, film.getUrlAffiche());
             statementFilm.executeUpdate();
         }
-        connection.commit(); // because idArtiste RETURNED INTO :6
-        // on doit créer les artistes
-        for (Artiste artiste : film.getArtistes().keySet()) {
-            DAOFactory.getArtisteDAO().create(artiste);
-        }
+        // connection.commit();
 
         // on doit créer les catégories
         for (CategorieFilm categorieFilm : film.getCategoriesFilm()) {
             DAOFactory.getCategorieFilmDAO().createOrUpdate(categorieFilm);
         }
-        
+        // connection.commit();
+
+        // connection.commit(); // because idArtiste RETURNED INTO :6
+        // on doit créer les artistes
+        for (Artiste artiste : film.getArtistes().keySet()) {
+            DAOFactory.getArtisteDAO().create(artiste);
+        }
+
         // NECESSARY because ImgExtraiteFilm references Film (titreFilm, anneeSortie)
-        // NECESSARY because FilmAPourCategorie references CategorieFilm (typeCategorieFilm) and Film (titreFilm, anneeSortie)
-        // NECESSARY because APourRole references Artiste (idArtiste) and Film (titreFilm, anneeSortie)
-        connection.commit(); 
+        // NECESSARY because FilmAPourCategorie references CategorieFilm
+        // (typeCategorieFilm) and Film (titreFilm, anneeSortie)
+        // NECESSARY because APourRole references Artiste (idArtiste) and Film
+        // (titreFilm, anneeSortie)
+        // connection.commit();
 
         // on doit créer les ImgExtraitesFilm
         for (ImgExtraiteFilm imgExtraiteFilm : film.getImgExtraitesFilm()) {
             DAOFactory.getImgExtraiteFilmDAO().createOrUpdate(imgExtraiteFilm);
         }
-        connection.commit();
+        // connection.commit();
 
         for (Map.Entry<Artiste, String> entry : film.getArtistes().entrySet()) {
             // insertion dans la table intermédiaire, c'est un nouveau film donc on est sur
             // que le couple n'existe pas
             createAPourRole(entry.getValue(), film, entry.getKey());
         }
-        connection.commit();
+        // connection.commit();
 
         for (CategorieFilm categorieFilm : film.getCategoriesFilm()) {
             // insertion dans la table intermédiaire, c'est un nouveau film mais la

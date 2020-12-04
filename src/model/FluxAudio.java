@@ -1,4 +1,4 @@
-package tables;
+package model;
 
 public class FluxAudio extends Flux {
     private int echantillonnage = 0;

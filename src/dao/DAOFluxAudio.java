@@ -2,7 +2,7 @@ package dao;
 
 import java.sql.SQLException;
 
-import tables.FluxAudio;
+import model.FluxAudio;
 
 public class DAOFluxAudio extends DAO<FluxAudio> {
 

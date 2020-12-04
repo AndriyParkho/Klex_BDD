@@ -26,26 +26,31 @@ public final class ConnectionOracle {
     }
 
     public static Connection getInstance() {
-        if (connection == null) {
-            // Établissement d’une connexion et Requête Simple
-            System.out.println("Connecting to the database...");
-            try {
+        // Établissement d’une connexion et Requête Simple
+        try {
+            if (connection == null || connection.isClosed()) {
+                System.out.println("Connecting to the database...");
                 connection = DriverManager.getConnection(url, user, passwd);
-                connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+                connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE); // vs
+                                                                                         // Connection.TRANSACTION_READ_COMMITTED
                 connection.setAutoCommit(false);
-            } catch (final SQLException e) {
-                System.err.println("sql error !");
-                JDBCUtilities.printSQLException(e);
+                System.out.println("connected.");
+            } else {
+                // System.out.println("Récupération de l'instance de la connection...");
             }
-            System.out.println("connected.");
+        } catch (final SQLException e) {
+            System.err.println("sql error !");
+            JDBCUtilities.printSQLException(e);
         }
         return connection;
     }
 
     public static void closeInstance() {
         try {
-            connection.close();
-            System.out.println("Closed.");
+            if (connection != null && connection.isValid(0)) {
+                connection.close();
+                System.out.println("Closed.");
+            }
         } catch (SQLException e) {
             System.err.println("sql error !");
             JDBCUtilities.printSQLException(e);

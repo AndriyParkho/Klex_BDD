@@ -7,7 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import dao.DAOUtilisateur;
-import tables.Utilisateur;
+import model.Utilisateur;
 import views.SignUp;
 
 public class SignUpControl {

@@ -1,7 +1,8 @@
-package tables;
+package model;
 
 import java.sql.Date;
 import java.util.HashSet;
+import java.util.Objects;
 
 public class Album {
     private long id = 0;
@@ -84,15 +85,7 @@ public class Album {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((categoriesMusique == null) ? 0 : categoriesMusique.hashCode());
-        result = prime * result + ((dateSortie == null) ? 0 : dateSortie.hashCode());
-        result = prime * result + ((groupe == null) ? 0 : groupe.hashCode());
-        result = prime * result + (int) (id ^ (id >>> 32));
-        result = prime * result + ((titre == null) ? 0 : titre.hashCode());
-        result = prime * result + ((urlImagePochette == null) ? 0 : urlImagePochette.hashCode());
-        return result;
+        return Objects.hash(id, titre, dateSortie, groupe, categoriesMusique, urlImagePochette);
     }
 
     @Override

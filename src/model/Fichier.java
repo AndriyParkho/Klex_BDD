@@ -1,6 +1,7 @@
-package tables;
+package model;
 
 import java.sql.Date;
+import java.util.Objects;
 
 public class Fichier {
     private long id = 0;
@@ -69,14 +70,7 @@ public class Fichier {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((contenu == null) ? 0 : contenu.hashCode());
-        result = prime * result + ((dateDepot == null) ? 0 : dateDepot.hashCode());
-        result = prime * result + ((email == null) ? 0 : email.hashCode());
-        result = prime * result + (int) (id ^ (id >>> 32));
-        result = prime * result + (int) (taille ^ (taille >>> 32));
-        return result;
+        return Objects.hash(email, id, taille, dateDepot, contenu);
     }
 
     @Override

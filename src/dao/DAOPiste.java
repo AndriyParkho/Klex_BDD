@@ -2,7 +2,7 @@ package dao;
 
 import java.sql.SQLException;
 
-import tables.Piste;
+import model.Piste;
 
 public class DAOPiste extends DAO<Piste> {
 

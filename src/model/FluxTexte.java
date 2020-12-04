@@ -1,4 +1,4 @@
-package tables;
+package model;
 
 public class FluxTexte extends Flux {
     private String langue = "";

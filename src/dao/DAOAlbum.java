@@ -7,8 +7,8 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashSet;
 
 import connections.JDBCUtilities;
-import tables.Album;
-import tables.CategorieMusique;
+import model.Album;
+import model.CategorieMusique;
 
 public class DAOAlbum extends DAO<Album> {
 
@@ -16,6 +16,7 @@ public class DAOAlbum extends DAO<Album> {
     public void create(Album album) throws SQLException {
         final String insertAlbumQuery = "INSERT INTO Album (titreAlbum, nomGroupe, dateSortieAlbum, urlImagePochette) VALUES (?, ?, ?, ?)";
 
+        System.out.println("Statement Album\n");
         try (PreparedStatement statementAlbum = this.connection.prepareStatement(insertAlbumQuery,
                 new String[] { "idAlbum" })) {
             statementAlbum.setString(1, album.getTitre());
@@ -35,9 +36,10 @@ public class DAOAlbum extends DAO<Album> {
         }
         // on doit créer les catégories
         for (CategorieMusique categorieMusique : album.getCategoriesMusique()) {
+            System.out.println("Statement CategorieMusique\n");
             DAOFactory.getCategorieMusiqueDAO().createOrUpdate(categorieMusique);
         }
-        connection.commit(); // NECESSARY because AlbumAPourCategorie references CategorieMusique.typeCategorieMusique and Album.idAlbum
+        // connection.commit(); // NECESSARY because AlbumAPourCategorie references CategorieMusique.typeCategorieMusique and Album.idAlbum
 
         for (CategorieMusique categorieMusique : album.getCategoriesMusique()) {
             // insertion dans la table intermédiaire, c'est un nouvel album donc on est sur

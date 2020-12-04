@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 
 import connections.JDBCUtilities;
-import tables.Fichier;
-import tables.Utilisateur;
+import model.Fichier;
+import model.Utilisateur;
 
 public class DAOFichier extends DAO<Fichier> {
 

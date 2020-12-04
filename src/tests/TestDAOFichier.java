@@ -12,8 +12,8 @@ import connections.ConnectionOracle;
 import connections.JDBCUtilities;
 import dao.DAOFichier;
 import dao.DAOUtilisateur;
-import tables.Fichier;
-import tables.Utilisateur;
+import model.Fichier;
+import model.Utilisateur;
 
 public class TestDAOFichier {
     static List<String> tables = List.of("Flux", "FluxTexte", "FluxAudio", "FluxVideo", "Dept", "Emp",
@@ -139,6 +139,8 @@ public class TestDAOFichier {
                     JDBCUtilities.printSQLException(excep);
                 }
             }
+        } finally {
+            ConnectionOracle.closeInstance();
         }
     }
 }

@@ -7,8 +7,8 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashSet;
 
 import connections.JDBCUtilities;
-import tables.Client;
-import tables.Codec;
+import model.Client;
+import model.Codec;
 
 public class DAOClient extends DAO<Client> {
 

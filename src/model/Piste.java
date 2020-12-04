@@ -1,7 +1,8 @@
-package tables;
+package model;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Objects;
 
 public class Piste extends Contenu {
     private long id = 0;
@@ -84,15 +85,7 @@ public class Piste extends Contenu {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = super.hashCode();
-        result = prime * result + ((album == null) ? 0 : album.hashCode());
-        result = prime * result + ((categoriesMusique == null) ? 0 : categoriesMusique.hashCode());
-        result = prime * result + ((duree == null) ? 0 : duree.hashCode());
-        result = prime * result + (int) (id ^ (id >>> 32));
-        result = prime * result + num;
-        result = prime * result + ((titre == null) ? 0 : titre.hashCode());
-        return result;
+        return Objects.hash(id, num, titre, duree, categoriesMusique, album, super.getArtistes());
     }
 
     @Override

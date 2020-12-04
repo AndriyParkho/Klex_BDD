@@ -13,10 +13,10 @@ import connections.JDBCUtilities;
 import dao.DAOCategorieFilm;
 import dao.DAOFactory;
 import dao.DAOFilm;
-import tables.Artiste;
-import tables.CategorieFilm;
-import tables.Film;
-import tables.ImgExtraiteFilm;
+import model.Artiste;
+import model.CategorieFilm;
+import model.Film;
+import model.ImgExtraiteFilm;
 
 public class TestDAOFilm {
     static List<String> tables = List.of("Flux", "FluxTexte", "FluxAudio", "FluxVideo", "Dept", "Emp",
@@ -121,8 +121,8 @@ public class TestDAOFilm {
             film.addImgExtraiteFilm(newImgExtraiteFilm);
             System.out.println(film);
 
-            JDBCUtilities.selectAll(connection, "CategorieFilm");
-            JDBCUtilities.selectAll(connection, "FilmAPourCategorie");
+            /* JDBCUtilities.selectAll(connection, "CategorieFilm");
+            JDBCUtilities.selectAll(connection, "FilmAPourCategorie"); */
 
             DAOFilm filmDAO = DAOFactory.getFilmDAO();
             filmDAO.create(film);
@@ -140,12 +140,14 @@ public class TestDAOFilm {
             JDBCUtilities.printSQLException(e);
             if (connection != null) {
                 try {
-                    System.err.print("Transaction is being rolled back");
+                    System.err.print("Transaction is being rolled back\n");
                     connection.rollback();
                 } catch (SQLException excep) {
                     JDBCUtilities.printSQLException(excep);
                 }
             }
+        } finally {
+            ConnectionOracle.closeInstance();
         }
     }
 }

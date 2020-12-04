@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 
 import connections.JDBCUtilities;
-import tables.Codec;
+import model.Codec;
 
 public class DAOCodec extends DAO<Codec> {
 

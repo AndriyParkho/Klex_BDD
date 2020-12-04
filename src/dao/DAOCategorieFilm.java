@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 
 import connections.JDBCUtilities;
-import tables.CategorieFilm;
+import model.CategorieFilm;
 
 public class DAOCategorieFilm extends DAO<CategorieFilm> {
 

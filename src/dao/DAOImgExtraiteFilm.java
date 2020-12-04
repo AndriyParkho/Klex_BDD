@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 
 import connections.JDBCUtilities;
-import tables.ImgExtraiteFilm;
+import model.ImgExtraiteFilm;
 
 public class DAOImgExtraiteFilm extends DAO<ImgExtraiteFilm> {
 

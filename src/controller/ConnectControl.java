@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import javax.swing.*;
 
 import dao.DAOUtilisateur;
-import tables.Utilisateur;
+import model.Utilisateur;
 import views.Connexion;
 
 public class ConnectControl {

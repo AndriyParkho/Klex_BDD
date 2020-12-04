@@ -1,4 +1,4 @@
-package tables;
+package model;
 
 public class FluxVideo extends Flux {
     private int largeur = 0;

@@ -1,6 +1,7 @@
-package tables;
+package model;
 
 import java.sql.Date;
+import java.util.Objects;
 
 public class ImgExtraiteFilm {
     private String urlImg = "";
@@ -47,12 +48,7 @@ public class ImgExtraiteFilm {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((anneeSortie == null) ? 0 : anneeSortie.hashCode());
-        result = prime * result + ((titreFilm == null) ? 0 : titreFilm.hashCode());
-        result = prime * result + ((urlImg == null) ? 0 : urlImg.hashCode());
-        return result;
+        return Objects.hash(titreFilm, anneeSortie, urlImg);
     }
 
     @Override

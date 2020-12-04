@@ -7,8 +7,8 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashSet;
 
 import connections.JDBCUtilities;
-import tables.Fichier;
-import tables.Utilisateur;
+import model.Fichier;
+import model.Utilisateur;
 
 public class DAOUtilisateur extends DAO<Utilisateur> {
 
