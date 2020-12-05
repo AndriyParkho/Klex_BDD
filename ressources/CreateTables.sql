@@ -3,8 +3,9 @@ CREATE TABLE CategorieMusique(
   CONSTRAINT pkCategorieMusique PRIMARY KEY (typeCategorieMusique)
 );
 
+CREATE SEQUENCE idAlbum_seq;
 CREATE TABLE Album(
-  idAlbum integer GENERATED ALWAYS AS IDENTITY,
+  idAlbum integer,
   titreAlbum varchar(50) NOT NULL,
   nomGroupe varchar(50) NOT NULL,
   dateSortieAlbum date NOT NULL,
@@ -60,7 +61,7 @@ CREATE TABLE AlbumAPourCategorie(
   idAlbum integer NOT NULL REFERENCES Album (idAlbum) ON DELETE CASCADE,
   typeCategorieMusique varchar(20) NOT NULL REFERENCES CategorieMusique (typeCategorieMusique) ON DELETE CASCADE,
   CONSTRAINT pkAlbumAPourCategorie PRIMARY KEY (idAlbum, typeCategorieMusique)
-) ROWDEPENDENCIES;
+);
 
 CREATE TABLE Codec(
   nomCodec varchar(20) NOT NULL,
@@ -94,7 +95,7 @@ CREATE TABLE Artiste(
   specialite varchar(50) NOT NULL,
   biographie CLOB,
   CONSTRAINT pkArtiste PRIMARY KEY (idArtiste)
-) ROWDEPENDENCIES;
+);
 
 CREATE TABLE CategorieFilm(
   typeCategorieFilm varchar(255) NOT NULL,
@@ -122,7 +123,7 @@ CREATE TABLE FilmAPourCategorie(
   typeCategorieFilm varchar(255) NOT NULL REFERENCES CategorieFilm (typeCategorieFilm) ON DELETE CASCADE,
   CONSTRAINT fkFilmAPourCategorie FOREIGN KEY (titreFilm, anneeSortie) REFERENCES Film (titreFilm, anneeSortie) ON DELETE CASCADE,
   CONSTRAINT pkFilmAPourCategorie PRIMARY KEY (titreFilm, anneeSortie, typeCategorieFilm)
-) ROWDEPENDENCIES;
+);
 
 CREATE TABLE EstUnFilm(
   idFichier integer NOT NULL REFERENCES Fichier (idFichier) ON DELETE CASCADE,
@@ -138,7 +139,7 @@ CREATE TABLE ImgExtraiteFilm(
   anneeSortie date NOT NULL,
   CONSTRAINT fkImgExtraiteFilmFilm FOREIGN KEY (titreFilm, anneeSortie) REFERENCES Film (titreFilm, anneeSortie) ON DELETE CASCADE,
   CONSTRAINT pkImgExtraiteFilm PRIMARY KEY (urlImage)
-) ROWDEPENDENCIES;
+);
 
 /*
 verifier qu'un film est associé à au moins un artiste
@@ -151,7 +152,7 @@ CREATE TABLE APourRole(
   idArtiste integer NOT NULL REFERENCES Artiste (idArtiste) ON DELETE CASCADE,
   CONSTRAINT fkAPourRoleFilm FOREIGN KEY (titreFilm, anneeSortie) REFERENCES Film (titreFilm, anneeSortie) ON DELETE CASCADE,
   CONSTRAINT pkAPourRole PRIMARY KEY (titreFilm, anneeSortie, idArtiste)
-) ROWDEPENDENCIES;
+);
 
 CREATE TABLE APourInstrument(
   instrument varchar(50) NOT NULL,

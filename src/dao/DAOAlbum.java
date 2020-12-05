@@ -14,32 +14,33 @@ public class DAOAlbum extends DAO<Album> {
 
     @Override
     public void create(Album album) throws SQLException {
-        final String insertAlbumQuery = "INSERT INTO Album (titreAlbum, nomGroupe, dateSortieAlbum, urlImagePochette) VALUES (?, ?, ?, ?)";
+        final String insertAlbumQuery = "INSERT INTO Album (idAlbum, titreAlbum, nomGroupe, dateSortieAlbum, urlImagePochette) VALUES (idAlbum_seq.nextval, ?, ?, ?, ?)";
+
+        /* String queryId = "SELECT idAlbum_seq.nextval from DUAL";
+        int nextID_from_seq = 0;
+        try (ResultSet rs = this.connection.prepareStatement(queryId).executeQuery()) {
+            if (rs.next()) {
+                nextID_from_seq = rs.getInt(1);
+                album.setId(nextID_from_seq);
+            }
+        }
+        System.out.println(nextID_from_seq); */
 
         System.out.println("Statement Album\n");
-        try (PreparedStatement statementAlbum = this.connection.prepareStatement(insertAlbumQuery,
-                new String[] { "idAlbum" })) {
+        try (PreparedStatement statementAlbum = this.connection.prepareStatement(insertAlbumQuery)) {
             statementAlbum.setString(1, album.getTitre());
             statementAlbum.setString(2, album.getGroupe());
             statementAlbum.setDate(3, album.getDateSortie());
             statementAlbum.setString(4, album.getUrlImagePochette());
 
-            final int nbRowsAffected = statementAlbum.executeUpdate();
-            Long createdId = null;
-            if (nbRowsAffected == 1) {
-                try (ResultSet rs = statementAlbum.getGeneratedKeys()) {
-                    rs.next();
-                    createdId = rs.getLong(1);
-                    album.setId(createdId);
-                }
-            }
+            statementAlbum.executeUpdate();
         }
         // on doit créer les catégories
         for (CategorieMusique categorieMusique : album.getCategoriesMusique()) {
             System.out.println("Statement CategorieMusique\n");
             DAOFactory.getCategorieMusiqueDAO().createOrUpdate(categorieMusique);
         }
-        // connection.commit(); // NECESSARY because AlbumAPourCategorie references CategorieMusique.typeCategorieMusique and Album.idAlbum
+        // connection.commit(); // NECESSARY because AlbumAPourCategorie references CategorieMusique.typeCategorieMusique and Album.idAlbum ?
 
         for (CategorieMusique categorieMusique : album.getCategoriesMusique()) {
             // insertion dans la table intermédiaire, c'est un nouvel album donc on est sur
@@ -130,11 +131,11 @@ public class DAOAlbum extends DAO<Album> {
     }
 
     private void createAlbumAPourCategorieQuery(Album album, CategorieMusique categorieMusique) throws SQLException {
-        final String insertAlbumAPourCategorieQuery = "INSERT INTO AlbumAPourCategorie VALUES (?, ?)";
+        final String insertAlbumAPourCategorieQuery = "INSERT INTO AlbumAPourCategorie VALUES (idAlbum_seq.currval, ?)";
         try (PreparedStatement statementAlbumAPourCategorie = this.connection
                 .prepareStatement(insertAlbumAPourCategorieQuery)) {
-            statementAlbumAPourCategorie.setLong(1, album.getId());
-            statementAlbumAPourCategorie.setString(2, categorieMusique.getCategorie());
+            // statementAlbumAPourCategorie.setLong(1, album.getId());
+            statementAlbumAPourCategorie.setString(1, categorieMusique.getCategorie());
             statementAlbumAPourCategorie.executeUpdate();
         }
     }

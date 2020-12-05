@@ -37,6 +37,8 @@ public class TestDAOAlbum {
                     statement.executeUpdate(JDBCUtilities.dropIfExist(tableName));
                     connection.commit();
                 }
+                statement.executeUpdate("DROP SEQUENCE idAlbum_seq");
+                connection.commit();
             }
             JDBCUtilities.loadFile(sr, "ressources/CreateTables.sql");
 

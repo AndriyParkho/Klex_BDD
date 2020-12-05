@@ -79,6 +79,8 @@ public class TestJDBC {
             // Établissement d’une connexion et Requête Simple
             System.out.println("Connecting to the database...");
             connection = DriverManager.getConnection(url, user, passwd);
+            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+            connection.setAutoCommit(false);
             System.out.println("connected.");
 
             // testSimpleQuery(connection);
@@ -92,11 +94,15 @@ public class TestJDBC {
             try (Statement statement = connection.createStatement()) {
                 for (String tableName : tables) {
                     statement.executeUpdate(JDBCUtilities.dropIfExist(tableName));
+                    connection.commit();
                 }
+                /* statement.executeUpdate("DROP SEQUENCE idAlbum_seq");
+                connection.commit(); */
             }
 
             // Running the script
-            JDBCUtilities.loadFile(sr, "ressources/CreateTables.sql");
+            JDBCUtilities.loadFile(sr, "ressources/transaction.sql");
+            /* JDBCUtilities.loadFile(sr, "ressources/CreateTables.sql");
             JDBCUtilities.loadFile(sr, "ressources/inserts/InsertCategorieMusique.sql");
             JDBCUtilities.loadFile(sr, "ressources/inserts/InsertAlbum.sql");
             JDBCUtilities.loadFile(sr, "ressources/inserts/InsertAlbumAPourCategorie.sql");
@@ -143,7 +149,7 @@ public class TestJDBC {
             JDBCUtilities.selectAll(connection, "Flux");
             JDBCUtilities.selectAll(connection, "FluxTexte");
             JDBCUtilities.selectAll(connection, "FluxAudio");
-            JDBCUtilities.selectAll(connection, "FluxVideo");
+            JDBCUtilities.selectAll(connection, "FluxVideo"); */
 
         } catch (SQLException e) {
             System.err.println("sql error !");
