@@ -31,6 +31,7 @@ public class SignUp extends View {
 		super(fenetre, switcherView, containerView, new String("Inscription"));
 
 		super.getContainerView().add(container, "Inscription");
+		super.getPanels().add("Inscription");
 		super.getSwitcherView().show(super.getContainerView() , "Inscription");
 
 		super.getFenetre().setSize(460, 350);

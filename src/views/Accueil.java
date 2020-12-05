@@ -32,6 +32,7 @@ public class Accueil extends View {
 		container.add(signUpButton);
 		
 		super.getContainerView().add(container, "Acceuil");
+		super.getPanels().add("Acceuil");
 		super.getSwitcherView().show(super.getContainerView() , "Acceuil");
 	}
 	
