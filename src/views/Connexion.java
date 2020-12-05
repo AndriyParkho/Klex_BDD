@@ -23,6 +23,7 @@ public class Connexion extends View {
 		super(fenetre, switcherView, containerView, new String("Se connecter"));
 
 		super.getContainerView().add(container, "Se connecter");
+		super.getPanels().add("Se connecter");
 		super.getSwitcherView().show(super.getContainerView() , "Se connecter");
 
 		super.getFenetre().setSize(453, 350);

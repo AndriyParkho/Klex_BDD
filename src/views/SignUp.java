@@ -25,11 +25,13 @@ public class SignUp extends View {
 	private JButton backButton = new JButton("<");
 	private JPanel container = new SignUpPanel();
 	private SignUpControl controller = new SignUpControl(this);
+	private JSpinner ageField = new JSpinner();
 	
 	public SignUp(JFrame fenetre, CardLayout switcherView, JPanel containerView) {
 		super(fenetre, switcherView, containerView, new String("Inscription"));
 
 		super.getContainerView().add(container, "Inscription");
+		super.getPanels().add("Inscription");
 		super.getSwitcherView().show(super.getContainerView() , "Inscription");
 
 		super.getFenetre().setSize(460, 350);
@@ -81,7 +83,6 @@ public class SignUp extends View {
 			lblAge.setBounds(253, 94, 47, 16);
 			add(lblAge);
 			
-			JSpinner ageField = new JSpinner();
 			ageField.setBounds(322, 91, 47, 22);
 			add(ageField);
 			
@@ -187,5 +188,15 @@ public class SignUp extends View {
 	public void setContainer(JPanel container) {
 		this.container = container;
 	}
+
+	public JSpinner getAgeField() {
+		return ageField;
+	}
+
+	public void setAgeField(JSpinner ageField) {
+		this.ageField = ageField;
+	}
+	
+	
 	
 }
