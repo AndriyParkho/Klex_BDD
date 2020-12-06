@@ -23,9 +23,9 @@ public class SignUp extends View {
 	private JTextField codeField;
 	private JButton validButton = new JButton("Valider");
 	private JButton backButton = new JButton("<");
+	private JSpinner ageField = new JSpinner();
 	private JPanel container = new SignUpPanel();
 	private SignUpControl controller = new SignUpControl(this);
-	private JSpinner ageField = new JSpinner();
 	
 	public SignUp(JFrame fenetre, CardLayout switcherView, JPanel containerView) {
 		super(fenetre, switcherView, containerView, new String("Inscription"));

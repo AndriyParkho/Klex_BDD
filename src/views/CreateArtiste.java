@@ -52,7 +52,7 @@ public class CreateArtiste extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("Ajoutez l'artiste :");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
-		lblNewLabel.setBounds(154, 44, 140, 16);
+		lblNewLabel.setBounds(154, 44, 140, 22);
 		contentPane.add(lblNewLabel);
 		
 		nomField = new JTextField(artisteInconnu);

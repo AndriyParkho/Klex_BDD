@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -41,6 +42,7 @@ public class InsertChoice extends View{
 		public InsertChxPanel() {
 			setLayout(null);
 			
+			ButtonGroup choixInsert = new ButtonGroup();
 			
 			lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
 			lblNewLabel.setBounds(94, 23, 89, 16);
@@ -49,10 +51,12 @@ public class InsertChoice extends View{
 			
 			filmChoice.setSelected(true);
 			filmChoice.setBounds(76, 59, 127, 25);
+			choixInsert.add(filmChoice);
 			add(filmChoice);
 			
 			
 			pisteChoice.setBounds(76, 89, 127, 25);
+			choixInsert.add(pisteChoice);
 			add(pisteChoice);
 			valideButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -74,6 +78,38 @@ public class InsertChoice extends View{
 			add(backButton);
 
 		}
+	}
+
+	public JLabel getLblNewLabel() {
+		return lblNewLabel;
+	}
+
+	public void setLblNewLabel(JLabel lblNewLabel) {
+		this.lblNewLabel = lblNewLabel;
+	}
+
+	public JRadioButton getFilmChoice() {
+		return filmChoice;
+	}
+
+	public void setFilmChoice(JRadioButton filmChoice) {
+		this.filmChoice = filmChoice;
+	}
+
+	public JRadioButton getPisteChoice() {
+		return pisteChoice;
+	}
+
+	public void setPisteChoice(JRadioButton pisteChoice) {
+		this.pisteChoice = pisteChoice;
+	}
+
+	public JButton getValideButton() {
+		return valideButton;
+	}
+
+	public void setValideButton(JButton valideButton) {
+		this.valideButton = valideButton;
 	}
 
 }

@@ -26,7 +26,7 @@ public class Fonctions extends View {
 		super.getPanels().add("Fonctions");
 		super.getSwitcherView().show(super.getContainerView() , "Fonctions");
 
-		super.getFenetre().setSize(460, 350);
+		super.getFenetre().setSize(453, 350);
 		super.getFenetre().setLocationRelativeTo(null);
 	}
 

@@ -30,7 +30,7 @@ public class InsertFilm extends View{
 		super.getPanels().add("Insertion film 1");
 		super.getSwitcherView().show(super.getContainerView() , "Insertion film 1");
 
-		super.getFenetre().setSize(287, 220);
+		super.getFenetre().setSize(282, 210);
 		super.getFenetre().setLocationRelativeTo(null);
 	}
 
@@ -81,7 +81,7 @@ public class InsertFilm extends View{
 			});
 			
 			
-			suivButton.setBounds(93, 149, 97, 25);
+			suivButton.setBounds(93, 131, 97, 25);
 			add(suivButton);
 
 		}
