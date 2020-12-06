@@ -16,22 +16,10 @@ public abstract class DAO<T> {
     public abstract void create(T obj) throws SQLException;
 
     /**
-     * Permet de créer ou d'update un objet
-     * @param obj
-     */
-    public abstract void createOrUpdate(T obj) throws SQLException;
-
-    /**
      * Permet de trouver un objet
      * @param obj
      */
     public abstract T find(T obj) throws SQLException;
-
-    /**
-     * Permet de mettre à jour les données d'une entrée dans la base 
-     * @param obj
-     */
-    public abstract void update(T obj) throws SQLException;
 
     /**
      * Permet la suppression d'une entrée de la base

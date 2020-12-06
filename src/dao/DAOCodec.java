@@ -8,61 +8,28 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import connections.JDBCUtilities;
 import model.Codec;
 
-public class DAOCodec extends DAO<Codec> {
+public class DAOCodec {
 
-    @Override
     public void create(Codec codec) throws SQLException {
         final String query = "INSERT INTO Codec VALUES (?, ?)";
 
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
-            statement.setString(1, codec.getNom());
-            statement.setString(2, codec.getType());
+            statement.setString(1, codec.getNomCodec());
+            statement.setString(2, codec.getTypeCodec());
+
             statement.executeUpdate();
         }
     }
 
-    @Override
-    public void createOrUpdate(Codec codec) throws SQLException {
-        try {
-            this.create(codec);
-        } catch (final SQLIntegrityConstraintViolationException e) {
-            System.out.println(codec + " est déjà dans la BDD");
-            if (e.getErrorCode() != 1) {
-                JDBCUtilities.printSQLException(e);
-            }
-        }
+    public void find(String nomCodec, String typeCodec) throws SQLException {
+        final String query = String.format("SELECT * FROM Codec WHERE nomCodec = '%s' AND typeCodec = '%s'", nomCodec, typeCodec);
+        this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
+                .executeUpdate(query);
     }
 
-    @Override
-    public Codec find(final Codec codec) throws SQLException {
-        return this.find(codec.getNom(), codec.getType());
-    }
-
-    public Codec find(final String nom, final String type) throws SQLException {
-        Codec codec = null;
-        final String query = "SELECT * FROM Codec WHERE nomCodec = '" + nom + "' AND typeCodec = '" + type + "'";
-        try (ResultSet rs = this.connection
-                .createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE).executeQuery(query)) {
-            // le ResultSet n'est pas vide, on construit un nouvel objet qui contient les
-            // attributs de la ligne
-            if (rs.first()) {
-                codec = new Codec(nom, type);
-            }
-        }
-        connection.commit();
-
-        return codec;
-    }
-
-    @Override
-    public void update(final Codec codec) throws SQLException {
-        this.createOrUpdate(codec);
-    }
-
-    @Override
-    public void delete(final Codec codec) throws SQLException {
-        final String query = "DELETE FROM Codec WHERE nomCodec = '" + codec.getNom() + "' AND typeCodec = '"
-                + codec.getType() + "'";
-        this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE).executeUpdate(query);
+    public void delete(String nomCodec, String typeCodec) throws SQLException {
+        final String query = String.format("DELETE FROM Codec WHERE nomCodec = '%s' AND typeCodec = '%s'", nomCodec, typeCodec);
+        this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
+                .executeUpdate(query);
     }
 }
