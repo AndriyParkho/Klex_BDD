@@ -10,11 +10,14 @@ public class DeleteFilmControl {
 	}
 	
 	public void clicSuiv() {
-		// TODO
+		// Récupère les id du film et lance la fonction de suppression du film 
 		
 	}
 	
 	public void clicBack() {
 		view.getSwitcherView().show(view.getContainerView(), "Choix supprimer");
+		view.getFenetre().setTitle("Choix de suppression");
+		view.getFenetre().setSize(282, 210);
+		view.getFenetre().setLocationRelativeTo(null);
 	}
 }

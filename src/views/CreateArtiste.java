@@ -18,7 +18,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileSystemView;
 
 import controller.CreateArtisteControl;
-import model.Artiste;
+import model.FichierFilm;
 
 public class CreateArtiste extends JFrame {
 	private String artisteInconnu;
@@ -29,14 +29,17 @@ public class CreateArtiste extends JFrame {
 	private JTextField photoField;
 	private JButton valideButton = new JButton("Valider");
 	private JTextArea bioField = new JTextArea();
-	private Artiste artiste;
+	private FichierFilm fichierFilm;
+//	private FichierPiste fichierPiste;
 	private CreateArtisteControl controller = new CreateArtisteControl(this);
 
 	/**
 	 * Create the frame.
 	 */
-	public CreateArtiste(String artisteInconnu) {
+	public CreateArtiste(String artisteInconnu, FichierFilm fichierFilm) { // , FichierPiste fichierPiste
 		this.artisteInconnu = artisteInconnu;
+		this.fichierFilm = fichierFilm;
+//		this.fichierPiste = fichierPiste;
 		setTitle("Ajout artiste");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 344);

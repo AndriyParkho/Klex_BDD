@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -34,6 +35,10 @@ public class Accueil extends View {
 		super.getContainerView().add(container, "Acceuil");
 		super.getPanels().add("Acceuil");
 		super.getSwitcherView().show(super.getContainerView() , "Acceuil");
+		
+
+        super.getFenetre().setSize((int) (Toolkit.getDefaultToolkit().getScreenSize().width*0.2), (int) (Toolkit.getDefaultToolkit().getScreenSize().height*0.2));
+        super.getFenetre().setLocationRelativeTo(null);
 	}
 	
 	class ConnectListener implements ActionListener{
