@@ -1,16 +1,14 @@
 package dao;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 
-import connections.JDBCUtilities;
 import model.FilmAPourCategorie;
 
 public class DAOFilmAPourCategorie extends DAO<FilmAPourCategorie> {
-    
+
     @Override
     public void create(FilmAPourCategorie filmAPourCategorie) throws SQLException {
         final String query = "INSERT INTO FilmAPourCategorie VALUES (?, ?, ?)";
@@ -25,16 +23,24 @@ public class DAOFilmAPourCategorie extends DAO<FilmAPourCategorie> {
         }
     }
 
-    public void find(String titreFilm, String anneeSortie, String typeCategorieFilm) throws SQLException {
-        final String query = String.format("SELECT * FROM FilmAPourCategorie WHERE titreFilm = '%s' AND anneeSortie = '%s' AND typeCategorieFilm = '%s'", titreFilm, Date.valueOf(anneeSortie),
-        typeCategorieFilm);
-        this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
-                .executeUpdate(query);
+    @Override
+    public ResultSet find(FilmAPourCategorie filmAPourCategorie) throws SQLException {
+        return this.find(filmAPourCategorie.getTitreFilm(), filmAPourCategorie.getAnneeSortie(),
+                filmAPourCategorie.getTypeCategorieFilm());
     }
 
-    public void delete(String titreFilm, String anneeSortie, String typeCategorieFilm) throws SQLException {
-        final String query = String.format("SELECT * FROM FilmAPourCategorie WHERE titreFilm = '%s' AND anneeSortie = '%s' AND typeCategorieFilm = '%s'", titreFilm, Date.valueOf(anneeSortie),
-        typeCategorieFilm);
+    public ResultSet find(String titreFilm, Date anneeSortie, String typeCategorieFilm) throws SQLException {
+        final String query = String.format(
+                "SELECT * FROM FilmAPourCategorie WHERE titreFilm = '%s' AND anneeSortie = '%s' AND typeCategorieFilm = '%s'",
+                titreFilm, anneeSortie, typeCategorieFilm);
+        return this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
+                .executeQuery(query);
+    }
+
+    public void delete(String titreFilm, Date anneeSortie, String typeCategorieFilm) throws SQLException {
+        final String query = String.format(
+                "SELECT * FROM FilmAPourCategorie WHERE titreFilm = '%s' AND anneeSortie = '%s' AND typeCategorieFilm = '%s'",
+                titreFilm, anneeSortie, typeCategorieFilm);
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeUpdate(query);
     }

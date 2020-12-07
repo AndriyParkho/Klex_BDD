@@ -3,7 +3,6 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 
 import model.AlbumAPourCategorie;
 
@@ -21,14 +20,23 @@ public class DAOAlbumAPourCategorie extends DAO<AlbumAPourCategorie> {
         }
     }
 
-    public void find(long idAlbum, String typeCategorieMusique) throws SQLException {
-        final String query = String.format("SELECT * FROM AlbumAPourCategorie WHERE idAlbum = %ld AND typeCategorieMusique = '%s'", idAlbum, typeCategorieMusique);
-        this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
-                .executeUpdate(query);
+    @Override
+    public ResultSet find(AlbumAPourCategorie albumAPourCategorie) throws SQLException {
+        return this.find(albumAPourCategorie.getIdAlbum(), albumAPourCategorie.getTypeCategorieMusique());
+    }
+
+    public ResultSet find(long idAlbum, String typeCategorieMusique) throws SQLException {
+        final String query = String.format(
+                "SELECT * FROM AlbumAPourCategorie WHERE idAlbum = %ld AND typeCategorieMusique = '%s'", idAlbum,
+                typeCategorieMusique);
+        return this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
+                .executeQuery(query);
     }
 
     public void delete(long idAlbum, String typeCategorieMusique) throws SQLException {
-        final String query = String.format("DELETE FROM AlbumAPourCategorie WHERE idAlbum = %ld AND typeCategorieMusique = '%s'", idAlbum, typeCategorieMusique);
+        final String query = String.format(
+                "DELETE FROM AlbumAPourCategorie WHERE idAlbum = %ld AND typeCategorieMusique = '%s'", idAlbum,
+                typeCategorieMusique);
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeUpdate(query);
     }

@@ -2,11 +2,8 @@ package dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 
-import connections.JDBCUtilities;
 import model.Album;
 
 public class DAOAlbum extends DAO<Album> {
@@ -23,7 +20,6 @@ public class DAOAlbum extends DAO<Album> {
                 album.setId(nextID_from_seq);
             }
         }
-        System.out.println(nextID_from_seq);
 
         try (PreparedStatement statementAlbum = this.connection.prepareStatement(insertAlbumQuery)) {
             statementAlbum.setString(1, album.getTitre());
@@ -34,10 +30,15 @@ public class DAOAlbum extends DAO<Album> {
         }
     }
 
-    public void find(long idAlbum) throws SQLException {
+    @Override
+    public ResultSet find(Album album) throws SQLException {
+        return this.find(album.getId());
+    }
+
+    public ResultSet find(long idAlbum) throws SQLException {
         final String query = String.format("SELECT * FROM Album WHERE idAlbum = %ld", idAlbum);
-        this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
-                .executeUpdate(query);
+        return this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
+                .executeQuery(query);
     }
 
     public void delete(long idAlbum) throws SQLException {

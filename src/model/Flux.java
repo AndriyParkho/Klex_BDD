@@ -1,16 +1,11 @@
 package model;
 
-import java.util.ArrayList;
-
 public abstract class Flux {
     private long id = 0;
     private int debit = 0;
-    private ArrayList<Codec> codecs = new ArrayList<Codec>();
-    
-    public Flux(long id, int debit) {
-    	this.id = id;
-    	this.debit = debit;
-    }
+    private long idFichier;
+    private String nomCodec;
+    private String typeCodec;
 
     public long getId() {
         return id;
@@ -27,25 +22,34 @@ public abstract class Flux {
     public void setDebit(int debit) {
         this.debit = debit;
     }
-    
-    public ArrayList<Codec> getCodec() {
-        return codecs;
+
+    public long getIdFichier() {
+        return idFichier;
     }
 
-    public void setCodec(ArrayList<Codec> codecs) {
-        this.codecs = codecs;
-    }
-    
-    public void addCodec(Codec codec) {
-    	this.codecs.add(codec);
+    public void setIdFichier(long idFichier) {
+        this.idFichier = idFichier;
     }
 
-    public Codec getCodec(int index) {
-        return this.codecs.get(index);
+    public String getNomCodec() {
+        return nomCodec;
+    }
+
+    public void setNomCodec(String nomCodec) {
+        this.nomCodec = nomCodec;
+    }
+
+    public String getTypeCodec() {
+        return typeCodec;
+    }
+
+    public void setTypeCodec(String typeCodec) {
+        this.typeCodec = typeCodec;
     }
 
     @Override
     public String toString() {
-        return "id=" + id + ", debit=" + debit;
+        return "Flux [debit=" + debit + ", id=" + id + ", idFichier=" + idFichier + ", nomCodec=" + nomCodec
+                + ", typeCodec=" + typeCodec + "]";
     }
 }

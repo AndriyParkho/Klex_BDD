@@ -1,7 +1,6 @@
 package model;
 
 import java.sql.Date;
-import java.util.Objects;
 
 public class Artiste {
     private long id = 0;
@@ -75,22 +74,5 @@ public class Artiste {
     public String toString() {
         return "Artiste [biographie=" + biographie + ", dateNaissance=" + dateNaissance + ", id=" + id + ", nom=" + nom
                 + ", specialite=" + specialite + ", urlPhoto=" + urlPhoto + "]";
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, nom, dateNaissance, urlPhoto, biographie, specialite);
-    }
-    
-    @Override
-    public boolean equals(final Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj.getClass() != this.getClass()) {
-            return false;
-        }
-        final Artiste other = (Artiste) obj;
-        return (id == other.id);
     }
 }

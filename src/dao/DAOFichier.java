@@ -3,12 +3,10 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 
-import connections.JDBCUtilities;
 import model.Fichier;
 
-public class DAOFichier extends DAO<Fichier>{
+public class DAOFichier extends DAO<Fichier> {
 
     @Override
     public void create(Fichier fichier) throws SQLException {
@@ -18,15 +16,19 @@ public class DAOFichier extends DAO<Fichier>{
             statement.setLong(1, fichier.getTaille());
             statement.setDate(2, fichier.getDateDepot());
             statement.setString(3, fichier.getEmail());
-
             statement.executeUpdate();
         }
     }
 
-    public void find(long idFichier) throws SQLException {
+    @Override
+    public ResultSet find(Fichier fichier) throws SQLException {
+        return this.find(fichier.getId());
+    }
+
+    public ResultSet find(long idFichier) throws SQLException {
         final String query = String.format("SELECT * FROM Fichier WHERE idFichier = '%ld'", idFichier);
-        this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
-                .executeUpdate(query);    
+        return this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
+                .executeQuery(query);
     }
 
     public void delete(long idFichier) throws SQLException {

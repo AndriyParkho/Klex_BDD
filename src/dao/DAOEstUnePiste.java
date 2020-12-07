@@ -3,30 +3,39 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 
 import model.EstUnePiste;
 
-public class DAOEstUnePiste extends DAO<EstUnePiste>{
+public class DAOEstUnePiste extends DAO<EstUnePiste> {
 
     @Override
     public void create(EstUnePiste estUnePiste) throws SQLException {
-        final String query = "INSERT INTO EstUnePiste VALUES (idFichier_seq.currval, idPiste_seq.currval, idAlbum_seq.currval)";
+        final String query = "INSERT INTO EstUnePiste VALUES (idFichier_seq.currval, ?, idAlbum_seq.currval)";
 
         System.out.println("Statement EstUnePiste\n");
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
+            statement.setInt(1, estUnePiste.getNumPiste());
             statement.executeUpdate();
         }
     }
 
-    public void find(long idFichier, long idPiste, long idAlbum) throws SQLException {
-        final String query = String.format("SELECT * FROM EstUnePiste WHERE idFichier = %ld AND idPiste = %ld AND idAlbum = %ld", idFichier, idPiste, idAlbum);
-        this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
-                .executeUpdate(query);
+    @Override
+    public ResultSet find(EstUnePiste estUnePiste) throws SQLException {
+        return this.find(estUnePiste.getIdFichier(), estUnePiste.getNumPiste(), estUnePiste.getIdAlbum());
     }
 
-    public void delete(long idFichier, long idPiste, long idAlbum) throws SQLException {
-        final String query = String.format("DELETE FROM EstUnePiste WHERE idFichier = %ld AND idPiste = %ld AND idAlbum = %ld", idFichier, idPiste, idAlbum);
+    public ResultSet find(long idFichier, long numPiste, long idAlbum) throws SQLException {
+        final String query = String.format(
+                "SELECT * FROM EstUnePiste WHERE idFichier = %ld AND numPiste = %ld AND idAlbum = %ld", idFichier,
+                numPiste, idAlbum);
+        return this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
+                .executeQuery(query);
+    }
+
+    public void delete(long idFichier, long numPiste, long idAlbum) throws SQLException {
+        final String query = String.format(
+                "DELETE FROM EstUnePiste WHERE idFichier = %ld AND numPiste = %ld AND idAlbum = %ld", idFichier,
+                numPiste, idAlbum);
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeUpdate(query);
     }

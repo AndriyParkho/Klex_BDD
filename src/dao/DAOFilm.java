@@ -4,9 +4,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 
-import connections.JDBCUtilities;
 import model.Film;
 
 public class DAOFilm extends DAO<Film> {
@@ -21,19 +19,25 @@ public class DAOFilm extends DAO<Film> {
             statementFilm.setString(3, film.getResume());
             statementFilm.setInt(4, film.getAgeMin());
             statementFilm.setString(5, film.getUrlAffiche());
-
             statementFilm.executeUpdate();
         }
     }
 
-    public void find(String titreFilm, String anneeSortie) throws SQLException {
-        final String query = String.format("SELECT * FROM Film WHERE titreFilm = '%s' AND anneeSortie = '%s'", titreFilm, Date.valueOf(anneeSortie));
-        this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
-                .executeUpdate(query);
+    @Override
+    public ResultSet find(Film film) throws SQLException {
+        return this.find(film.getTitreFilm(), film.getAnneeSortie());
     }
 
-    public void delete(String titreFilm, String anneeSortie) throws SQLException {
-        final String query = String.format("DELETE FROM Film WHERE titreFilm = '%s' AND anneeSortie = '%s'", titreFilm, Date.valueOf(anneeSortie));
+    public ResultSet find(String titreFilm, Date anneeSortie) throws SQLException {
+        final String query = String.format("SELECT * FROM Film WHERE titreFilm = '%s' AND anneeSortie = '%s'",
+                titreFilm, anneeSortie);
+        return this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
+                .executeQuery(query);
+    }
+
+    public void delete(String titreFilm, Date anneeSortie) throws SQLException {
+        final String query = String.format("DELETE FROM Film WHERE titreFilm = '%s' AND anneeSortie = '%s'", titreFilm,
+                anneeSortie);
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeUpdate(query);
     }

@@ -1,20 +1,14 @@
 package tests;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.ResultSet;
-import java.sql.Statement;
-
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import connections.ConnectionOracle;
-import connections.JDBCUtilities;
-
-import model.Utilisateur;
 import dao.DAOUtilisateur;
+import model.Utilisateur;
 
 public class TestDAO {
 
@@ -50,7 +44,7 @@ public class TestDAO {
                 fonctionsUtilisateur.create(utilisateur);
 
                 System.out.println("Inscription terminée.");
-                fonctionsUtilisateur.getConnection().commit();
+                ConnectionOracle.getInstance().commit();
             }
             else {
                 System.out.println("Donnez votre email");

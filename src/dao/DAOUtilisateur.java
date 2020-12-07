@@ -3,9 +3,7 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 
-import connections.JDBCUtilities;
 import model.Utilisateur;
 
 public class DAOUtilisateur extends DAO<Utilisateur> {
@@ -22,9 +20,13 @@ public class DAOUtilisateur extends DAO<Utilisateur> {
             statement.setInt(4, utilisateur.getAge());
             statement.setString(5, utilisateur.getLangueDiffusion());
             statement.setInt(6, utilisateur.getCode());
-
             statement.executeUpdate();
         }
+    }
+
+    @Override
+    public ResultSet find(Utilisateur utilisateur) throws SQLException {
+        return this.find(utilisateur.getEmail());
     }
 
     public ResultSet find(String email) throws SQLException {

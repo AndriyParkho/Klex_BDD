@@ -1,6 +1,6 @@
 CREATE SEQUENCE idAlbum_seq;
 CREATE TABLE Album(
-  idAlbum integer,
+  idAlbum integer NOT NULL,
   titreAlbum varchar(50) NOT NULL,
   nomGroupe varchar(50) NOT NULL,
   dateSortieAlbum date NOT NULL,
@@ -15,43 +15,43 @@ CREATE TABLE Utilisateur(
   age integer NOT NULL CHECK (age > 0),
   langueDiffusion varchar(100) NOT NULL CHECK (langueDiffusion in ('Français', 'Anglais', 'Italien', 'Espagnol', 'Allemand')),
   code integer NOT NULL CHECK (code BETWEEN 0000 AND 9999), -- check que le code est bien constitué que de 4 chiffres
+  -- NUMERIC(4, 0) NOT NULL,
   CONSTRAINT pkUtilisateur PRIMARY KEY (email)
 );
 
 CREATE SEQUENCE idFichier_seq;
 CREATE TABLE Fichier(
-  idFichier integer,
+  idFichier integer NOT NULL,
   taille integer NOT NULL,
   dateDepot DATE NOT NULL,
   email varchar(255) NOT NULL REFERENCES Utilisateur (email) ON DELETE CASCADE, -- la suppression d'un utilisateur supprime ses fichiers
   CONSTRAINT pkFichier PRIMARY KEY (idFichier)
 );
 
-CREATE SEQUENCE idPiste_seq;
+-- CREATE SEQUENCE idPiste_seq;
 CREATE TABLE Piste(
-  idPiste integer,
+  -- idPiste integer,
   numPiste integer NOT NULL,
   titrePiste varchar(50) NOT NULL,
-  --dureePiste interval day (0) to second(0) NOT NULL, -- select only hour-min-seconds, see REGEXP_SUBSTR
-  dureePiste integer NOT NULL,
+  dureePiste interval day (0) to second(0) NOT NULL, -- select only hour-min-seconds, see REGEXP_SUBSTR
   idAlbum integer NOT NULL REFERENCES Album (idAlbum) ON DELETE CASCADE, -- la suppression d'un album supprime ses pistes
   idFichier integer NOT NULL REFERENCES Fichier (idFichier) ON DELETE CASCADE, -- la suppression d'un fichier supprime la piste associée
-  CONSTRAINT pkPiste PRIMARY KEY (idPiste, idAlbum)
+  CONSTRAINT pkPiste PRIMARY KEY (numPiste, idAlbum)
 );
 
 CREATE TABLE PisteAPourCategorie(
-  idPiste integer NOT NULL,
+  numPiste integer NOT NULL,
   idAlbum integer NOT NULL,
   typeCategorieMusique varchar(20) NOT NULL REFERENCES CategorieMusique (typeCategorieMusique) ON DELETE CASCADE,
-  CONSTRAINT fkPisteAPourCategoriePiste FOREIGN KEY (idPiste, idAlbum) REFERENCES Piste (idPiste, idAlbum) ON DELETE CASCADE,
-  CONSTRAINT pkPisteAPourCategorie PRIMARY KEY (idPiste, idAlbum, typeCategorieMusique)
+  CONSTRAINT fkPisteAPourCategoriePiste FOREIGN KEY (numPiste, idAlbum) REFERENCES Piste (numPiste, idAlbum) ON DELETE CASCADE,
+  CONSTRAINT pkPisteAPourCategorie PRIMARY KEY (numPiste, idAlbum, typeCategorieMusique)
 );
 
 CREATE TABLE EstUnePiste(
   idFichier integer NOT NULL REFERENCES Fichier (idFichier) ON DELETE CASCADE,
-  idPiste integer NOT NULL,
+  numPiste integer NOT NULL,
   idAlbum integer NOT NULL,
-  CONSTRAINT fkEstUnePistePiste FOREIGN KEY (idPiste, idAlbum) REFERENCES Piste (idPiste, idAlbum) ON DELETE CASCADE,
+  CONSTRAINT fkEstUnePistePiste FOREIGN KEY (numPiste, idAlbum) REFERENCES Piste (numPiste, idAlbum) ON DELETE CASCADE,
   CONSTRAINT pkEstUnePiste PRIMARY KEY (idFichier)
 );
 
@@ -87,7 +87,7 @@ CREATE TABLE SupporteCodec(
 
 CREATE SEQUENCE idArtiste_seq;
 CREATE TABLE Artiste(
-  idArtiste integer,
+  idArtiste integer NOT NULL,
   nomArtiste varchar(50) NOT NULL,
   dateNaissance date,
   urlPhoto varchar(150) NOT NULL,
@@ -162,15 +162,15 @@ CREATE TABLE APourInstrument(
   instrument varchar(50) NOT NULL,
   idArtiste integer NOT NULL,
   idAlbum integer NOT NULL,
-  idPiste integer NOT NULL REFERENCES Artiste (idArtiste) ON DELETE CASCADE,
-  CONSTRAINT fkAPourInstrumentPiste FOREIGN KEY (idPiste, idAlbum) REFERENCES Piste (idPiste, idAlbum) ON DELETE CASCADE,
-  CONSTRAINT pkAPourInstrument PRIMARY KEY (idArtiste, idPiste)
+  numPiste integer NOT NULL REFERENCES Artiste (idArtiste) ON DELETE CASCADE,
+  CONSTRAINT fkAPourInstrumentPiste FOREIGN KEY (numPiste, idAlbum) REFERENCES Piste (numPiste, idAlbum) ON DELETE CASCADE,
+  CONSTRAINT pkAPourInstrument PRIMARY KEY (idArtiste, numPiste)
 );
 
 /* revoir la taille pour les nom de codec */
 CREATE SEQUENCE idFlux_seq;
 CREATE TABLE Flux(
-  idFlux integer GENERATED ALWAYS AS IDENTITY,
+  idFlux integer NOT NULL,
   debit float NOT NULL CHECK (debit > 0),
   idFichier integer NOT NULL REFERENCES Fichier (idFichier) ON DELETE CASCADE,
   nomCodec varchar(20) NOT NULL,
