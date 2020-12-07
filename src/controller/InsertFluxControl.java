@@ -12,7 +12,7 @@ public class InsertFluxControl {
 	public void clicSuiv() {
 		if(view.getNumeroFlux() <= view.getNbMaxFlux()) {
 			// TODO
-			new InsertFlux(view.getFenetre(), view.getSwitcherView(), view.getContainerView(), view.getNumeroFlux() + 1, view.getNbMaxFlux());
+			new InsertFlux(view.getFenetre(), view.getSwitcherView(), view.getContainerView(), view.getNumeroFlux() + 1, view.getNbMaxFlux(), view.getFichierFilm(), view.getFichierPiste());
 		} else {
 			// TODO
 			view.getSwitcherView().show(view.getContainerView(), "Fonctions");

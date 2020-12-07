@@ -23,10 +23,10 @@ public class InsertFilm extends View{
 	private JPanel container = new InsertFilmPanel();
 	private FichierFilm fichierFilm = new FichierFilm();
 	private InsertFilmControl controller = new InsertFilmControl(this);
-
+	
 	public InsertFilm(JFrame fenetre, CardLayout switcherView, JPanel containerView) {
-		super(fenetre, switcherView, containerView, new String("Insrer un film"));
-
+		super(fenetre, switcherView, containerView, new String("Insérer un film"));
+		
 		super.getContainerView().add(container, "Insertion film 1");
 		super.getPanels().add("Insertion film 1");
 		super.getSwitcherView().show(super.getContainerView() , "Insertion film 1");
@@ -43,7 +43,7 @@ public class InsertFilm extends View{
 		 */
 		public InsertFilmPanel() {
 			setLayout(null);
-
+			
 			JLabel lblFilmInfos = new JLabel("Film infos :");
 			lblFilmInfos.setFont(new Font("Tahoma", Font.BOLD, 18));
 			lblFilmInfos.setBounds(93, 13, 104, 16);
@@ -53,26 +53,26 @@ public class InsertFilm extends View{
 					controller.clicBack();
 				}
 			});
-
-
+			
+			
 			backButton.setBounds(12, 11, 47, 34);
 			add(backButton);
-
+			
 			titreField = new JTextField();
 			titreField.setBounds(109, 61, 116, 22);
 			add(titreField);
 			titreField.setColumns(10);
-
+			
 			JLabel lblNewLabel = new JLabel("Titre :");
 			lblNewLabel.setBounds(50, 64, 47, 16);
 			add(lblNewLabel);
-
+			
 			anneeField = new JTextField();
 			anneeField.setColumns(10);
 			anneeField.setBounds(109, 96, 116, 22);
 			add(anneeField);
-
-			JLabel lblAnnenDe = new JLabel("Anne :");
+			
+			JLabel lblAnnenDe = new JLabel("Année :");
 			lblAnnenDe.setBounds(50, 99, 47, 16);
 			add(lblAnnenDe);
 			suivButton.addActionListener(new ActionListener() {
@@ -80,8 +80,8 @@ public class InsertFilm extends View{
 					controller.clicSuiv();
 				}
 			});
-
-
+			
+			
 			suivButton.setBounds(93, 131, 97, 25);
 			add(suivButton);
 
@@ -149,6 +149,6 @@ public class InsertFilm extends View{
 	}
 
 
-
+	
 
 }

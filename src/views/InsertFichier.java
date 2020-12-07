@@ -15,8 +15,8 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
 import controller.InsertFichierControl;
-import model.FichierFilm;
-import model.FichierPiste;
+import model.aggregates.FichierFilm;
+import model.aggregates.FichierPiste;
 
 public class InsertFichier extends View{
 	private JTextField dateField;

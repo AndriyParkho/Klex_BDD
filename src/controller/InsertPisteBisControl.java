@@ -1,6 +1,5 @@
 package controller;
 
-import views.CreateArtiste;
 import views.FluxNbChoice;
 import views.InsertPisteBis;
 
@@ -13,7 +12,7 @@ public class InsertPisteBisControl {
 	
 	public void clicSuiv() {
 		// TODO
-		new FluxNbChoice(view.getFenetre(), view.getSwitcherView(), view.getContainerView());
+		new FluxNbChoice(view.getFenetre(), view.getSwitcherView(), view.getContainerView(), null, view.getFichierPiste());
 		// Si un artiste existe pas
 //		new CreateArtiste("Exemple");
 	}

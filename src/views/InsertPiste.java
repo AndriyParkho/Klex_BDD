@@ -12,8 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.InsertPisteControl;
-import model.Album;
-import model.Piste;
+import model.aggregates.FichierPiste;
 
 public class InsertPiste extends View{
 	private JTextField titrePisteField;
@@ -23,10 +22,10 @@ public class InsertPiste extends View{
 	private JPanel container = new InsertPistePanel();
 	private FichierPiste fichierPiste = new FichierPiste();
 	private InsertPisteControl controller = new InsertPisteControl(this);
-
+	
 	public InsertPiste(JFrame fenetre, CardLayout switcherView, JPanel containerView) {
-		super(fenetre, switcherView, containerView, new String("Insï¿½rer une piste"));
-
+		super(fenetre, switcherView, containerView, new String("Insérer une piste"));
+		
 		super.getContainerView().add(container, "Insertion piste 1");
 		super.getPanels().add("Insertion piste 1");
 		super.getSwitcherView().show(super.getContainerView() , "Insertion piste 1");
@@ -43,7 +42,7 @@ public class InsertPiste extends View{
 		 */
 		public InsertPistePanel() {
 			setLayout(null);
-
+			
 			JLabel lblFilmInfos = new JLabel("Piste infos :");
 			lblFilmInfos.setFont(new Font("Tahoma", Font.BOLD, 18));
 			lblFilmInfos.setBounds(85, 13, 116, 16);
@@ -53,25 +52,25 @@ public class InsertPiste extends View{
 					controller.clicBack();
 				}
 			});
-
-
+			
+			
 			backButton.setBounds(12, 11, 47, 34);
 			add(backButton);
-
+			
 			titrePisteField = new JTextField();
 			titrePisteField.setBounds(109, 61, 116, 22);
 			add(titrePisteField);
 			titrePisteField.setColumns(10);
-
+			
 			JLabel lblNewLabel = new JLabel("Titre piste :");
 			lblNewLabel.setBounds(30, 64, 67, 16);
 			add(lblNewLabel);
-
+			
 			titreAlbumField = new JTextField();
 			titreAlbumField.setColumns(10);
 			titreAlbumField.setBounds(109, 96, 116, 22);
 			add(titreAlbumField);
-
+			
 			JLabel lblAnnenDe = new JLabel("Titre album :");
 			lblAnnenDe.setBounds(22, 99, 75, 16);
 			add(lblAnnenDe);
@@ -80,8 +79,8 @@ public class InsertPiste extends View{
 					controller.clicSuiv();
 				}
 			});
-
-
+			
+			
 			suivButton.setBounds(93, 131, 97, 25);
 			add(suivButton);
 		}
@@ -129,14 +128,17 @@ public class InsertPiste extends View{
 	}
 
 
-	public Piste getPiste() {
-		return piste;
+	public FichierPiste getFichierPiste() {
+		return fichierPiste;
 	}
 
 
-	public void setPiste(Piste piste) {
-		this.piste = piste;
+	public void setFichierPiste(FichierPiste fichierPiste) {
+		this.fichierPiste = fichierPiste;
 	}
+
+
+	
 
 
 }

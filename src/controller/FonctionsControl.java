@@ -1,8 +1,11 @@
 package controller;
 
+import java.awt.Toolkit;
+
 import views.DeleteChoice;
 import views.Fonctions;
 import views.InsertChoice;
+import views.SelectClient;
 
 public class FonctionsControl {
 	private Fonctions view;
@@ -16,7 +19,7 @@ public class FonctionsControl {
 	}
 	
 	public void clicSelect() {
-		// Page selectionner
+		new SelectClient(view.getFenetre(), view.getSwitcherView(), view.getContainerView());
 	}
 	
 	public void clicDelete() {
@@ -24,6 +27,9 @@ public class FonctionsControl {
 	}
 	
 	public void clicDisconnect() {
-		view.getSwitcherView().show(view.getContainerView(), "Se connecter");
+		view.getSwitcherView().show(view.getContainerView(), "Acceuil");
+		view.getFenetre().setTitle("Acceuil");
+		view.getFenetre().setSize((int) (Toolkit.getDefaultToolkit().getScreenSize().width*0.2), (int) (Toolkit.getDefaultToolkit().getScreenSize().height*0.2));
+        view.getFenetre().setLocationRelativeTo(null);
 	}
 }

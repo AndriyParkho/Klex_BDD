@@ -19,8 +19,7 @@ import javax.swing.SpinnerNumberModel;
 
 import controller.InsertFluxControl;
 import model.FichierFilm;
-import model.FichierPiste;
-import model.Flux;
+import model.aggregates.FichierPiste;
 
 public class InsertFlux extends View{
 	private int numeroFlux;

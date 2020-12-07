@@ -36,10 +36,10 @@ public class InsertFilmBis extends View{
 	private FichierFilm fichierFilm;
 	private InsertFilmBisControl controller = new InsertFilmBisControl(this);
 
-	public InsertFilmBis(JFrame fenetre, CardLayout switcherView, JPanel containerView, FichierFilm film) {
-		super(fenetre, switcherView, containerView, new String("Insrer un film"));
-		this.fichierFilm = film;
-
+	public InsertFilmBis(JFrame fenetre, CardLayout switcherView, JPanel containerView, FichierFilm fichierFilm) {
+		super(fenetre, switcherView, containerView, new String("Insérer un film"));
+		this.fichierFilm = fichierFilm;
+		
 		super.getContainerView().add(container, "Insertion film 2");
 		super.getPanels().add("Insertion film 2");
 		super.getSwitcherView().show(super.getContainerView() , "Insertion film 2");
@@ -55,40 +55,40 @@ public class InsertFilmBis extends View{
 		 */
 		public InsertFilmBisPanel() {
 			setLayout(null);
-
+			
 			JLabel lblFilmInfos = new JLabel("Film infos :");
 			lblFilmInfos.setFont(new Font("Tahoma", Font.BOLD, 18));
 			lblFilmInfos.setBounds(172, 13, 104, 16);
 			add(lblFilmInfos);
 			resumeField.setWrapStyleWord(true);
 			resumeField.setLineWrap(true);
-
-
+			
+			
 			resumeField.setBounds(29, 82, 392, 62);
 			add(resumeField);
-
-			JLabel lblNewLabel = new JLabel("Rsum :");
+			
+			JLabel lblNewLabel = new JLabel("Résumé :");
 			lblNewLabel.setBounds(29, 60, 56, 16);
 			add(lblNewLabel);
-
-
+			
+			
 			ageField.setBounds(101, 157, 46, 22);
 			add(ageField);
-
+			
 			JLabel lblAgeMin = new JLabel("Age min. :");
 			lblAgeMin.setBounds(29, 160, 60, 16);
 			add(lblAgeMin);
-
+			
 			afficheField = new JTextField();
 			afficheField.setBounds(242, 157, 104, 22);
 			add(afficheField);
 			afficheField.setColumns(10);
-
+			
 			JLabel lblNewLabel_1 = new JLabel("Affiche :");
 			lblNewLabel_1.setBounds(184, 160, 56, 16);
 			add(lblNewLabel_1);
-
-
+			
+			
 			afficheButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
@@ -102,18 +102,18 @@ public class InsertFilmBis extends View{
 			});
 			afficheButton.setBounds(353, 157, 85, 22);
 			add(afficheButton);
-
-			JLabel lblNewLabel_2 = new JLabel("Catgorie(s) :");
+			
+			JLabel lblNewLabel_2 = new JLabel("Catégorie(s) :");
 			lblNewLabel_2.setBounds(29, 189, 247, 16);
 			add(lblNewLabel_2);
-
+			
 			categField = new JTextField();
-			categField.setText("Categ1, categ2, ...");
+			categField.setText("Categ1 ; categ2 ; ...");
 			categField.addFocusListener(new FocusListener() {
 
 
 				public void focusGained(FocusEvent e) {
-				    categField.setText("");
+				    categField.setText(""); 
 				}
 
 
@@ -125,18 +125,18 @@ public class InsertFilmBis extends View{
 			categField.setBounds(29, 209, 211, 22);
 			add(categField);
 			categField.setColumns(10);
-
+			
 			JLabel lblNewLabel_3 = new JLabel("Image(s) extraite(s) :");
 			lblNewLabel_3.setBounds(29, 244, 130, 16);
 			add(lblNewLabel_3);
-
+			
 			imagesField = new JTextField();
 			imagesField.setToolTipText("Selection multiple possible");
 			imagesField.setBounds(29, 269, 151, 22);
 			add(imagesField);
 			imagesField.setColumns(10);
-
-
+			
+			
 			imagesButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 			        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
@@ -147,7 +147,7 @@ public class InsertFilmBis extends View{
 			        	String urls = new String("");
 			            File[] selectedFiles = jfc.getSelectedFiles();
 			            for(int i = 0; i < selectedFiles.length - 1; ++i)
-			            	urls += selectedFiles[i].getAbsolutePath() + ", ";
+			            	urls += selectedFiles[i].getAbsolutePath() + " ; ";
 			            urls += selectedFiles[selectedFiles.length - 1];
 			            imagesField.setText(urls);
 			        }
@@ -156,8 +156,8 @@ public class InsertFilmBis extends View{
 			imagesButton.setToolTipText("Selection multiple possible");
 			imagesButton.setBounds(184, 269, 85, 22);
 			add(imagesButton);
-
-
+			
+			
 			suivButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					controller.clicSuiv();
@@ -165,20 +165,20 @@ public class InsertFilmBis extends View{
 			});
 			suivButton.setBounds(179, 321, 97, 25);
 			add(suivButton);
-
-			JLabel lblNewLabel_4 = new JLabel("Artiste(s) et rle:");
+			
+			JLabel lblNewLabel_4 = new JLabel("Artiste(s) et rôle:");
 			lblNewLabel_4.setBounds(290, 189, 112, 16);
 			add(lblNewLabel_4);
-
-
+			
+			
 			artisteField.setWrapStyleWord(true);
 			artisteField.setLineWrap(true);
-			artisteField.setText("Sous la forme : (NomArtiste, role), ...");
+			artisteField.setText("Sous la forme : (NomArtiste, role) ; ...");
 			artisteField.addFocusListener(new FocusListener() {
 
 
 				public void focusGained(FocusEvent e) {
-				    artisteField.setText("");
+				    artisteField.setText(""); 
 				}
 
 
@@ -272,6 +272,6 @@ public class InsertFilmBis extends View{
 	public void setFichierFilm(FichierFilm fichierFilm) {
 		this.fichierFilm = fichierFilm;
 	}
-
-
+	
+	
 }

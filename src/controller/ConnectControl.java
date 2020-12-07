@@ -41,7 +41,7 @@ public class ConnectControl {
 			}else {
 				util = new Utilisateur(email);
 				//int codeUser = util.getCode();
-				//if(code = codeUtilisateur TrouvÃ©){
+				//if(code = codeUtilisateur Trouvé){
 					//util = utilisateurtrouv
 					//View.setUtilConnecte;
 					

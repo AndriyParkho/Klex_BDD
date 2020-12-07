@@ -2,16 +2,11 @@ package controller;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.HashSet;
 
 import dao.DAOArtiste;
 import dao.DAOCategorieFilm;
-import dao.DAOFilm;
 import model.Artiste;
 import model.CategorieFilm;
-import model.FichierFilm;
-import model.Film;
 import model.ImgExtraiteFilm;
 import views.CreateArtiste;
 import views.InsertFilmBis;
@@ -43,7 +38,7 @@ public class InsertFilmBisControl {
 				if( !resCat.next()) {
 					catDAO.create(categorieFilm);
 				}
-			//faire une view pour crÃ©er une catÃ©gorie
+			//faire une view pour créer une catégorie
 		
 			}catch(SQLException e) {
 				System.out.println(e);
@@ -68,7 +63,7 @@ public class InsertFilmBisControl {
 			
 			try(ResultSet resArt = artisteDAO.find(artiste)){
 				if(!resArt.next()) {
-					CreateArtiste viewArtiste = new CreateArtiste(artiste.getNom());
+					CreateArtiste viewArtiste = new CreateArtiste(artiste.getNom(), view.getFichierFilm(), null);
 				}
 			}catch(SQLException e) {
 				System.out.println(e);

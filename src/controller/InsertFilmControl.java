@@ -45,9 +45,9 @@ public class InsertFilmControl {
 			if(res.next()) {
 				new InsertFilmBis(view.getFenetre(), view.getSwitcherView(), view.getContainerView(), view.getFichierFilm());
 			}else {
-				System.out.println("Film existe d��j��");
+				System.out.println("Film existe deja");
 				JDialog erreur = new JDialog(view.getFenetre(),"erreur");
-				JLabel label = new JLabel("ce film existe d��j��", SwingConstants.CENTER);
+				JLabel label = new JLabel("ce film existe deja", SwingConstants.CENTER);
 				erreur.add(label);
 				erreur.setSize(250, 100);
 				erreur.setLocationRelativeTo(null);

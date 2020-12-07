@@ -17,8 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import controller.InsertPisteBisControl;
-import model.FichierPiste;
-import model.Piste;
+import model.aggregates.FichierPiste;
 
 public class InsertPisteBis extends View{
 	private JTextField titreField;
@@ -100,7 +99,7 @@ public class InsertPisteBis extends View{
 			add(lblNewLabel_2);
 			
 			categField = new JTextField();
-			categField.setText("Categ1, categ2, ...");
+			categField.setText("Categ1 ; categ2 ; ...");
 			categField.addFocusListener(new FocusListener() {
 
 
@@ -123,7 +122,7 @@ public class InsertPisteBis extends View{
 			add(lblNewLabel_4);
 			
 			artisteField.setWrapStyleWord(true);
-			artisteField.setText("Sous la forme : (NomArtiste, instrument), ...");
+			artisteField.setText("Sous la forme : (NomArtiste, instrument) ; ...");
 			artisteField.addFocusListener(new FocusListener() {
 
 
