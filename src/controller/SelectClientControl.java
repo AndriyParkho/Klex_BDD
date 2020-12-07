@@ -10,10 +10,14 @@ public class SelectClientControl {
 	}
 	
 	public void clicSuiv() {
-		// TODO
+		// TODO Vérifier si client existe si oui ouvrir un dialogue disant d'aller voir le terminal pour continuer
+		// Sinon ouvrir fenetre CreateClient en recupérant les infos saisies
 	}
 	
 	public void clicBack() {
 		view.getSwitcherView().show(view.getContainerView(), "Fonctions");
+		view.getFenetre().setTitle("Fonctions");
+		view.getFenetre().setSize(453, 350);
+		view.getFenetre().setLocationRelativeTo(null);
 	}
 }

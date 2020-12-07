@@ -18,7 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import controller.InsertFluxControl;
-import model.FichierFilm;
+import model.aggregates.FichierFilm;
 import model.aggregates.FichierPiste;
 
 public class InsertFlux extends View{

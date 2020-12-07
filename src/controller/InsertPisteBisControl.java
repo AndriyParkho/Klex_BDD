@@ -11,9 +11,9 @@ public class InsertPisteBisControl {
 	}
 	
 	public void clicSuiv() {
-		// TODO
+		// Récupèrer les infos supplémentaire de la piste pour l'ajouter dans la Piste du modele FichierPiste
 		new FluxNbChoice(view.getFenetre(), view.getSwitcherView(), view.getContainerView(), null, view.getFichierPiste());
 		// Si un artiste existe pas
-//		new CreateArtiste("Exemple");
+//		new CreateArtiste("Exemple", null, view.getFichierPiste());
 	}
 }

@@ -1,5 +1,6 @@
 package controller;
 
+import views.InsertFichier;
 import views.InsertFlux;
 
 public class InsertFluxControl {
@@ -10,12 +11,14 @@ public class InsertFluxControl {
 	}
 	
 	public void clicSuiv() {
-		if(view.getNumeroFlux() <= view.getNbMaxFlux()) {
-			// TODO
+		// TODO
+		// Récupérer les infos du flux et les ajouter à la liste des flux de FichierPiste ou FichierFilm 
+		if(view.getNumeroFlux() < view.getNbMaxFlux()) {
+			// On réouvre une fenetre de flux car nous n'avons pas encore atteint le nombre de flux que l'util veut ajouter
 			new InsertFlux(view.getFenetre(), view.getSwitcherView(), view.getContainerView(), view.getNumeroFlux() + 1, view.getNbMaxFlux(), view.getFichierFilm(), view.getFichierPiste());
 		} else {
-			// TODO
-			view.getSwitcherView().show(view.getContainerView(), "Fonctions");
+			// On passe à la fenetre d'après
+			new InsertFichier(view.getFenetre(), view.getSwitcherView(), view.getContainerView(), view.getFichierFilm(), view.getFichierPiste());
 		}
 	}
 }

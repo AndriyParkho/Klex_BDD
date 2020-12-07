@@ -13,7 +13,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
 import controller.FluxNbChoiceControl;
-import model.FichierFilm;
+import model.aggregates.FichierFilm;
 import model.aggregates.FichierPiste;
 
 public class FluxNbChoice extends View{
