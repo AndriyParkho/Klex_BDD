@@ -12,12 +12,12 @@ import model.AlbumAPourCategorie;
 import model.Artiste;
 import model.CategorieMusique;
 import model.EstUnePiste;
-import model.FichierPiste;
 import model.Flux;
 import model.FluxAudio;
 import model.FluxTexte;
 import model.FluxVideo;
 import model.PisteAPourCategorie;
+import model.aggregates.FichierPiste;
 
 public final class TransactionFichierPiste {
     public static void execute(FichierPiste fichierPiste) {

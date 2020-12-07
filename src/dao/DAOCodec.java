@@ -3,7 +3,9 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 
+import connections.JDBCUtilities;
 import model.Codec;
 
 public class DAOCodec extends DAO<Codec> {
@@ -16,6 +18,18 @@ public class DAOCodec extends DAO<Codec> {
             statement.setString(1, codec.getNom());
             statement.setString(2, codec.getType());
             statement.executeUpdate();
+        }
+    }
+
+    public void createOrUpdate(Codec codec) throws SQLException {
+        try {
+            this.create(codec);
+        } catch (final SQLIntegrityConstraintViolationException e) {
+            if (e.getErrorCode() != 1) {
+                JDBCUtilities.printSQLException(e);
+            } else {
+                System.out.println(codec + " est déjà dans la BDD.");
+            }
         }
     }
 

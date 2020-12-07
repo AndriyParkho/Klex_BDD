@@ -1,7 +1,14 @@
-package model;
+package model.aggregates;
 
 import java.util.HashMap;
 import java.util.HashSet;
+
+import model.Artiste;
+import model.CategorieFilm;
+import model.Fichier;
+import model.Film;
+import model.Flux;
+import model.ImgExtraiteFilm;
 
 public class FichierFilm {
 	private Fichier fichier;

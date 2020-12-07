@@ -1,7 +1,14 @@
-package model;
+package model.aggregates;
 
 import java.util.HashMap;
 import java.util.HashSet;
+
+import model.Album;
+import model.Artiste;
+import model.CategorieMusique;
+import model.Fichier;
+import model.Flux;
+import model.Piste;
 
 public class FichierPiste {
 	private Fichier fichier;

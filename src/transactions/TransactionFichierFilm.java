@@ -11,13 +11,13 @@ import model.APourRole;
 import model.Artiste;
 import model.CategorieFilm;
 import model.EstUnFilm;
-import model.FichierFilm;
 import model.FilmAPourCategorie;
 import model.Flux;
 import model.FluxAudio;
 import model.FluxTexte;
 import model.FluxVideo;
 import model.ImgExtraiteFilm;
+import model.aggregates.FichierFilm;
 
 public final class TransactionFichierFilm {
     public static void execute(FichierFilm fichierFilm) {
