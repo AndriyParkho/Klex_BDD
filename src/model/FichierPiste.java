@@ -4,15 +4,12 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public class FichierPiste {
-	private Piste piste;
 	private Fichier fichier;
+	private Piste piste;
 	private Album album;
-	private HashSet<CategorieMusique> categories = new HashSet<CategorieMusique>();
-	private HashSet<Flux> flux = new HashSet<Flux>();
-	private HashSet<Artiste> artistes = new HashSet<Artiste>();
-	private HashSet<APourInstrument> aPourInstrument = new HashSet<APourInstrument>();
-	private HashSet<PisteAPourCategorie> pisteAPourCateg = new HashSet<PisteAPourCategorie>();
-	private HashSet<AlbumAPourCategorie> albumAPourCateg = new HashSet<AlbumAPourCategorie>();
+	private HashSet<CategorieMusique> categories;
+	private HashSet<Flux> flux;
+	private HashMap<Artiste, String> artistes;
 	
 	public Piste getPiste() {
 		return piste;
@@ -54,36 +51,11 @@ public class FichierPiste {
 		this.flux = flux;
 	}
 	
-	public HashSet<Artiste> getArtistes() {
+	public HashMap<Artiste, String> getArtistes() {
 		return artistes;
 	}
 	
-	public void setArtistes(HashSet<Artiste> artistes) {
+	public void setArtistes(HashMap<Artiste, String> artistes) {
 		this.artistes = artistes;
 	}
-	
-	public HashSet<APourInstrument> getaPourInstrument() {
-		return aPourInstrument;
-	}
-	
-	public void setaPourInstrument(HashSet<APourInstrument> aPourInstrument) {
-		this.aPourInstrument = aPourInstrument;
-	}
-	
-	public HashSet<PisteAPourCategorie> getPisteAPourCateg() {
-		return pisteAPourCateg;
-	}
-	
-	public void setPisteAPourCateg(HashSet<PisteAPourCategorie> pisteAPourCateg) {
-		this.pisteAPourCateg = pisteAPourCateg;
-	}
-	
-	public HashSet<AlbumAPourCategorie> getAlbumAPourCateg() {
-		return albumAPourCateg;
-	}
-	
-	public void setAlbumAPourCateg(HashSet<AlbumAPourCategorie> albumAPourCateg) {
-		this.albumAPourCateg = albumAPourCateg;
-	}
-	
 }

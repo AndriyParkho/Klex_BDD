@@ -58,6 +58,10 @@ public final class DAOFactory {
         return new DAOAlbumAPourCategorie();
     }
 
+    public static DAOPisteAPourCategorie getPisteAPourCategorie() {
+        return new DAOPisteAPourCategorie();
+    }
+
     public static DAOEstUnFilm getEstUnFilm() {
         return new DAOEstUnFilm();
     }
