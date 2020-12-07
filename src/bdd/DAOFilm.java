@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.Map;
 
 import connections.JDBCUtilities;
+import dao.DAO;
 import model.Artiste;
 import model.CategorieFilm;
 import model.Film;

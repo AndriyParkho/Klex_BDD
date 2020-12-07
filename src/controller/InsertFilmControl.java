@@ -10,7 +10,7 @@ import javax.swing.SwingConstants;
 
 import dao.DAOFilm;
 import model.Film;
-import model.FichierFilm;
+import model.aggregates.FichierFilm;
 import views.InsertFilm;
 import views.InsertFilmBis;
 

@@ -38,18 +38,18 @@ public class InsertFilmBisControl {
 				if( !resCat.next()) {
 					catDAO.create(categorieFilm);
 				}
-			//faire une view pour créer une catégorie
+			//faire une view pour crï¿½er une catï¿½gorie
 		
 			}catch(SQLException e) {
 				System.out.println(e);
 			}
-			view.getFichierFilm().getCategorie().add(categorieFilm);
+			view.getFichierFilm().getCategories().add(categorieFilm);
 
 		}
 			
 		for(String img : image) {
 			ImgExtraiteFilm imgExtraiteFilm = new ImgExtraiteFilm(img, view.getFichierFilm().getFilm().getTitreFilm(), view.getFichierFilm().getFilm().getAnneeSortie());
-			view.getFichierFilm().getImgExtraiteFilm().add(imgExtraiteFilm);
+			view.getFichierFilm().getImgExtraiteFilms().add(imgExtraiteFilm);
 		}
 		
 		

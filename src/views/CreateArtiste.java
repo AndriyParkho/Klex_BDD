@@ -18,7 +18,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileSystemView;
 
 import controller.CreateArtisteControl;
-import model.FichierFilm;
+import model.aggregates.FichierFilm;
 import model.aggregates.FichierPiste;
 
 public class CreateArtiste extends JFrame {
@@ -92,7 +92,7 @@ public class CreateArtiste extends JFrame {
 		dateField.setBounds(137, 124, 116, 22);
 		contentPane.add(dateField);
 		
-		JLabel lblNewLabel_1_2 = new JLabel("Spécialité :");
+		JLabel lblNewLabel_1_2 = new JLabel("Spï¿½cialitï¿½ :");
 		lblNewLabel_1_2.setBounds(217, 92, 64, 16);
 		contentPane.add(lblNewLabel_1_2);
 		
