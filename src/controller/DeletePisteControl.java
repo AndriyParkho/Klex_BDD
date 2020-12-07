@@ -11,13 +11,10 @@ public class DeletePisteControl {
 	}
 	
 	public void clicSuiv() {
-		// Récupère les infos de la piste et lance la fonction de suppression de la piste
+		// TODO
 	}
 	
 	public void clicBack() {
 		view.getSwitcherView().show(view.getContainerView(), "Choix supprimer");
-		view.getFenetre().setTitle("Choix de suppression");
-		view.getFenetre().setSize(282, 210);
-		view.getFenetre().setLocationRelativeTo(null);
 	}
 }

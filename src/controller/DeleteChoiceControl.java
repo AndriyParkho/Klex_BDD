@@ -1,8 +1,6 @@
 package controller;
 
 import views.DeleteChoice;
-import views.DeleteFilm;
-import views.DeletePiste;
 
 public class DeleteChoiceControl {
 	private DeleteChoice view;
@@ -20,8 +18,5 @@ public class DeleteChoiceControl {
 	
 	public void clicBack() {
 		view.getSwitcherView().show(view.getContainerView(), "Fonctions");
-		view.getFenetre().setTitle("Fonctions");
-		view.getFenetre().setSize(453, 350);
-		view.getFenetre().setLocationRelativeTo(null);
 	}
 }

@@ -5,27 +5,26 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
 import controller.FluxNbChoiceControl;
-import model.FichierFilm;
+import controller.FonctionsControl;
+import controller.InsertChoiceControl;
 
 public class FluxNbChoice extends View{
 	private JSpinner nombreField = new JSpinner();
 	private JPanel container = new ChoixNbFluxPanel();
 	private FluxNbChoiceControl controller = new FluxNbChoiceControl(this);
-	private FichierFilm fichierFilm;
-//	private FichierPiste fichierPiste;
 
-	public FluxNbChoice(JFrame fenetre, CardLayout switcherView, JPanel containerView, FichierFilm fichierFilm) {
+	public FluxNbChoice(JFrame fenetre, CardLayout switcherView, JPanel containerView) {
 		super(fenetre, switcherView, containerView, new String("Nombre de flux"));
-		this.fichierFilm = fichierFilm;
-//		this.fichierPiste = fichierPiste;
 
 		super.getContainerView().add(container, "Nombre flux");
 		super.getPanels().add("Nombre flux");

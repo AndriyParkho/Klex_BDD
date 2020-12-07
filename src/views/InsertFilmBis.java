@@ -36,9 +36,9 @@ public class InsertFilmBis extends View{
 	private FichierFilm fichierFilm;
 	private InsertFilmBisControl controller = new InsertFilmBisControl(this);
 
-	public InsertFilmBis(JFrame fenetre, CardLayout switcherView, JPanel containerView, FichierFilm fichierFilm) {
-		super(fenetre, switcherView, containerView, new String("Insérer un film"));
-		this.fichierFilm = fichierFilm;
+	public InsertFilmBis(JFrame fenetre, CardLayout switcherView, JPanel containerView, FichierFilm film) {
+		super(fenetre, switcherView, containerView, new String("Insrer un film"));
+		this.fichierFilm = film;
 		
 		super.getContainerView().add(container, "Insertion film 2");
 		super.getPanels().add("Insertion film 2");
@@ -67,7 +67,7 @@ public class InsertFilmBis extends View{
 			resumeField.setBounds(29, 82, 392, 62);
 			add(resumeField);
 			
-			JLabel lblNewLabel = new JLabel("Résumé :");
+			JLabel lblNewLabel = new JLabel("Rsum :");
 			lblNewLabel.setBounds(29, 60, 56, 16);
 			add(lblNewLabel);
 			
@@ -103,12 +103,12 @@ public class InsertFilmBis extends View{
 			afficheButton.setBounds(353, 157, 85, 22);
 			add(afficheButton);
 			
-			JLabel lblNewLabel_2 = new JLabel("Catégorie(s) :");
+			JLabel lblNewLabel_2 = new JLabel("Catgorie(s) :");
 			lblNewLabel_2.setBounds(29, 189, 247, 16);
 			add(lblNewLabel_2);
 			
 			categField = new JTextField();
-			categField.setText("Categ1 ; categ2 ; ...");
+			categField.setText("Categ1, categ2, ...");
 			categField.addFocusListener(new FocusListener() {
 
 
@@ -147,7 +147,7 @@ public class InsertFilmBis extends View{
 			        	String urls = new String("");
 			            File[] selectedFiles = jfc.getSelectedFiles();
 			            for(int i = 0; i < selectedFiles.length - 1; ++i)
-			            	urls += selectedFiles[i].getAbsolutePath() + " ; ";
+			            	urls += selectedFiles[i].getAbsolutePath() + ", ";
 			            urls += selectedFiles[selectedFiles.length - 1];
 			            imagesField.setText(urls);
 			        }
@@ -166,14 +166,14 @@ public class InsertFilmBis extends View{
 			suivButton.setBounds(179, 321, 97, 25);
 			add(suivButton);
 			
-			JLabel lblNewLabel_4 = new JLabel("Artiste(s) et rôle:");
+			JLabel lblNewLabel_4 = new JLabel("Artiste(s) et rle:");
 			lblNewLabel_4.setBounds(290, 189, 112, 16);
 			add(lblNewLabel_4);
 			
 			
 			artisteField.setWrapStyleWord(true);
 			artisteField.setLineWrap(true);
-			artisteField.setText("Sous la forme : (NomArtiste, role) ; ...");
+			artisteField.setText("Sous la forme : (NomArtiste, role), ...");
 			artisteField.addFocusListener(new FocusListener() {
 
 
@@ -273,12 +273,14 @@ public class InsertFilmBis extends View{
 		this.container = container;
 	}
 
-	public Film getFilm() {
-		return film;
+	
+
+	public FichierFilm getFichierFilm() {
+		return fichierFilm;
 	}
 
-	public void setFilm(Film film) {
-		this.film = film;
+	public void setFichierFilm(FichierFilm fichierFilm) {
+		this.fichierFilm = fichierFilm;
 	}
 
 	public InsertFilmBisControl getController() {

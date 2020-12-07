@@ -5,12 +5,6 @@ public class PisteAPourCategorie {
     private long idAlbum;
     private String typeCategorieMusique;
 
-    public PisteAPourCategorie(int numPiste, long idAlbum, String typeCategorieMusique) {
-        this.numPiste = numPiste;
-        this.idAlbum = idAlbum;
-        this.typeCategorieMusique = typeCategorieMusique;
-    }
-    
     public int getNumPiste() {
         return numPiste;
     }

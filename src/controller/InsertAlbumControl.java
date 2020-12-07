@@ -11,7 +11,7 @@ public class InsertAlbumControl {
 	}
 	
 	public void clicSuiv() {
-		// Récupérer les infos de l'album dans chaque case et créer l'objet Album pour l'insérer dans le model FichierPiste
-		new InsertPisteBis(view.getFenetre(), view.getSwitcherView(), view.getContainerView(), view.getFichierPiste());
+		// TODO
+		new InsertPisteBis(view.getFenetre(), view.getSwitcherView(), view.getContainerView(), view.getPiste());
 	}
 }
