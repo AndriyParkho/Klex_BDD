@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.InsertFilmControl;
+import model.FichierFilm;
 import model.Film;
 
 public class InsertFilm extends View{
@@ -20,7 +21,7 @@ public class InsertFilm extends View{
 	private JButton backButton = new JButton("<");
 	private JButton suivButton = new JButton("Suivant");
 	private JPanel container = new InsertFilmPanel();
-	private Film film;
+	private FichierFilm fichierFilm;
 	private InsertFilmControl controller = new InsertFilmControl(this);
 	
 	public InsertFilm(JFrame fenetre, CardLayout switcherView, JPanel containerView) {

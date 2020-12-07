@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileSystemView;
 
 import controller.InsertFilmBisControl;
+import model.FichierFilm;
 import model.Film;
 
 public class InsertFilmBis extends View{
@@ -32,12 +33,12 @@ public class InsertFilmBis extends View{
 	private JButton suivButton = new JButton("Suivant");
 	private JTextArea artisteField = new JTextArea();
 	private JPanel container = new InsertFilmBisPanel();
-	private Film film;
+	private FichierFilm fichierFilm;
 	private InsertFilmBisControl controller = new InsertFilmBisControl(this);
 
-	public InsertFilmBis(JFrame fenetre, CardLayout switcherView, JPanel containerView, Film film) {
+	public InsertFilmBis(JFrame fenetre, CardLayout switcherView, JPanel containerView, FichierFilm fichierFilm) {
 		super(fenetre, switcherView, containerView, new String("Insérer un film"));
-		this.film = film;
+		this.fichierFilm = fichierFilm;
 		
 		super.getContainerView().add(container, "Insertion film 2");
 		super.getPanels().add("Insertion film 2");
@@ -107,7 +108,7 @@ public class InsertFilmBis extends View{
 			add(lblNewLabel_2);
 			
 			categField = new JTextField();
-			categField.setText("Categ1, categ2, ...");
+			categField.setText("Categ1 ; categ2 ; ...");
 			categField.addFocusListener(new FocusListener() {
 
 
@@ -146,7 +147,7 @@ public class InsertFilmBis extends View{
 			        	String urls = new String("");
 			            File[] selectedFiles = jfc.getSelectedFiles();
 			            for(int i = 0; i < selectedFiles.length - 1; ++i)
-			            	urls += selectedFiles[i].getAbsolutePath() + ", ";
+			            	urls += selectedFiles[i].getAbsolutePath() + " ; ";
 			            urls += selectedFiles[selectedFiles.length - 1];
 			            imagesField.setText(urls);
 			        }
@@ -172,7 +173,7 @@ public class InsertFilmBis extends View{
 			
 			artisteField.setWrapStyleWord(true);
 			artisteField.setLineWrap(true);
-			artisteField.setText("Sous la forme : (NomArtiste, role), ...");
+			artisteField.setText("Sous la forme : (NomArtiste, role) ; ...");
 			artisteField.addFocusListener(new FocusListener() {
 
 
