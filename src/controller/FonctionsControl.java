@@ -1,5 +1,6 @@
 package controller;
 
+import views.DeleteChoice;
 import views.Fonctions;
 import views.InsertChoice;
 
@@ -19,7 +20,7 @@ public class FonctionsControl {
 	}
 	
 	public void clicDelete() {
-		// Page supprimmer
+		new DeleteChoice(view.getFenetre(), view.getSwitcherView(), view.getContainerView());
 	}
 	
 	public void clicDisconnect() {
