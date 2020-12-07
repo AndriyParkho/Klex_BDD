@@ -4,19 +4,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import model.FluxAudio;
+import model.Flux;
 
-public class DAOFluxAudio {
+public class DAOFlux {
     
-    public void create(FluxAudio fluxAudio) throws SQLException {
-        final String insertFluxQuery = "INSERT INTO FluxAudio VALUES (idFlux_seq.currval, ?, idFichier_seq.currval, ?, ?, ?, ?)";
+    public void create(Flux flux) throws SQLException {
+        final String insertFluxQuery = "INSERT INTO Flux VALUES (idFlux_seq.nextval, ?, idFichier_seq.currval, ?, ?)";
     
         try (PreparedStatement statementFlux = this.connection.prepareStatement(insertFluxQuery)) {
-            statementFlux.setInt(1, fluxAudio.getDebit());
-            statementFlux.setString(2, fluxAudio.getNomCodec());
-            statementFlux.setString(3, fluxAudio.getTypeCodec());
-            statementFlux.setInt(4, fluxAudio.getEchantillonage());
-            statementFlux.setString(5, fluxAudio.getLangue());
+            statementFlux.setInt(1, flux.getDebit());
+            statementFlux.setString(2, flux.getNomCodec());
+            statementFlux.setString(3, flux.getTypeCodec());
             
             statementFlux.executeUpdate();
         }

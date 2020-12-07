@@ -1,8 +1,3 @@
-CREATE TABLE CategorieMusique(
-  typeCategorieMusique varchar(50) NOT NULL,
-  CONSTRAINT pkCategorieMusique PRIMARY KEY (typeCategorieMusique)
-);
-
 CREATE SEQUENCE idAlbum_seq;
 CREATE TABLE Album(
   idAlbum integer,
@@ -23,19 +18,22 @@ CREATE TABLE Utilisateur(
   CONSTRAINT pkUtilisateur PRIMARY KEY (email)
 );
 
+CREATE SEQUENCE idFichier_seq;
 CREATE TABLE Fichier(
-  idFichier integer GENERATED ALWAYS AS IDENTITY,
+  idFichier integer,
   taille integer NOT NULL,
   dateDepot DATE NOT NULL,
   email varchar(255) NOT NULL REFERENCES Utilisateur (email) ON DELETE CASCADE, -- la suppression d'un utilisateur supprime ses fichiers
   CONSTRAINT pkFichier PRIMARY KEY (idFichier)
 );
 
+CREATE SEQUENCE idPiste_seq;
 CREATE TABLE Piste(
-  idPiste integer GENERATED ALWAYS AS IDENTITY,
+  idPiste integer,
   numPiste integer NOT NULL,
   titrePiste varchar(50) NOT NULL,
-  dureePiste interval day (0) to second(0) NOT NULL, -- select only hour-min-seconds, see REGEXP_SUBSTR
+  --dureePiste interval day (0) to second(0) NOT NULL, -- select only hour-min-seconds, see REGEXP_SUBSTR
+  dureePiste integer NOT NULL,
   idAlbum integer NOT NULL REFERENCES Album (idAlbum) ON DELETE CASCADE, -- la suppression d'un album supprime ses pistes
   idFichier integer NOT NULL REFERENCES Fichier (idFichier) ON DELETE CASCADE, -- la suppression d'un fichier supprime la piste associée
   CONSTRAINT pkPiste PRIMARY KEY (idPiste, idAlbum)
@@ -87,19 +85,25 @@ CREATE TABLE SupporteCodec(
   CONSTRAINT fkCodecSupporteCodec FOREIGN KEY (nomCodec, typeCodec) REFERENCES Codec (nomCodec, typeCodec) ON DELETE CASCADE
 );
 
+CREATE SEQUENCE idArtiste_seq;
 CREATE TABLE Artiste(
-  idArtiste integer GENERATED ALWAYS AS IDENTITY,
+  idArtiste integer,
   nomArtiste varchar(50) NOT NULL,
   dateNaissance date,
   urlPhoto varchar(150) NOT NULL,
   specialite varchar(50) NOT NULL,
-  biographie CLOB,
+  biographie varchar(2000),
   CONSTRAINT pkArtiste PRIMARY KEY (idArtiste)
 );
 
 CREATE TABLE CategorieFilm(
   typeCategorieFilm varchar(255) NOT NULL,
   CONSTRAINT pkCategorieFilm PRIMARY KEY (typeCategorieFilm)
+);
+
+CREATE TABLE CategorieMusique(
+  typeCategorieMusique varchar(50) NOT NULL,
+  CONSTRAINT pkCategorieMusique PRIMARY KEY (typeCategorieMusique)
 );
 
 /*
@@ -111,7 +115,7 @@ Si le type TEXT fonctionne pas pour Oracle utiliser VARCHAR(2083)
 CREATE TABLE Film(
   titreFilm varchar(1000) NOT NULL,
   anneeSortie date NOT NULL,
-  resume CLOB NOT NULL,
+  resume varchar(2000) NOT NULL,
   ageMin integer NOT NULL CHECK (ageMin > 0),
   urlAffiche varchar(1000) NOT NULL,
   CONSTRAINT pkFilm PRIMARY KEY (titreFilm, anneeSortie)
@@ -164,6 +168,7 @@ CREATE TABLE APourInstrument(
 );
 
 /* revoir la taille pour les nom de codec */
+CREATE SEQUENCE idFlux_seq;
 CREATE TABLE Flux(
   idFlux integer GENERATED ALWAYS AS IDENTITY,
   debit float NOT NULL CHECK (debit > 0),
