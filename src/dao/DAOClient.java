@@ -9,8 +9,9 @@ import java.util.HashSet;
 import connections.JDBCUtilities;
 import model.Client;
 
-public class DAOClient {
+public class DAOClient extends DAO<Client> {
 
+    @Override
     public void create(Client client) throws SQLException {
         final String insertClientQuery = "INSERT INTO Client VALUES (?, ?, ?, ?)";
 

@@ -7,8 +7,9 @@ import java.sql.SQLIntegrityConstraintViolationException;
 
 import model.Piste;
 
-public class DAOPiste {
+public class DAOPiste extends DAO<Piste>{
 
+    @Override
     public void create(Piste piste) throws SQLException {
         final String query = "INSERT INTO Piste VALUES (idPiste_seq.nextval, ?, ?, ?, ?, idFichier_seq.currval)";
 

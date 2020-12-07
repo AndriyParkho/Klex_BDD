@@ -6,8 +6,9 @@ import java.sql.SQLException;
 
 import model.FluxAudio;
 
-public class DAOFluxAudio {
+public class DAOFluxAudio extends DAO<FluxAudio>{
     
+    @Override
     public void create(FluxAudio fluxAudio) throws SQLException {
         final String insertFluxQuery = "INSERT INTO FluxAudio VALUES (idFlux_seq.currval, ?, idFichier_seq.currval, ?, ?, ?, ?)";
     

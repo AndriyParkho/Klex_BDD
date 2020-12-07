@@ -8,8 +8,9 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import connections.JDBCUtilities;
 import model.CategorieFilm;
 
-public class DAOCategorieFilm  {
+public class DAOCategorieFilm extends DAO<CategorieFilm> {
 
+    @Override
     public void create(CategorieFilm categorieFilm) throws SQLException {
         final String query = "INSERT INTO CategorieFilm VALUES (?)";
 

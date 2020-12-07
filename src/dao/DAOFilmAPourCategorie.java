@@ -9,15 +9,16 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import connections.JDBCUtilities;
 import model.FilmAPourCategorie;
 
-public class DAOFilmAPourCategorie {
+public class DAOFilmAPourCategorie extends DAO<FilmAPourCategorie> {
     
+    @Override
     public void create(FilmAPourCategorie filmAPourCategorie) throws SQLException {
         final String query = "INSERT INTO FilmAPourCategorie VALUES (?, ?, ?)";
 
         System.out.println("Statement FilmAPourCategorie");
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setString(1, filmAPourCategorie.getTitreFilm());
-            statement.setDate(2, Date.valueOf(filmAPourCategorie.getAnneeSortie()));
+            statement.setDate(2, filmAPourCategorie.getAnneeSortie());
             statement.setString(3, filmAPourCategorie.getTypeCategorieFilm());
 
             statement.executeUpdate();

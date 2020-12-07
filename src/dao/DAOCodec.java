@@ -8,8 +8,9 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import connections.JDBCUtilities;
 import model.Codec;
 
-public class DAOCodec {
+public class DAOCodec extends DAO<Codec> {
 
+    @Override
     public void create(Codec codec) throws SQLException {
         final String query = "INSERT INTO Codec VALUES (?, ?)";
 

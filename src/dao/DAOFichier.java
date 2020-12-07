@@ -8,8 +8,9 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import connections.JDBCUtilities;
 import model.Fichier;
 
-public class DAOFichier {
+public class DAOFichier extends DAO<Fichier>{
 
+    @Override
     public void create(Fichier fichier) throws SQLException {
         final String query = "INSERT INTO Fichier VALUES (idFichier_seq.nextval, ?, ?, ?)";
 
