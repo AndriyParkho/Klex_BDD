@@ -19,6 +19,7 @@ import javax.swing.filechooser.FileSystemView;
 
 import controller.CreateArtisteControl;
 import model.FichierFilm;
+import model.FichierPiste;
 
 public class CreateArtiste extends JFrame {
 	private String artisteInconnu;
@@ -30,16 +31,17 @@ public class CreateArtiste extends JFrame {
 	private JButton valideButton = new JButton("Valider");
 	private JTextArea bioField = new JTextArea();
 	private FichierFilm fichierFilm;
-//	private FichierPiste fichierPiste;
+	private FichierPiste fichierPiste;
 	private CreateArtisteControl controller = new CreateArtisteControl(this);
 
 	/**
 	 * Create the frame.
 	 */
-	public CreateArtiste(String artisteInconnu, FichierFilm fichierFilm) { // , FichierPiste fichierPiste
+	public CreateArtiste(String artisteInconnu, FichierFilm fichierFilm, FichierPiste fichierPiste) {
 		this.artisteInconnu = artisteInconnu;
 		this.fichierFilm = fichierFilm;
-//		this.fichierPiste = fichierPiste;
+		this.fichierPiste = fichierPiste;
+		
 		setTitle("Ajout artiste");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 344);
@@ -145,4 +147,93 @@ public class CreateArtiste extends JFrame {
 		this.setVisible(true);
 	}
 
+	public String getArtisteInconnu() {
+		return artisteInconnu;
+	}
+
+	public void setArtisteInconnu(String artisteInconnu) {
+		this.artisteInconnu = artisteInconnu;
+	}
+
+	public JPanel getContentPane() {
+		return contentPane;
+	}
+
+	public void setContentPane(JPanel contentPane) {
+		this.contentPane = contentPane;
+	}
+
+	public JTextField getNomField() {
+		return nomField;
+	}
+
+	public void setNomField(JTextField nomField) {
+		this.nomField = nomField;
+	}
+
+	public JTextField getDateField() {
+		return dateField;
+	}
+
+	public void setDateField(JTextField dateField) {
+		this.dateField = dateField;
+	}
+
+	public JTextField getSpecField() {
+		return specField;
+	}
+
+	public void setSpecField(JTextField specField) {
+		this.specField = specField;
+	}
+
+	public JTextField getPhotoField() {
+		return photoField;
+	}
+
+	public void setPhotoField(JTextField photoField) {
+		this.photoField = photoField;
+	}
+
+	public JButton getValideButton() {
+		return valideButton;
+	}
+
+	public void setValideButton(JButton valideButton) {
+		this.valideButton = valideButton;
+	}
+
+	public JTextArea getBioField() {
+		return bioField;
+	}
+
+	public void setBioField(JTextArea bioField) {
+		this.bioField = bioField;
+	}
+
+	public FichierFilm getFichierFilm() {
+		return fichierFilm;
+	}
+
+	public void setFichierFilm(FichierFilm fichierFilm) {
+		this.fichierFilm = fichierFilm;
+	}
+
+	public FichierPiste getFichierPiste() {
+		return fichierPiste;
+	}
+
+	public void setFichierPiste(FichierPiste fichierPiste) {
+		this.fichierPiste = fichierPiste;
+	}
+
+	public CreateArtisteControl getController() {
+		return controller;
+	}
+
+	public void setController(CreateArtisteControl controller) {
+		this.controller = controller;
+	}
+	
+	
 }

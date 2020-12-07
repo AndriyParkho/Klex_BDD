@@ -265,28 +265,13 @@ public class InsertFilmBis extends View{
 		this.artisteField = artisteField;
 	}
 
-	public JPanel getContainer() {
-		return container;
+	public FichierFilm getFichierFilm() {
+		return fichierFilm;
 	}
 
-	public void setContainer(JPanel container) {
-		this.container = container;
+	public void setFichierFilm(FichierFilm fichierFilm) {
+		this.fichierFilm = fichierFilm;
 	}
-
-	public Film getFilm() {
-		return film;
-	}
-
-	public void setFilm(Film film) {
-		this.film = film;
-	}
-
-	public InsertFilmBisControl getController() {
-		return controller;
-	}
-
-	public void setController(InsertFilmBisControl controller) {
-		this.controller = controller;
-	}
+	
 	
 }

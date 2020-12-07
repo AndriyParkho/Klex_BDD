@@ -15,18 +15,22 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
 import controller.InsertFichierControl;
-import model.Film;
+import model.FichierFilm;
+import model.FichierPiste;
 
 public class InsertFichier extends View{
 	private JTextField dateField;
 	private JButton suivButton = new JButton("Suivant");
 	private JSpinner tailleField = new JSpinner();
 	private JPanel container = new InsertFichierPanel();
-	// Ajouter un model FichierFilm et FichierPiste et les getters associés
+	private FichierFilm fichierFilm;
+	private FichierPiste fichierPiste;
 	private InsertFichierControl controller = new InsertFichierControl(this);
 	
-	public InsertFichier(JFrame fenetre, CardLayout switcherView, JPanel containerView) {
+	public InsertFichier(JFrame fenetre, CardLayout switcherView, JPanel containerView, FichierFilm fichierFilm, FichierPiste fichierPiste) {
 		super(fenetre, switcherView, containerView, new String("Ajout des infos du fichier"));
+		this.fichierFilm = fichierFilm;
+		this.fichierPiste = fichierPiste;
 		
 		super.getContainerView().add(container, "Insertion fichier");
 		super.getPanels().add("Insertion fichier");
@@ -115,6 +119,26 @@ public class InsertFichier extends View{
 
 	public void setTailleField(JSpinner tailleField) {
 		this.tailleField = tailleField;
+	}
+
+
+	public FichierFilm getFichierFilm() {
+		return fichierFilm;
+	}
+
+
+	public void setFichierFilm(FichierFilm fichierFilm) {
+		this.fichierFilm = fichierFilm;
+	}
+
+
+	public FichierPiste getFichierPiste() {
+		return fichierPiste;
+	}
+
+
+	public void setFichierPiste(FichierPiste fichierPiste) {
+		this.fichierPiste = fichierPiste;
 	}
 
 

@@ -21,7 +21,7 @@ public class InsertPiste extends View{
 	private JButton backButton = new JButton("<");
 	private JButton suivButton = new JButton("Suivant");
 	private JPanel container = new InsertPistePanel();
-	private FichierPiste fichierPiste;
+	private FichierPiste fichierPiste = new FichierPiste();
 	private InsertPisteControl controller = new InsertPisteControl(this);
 	
 	public InsertPiste(JFrame fenetre, CardLayout switcherView, JPanel containerView) {

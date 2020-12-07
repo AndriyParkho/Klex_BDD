@@ -21,7 +21,7 @@ public class InsertFilm extends View{
 	private JButton backButton = new JButton("<");
 	private JButton suivButton = new JButton("Suivant");
 	private JPanel container = new InsertFilmPanel();
-	private FichierFilm fichierFilm;
+	private FichierFilm fichierFilm = new FichierFilm();
 	private InsertFilmControl controller = new InsertFilmControl(this);
 	
 	public InsertFilm(JFrame fenetre, CardLayout switcherView, JPanel containerView) {
@@ -139,13 +139,16 @@ public class InsertFilm extends View{
 	}
 
 
-	public Film getFilm() {
-		return film;
+	public FichierFilm getFichierFilm() {
+		return fichierFilm;
 	}
 
 
-	public void setFilm(Film film) {
-		this.film = film;
+	public void setFichierFilm(FichierFilm fichierFilm) {
+		this.fichierFilm = fichierFilm;
 	}
+
+
+	
 
 }

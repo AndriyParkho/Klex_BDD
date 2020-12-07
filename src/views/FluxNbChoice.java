@@ -14,18 +14,19 @@ import javax.swing.SpinnerNumberModel;
 
 import controller.FluxNbChoiceControl;
 import model.FichierFilm;
+import model.FichierPiste;
 
 public class FluxNbChoice extends View{
 	private JSpinner nombreField = new JSpinner();
 	private JPanel container = new ChoixNbFluxPanel();
 	private FluxNbChoiceControl controller = new FluxNbChoiceControl(this);
 	private FichierFilm fichierFilm;
-//	private FichierPiste fichierPiste;
+	private FichierPiste fichierPiste;
 
-	public FluxNbChoice(JFrame fenetre, CardLayout switcherView, JPanel containerView, FichierFilm fichierFilm) {
+	public FluxNbChoice(JFrame fenetre, CardLayout switcherView, JPanel containerView, FichierFilm fichierFilm, FichierPiste fichierPiste) {
 		super(fenetre, switcherView, containerView, new String("Nombre de flux"));
 		this.fichierFilm = fichierFilm;
-//		this.fichierPiste = fichierPiste;
+		this.fichierPiste = fichierPiste;
 
 		super.getContainerView().add(container, "Nombre flux");
 		super.getPanels().add("Nombre flux");
@@ -75,5 +76,23 @@ public class FluxNbChoice extends View{
 	public void setNombreField(JSpinner nombreField) {
 		this.nombreField = nombreField;
 	}
+
+	public FichierFilm getFichierFilm() {
+		return fichierFilm;
+	}
+
+	public void setFichierFilm(FichierFilm fichierFilm) {
+		this.fichierFilm = fichierFilm;
+	}
+
+	public FichierPiste getFichierPiste() {
+		return fichierPiste;
+	}
+
+	public void setFichierPiste(FichierPiste fichierPiste) {
+		this.fichierPiste = fichierPiste;
+	}
+	
+	
 
 }
