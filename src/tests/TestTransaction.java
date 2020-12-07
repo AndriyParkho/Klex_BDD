@@ -1,20 +1,14 @@
 package tests;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.ResultSet;
-import java.sql.Date;
-import java.sql.Statement;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
-
-import org.apache.ibatis.jdbc.ScriptRunner;
 
 import connections.ConnectionOracle;
-import connections.JDBCUtilities;
 
 public class TestTransaction {
 

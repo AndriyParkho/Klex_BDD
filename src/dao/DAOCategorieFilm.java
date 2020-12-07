@@ -3,7 +3,9 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 
+import connections.JDBCUtilities;
 import model.CategorieFilm;
 
 public class DAOCategorieFilm extends DAO<CategorieFilm> {
@@ -15,6 +17,18 @@ public class DAOCategorieFilm extends DAO<CategorieFilm> {
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setString(1, categorieFilm.getCategorie());
             statement.executeUpdate();
+        }
+    }
+
+    public void createOrUpdate(CategorieFilm categorieFilm) throws SQLException {
+        try {
+            this.create(categorieFilm);
+        } catch (final SQLIntegrityConstraintViolationException e) {
+            if (e.getErrorCode() != 1) {
+                JDBCUtilities.printSQLException(e);
+            } else {
+                System.out.println(categorieFilm + " est déjà dans la BDD.");
+            }
         }
     }
 

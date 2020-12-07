@@ -1,8 +1,8 @@
 package model;
 
 public class FluxAudio extends Flux {
-    private int echantillonnage = 0;
-    private String langue = "";
+    private int echantillonnage;
+    private String langue;
 
     public int getEchantillonnage() {
         return echantillonnage;

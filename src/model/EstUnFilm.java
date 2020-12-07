@@ -7,6 +7,12 @@ public class EstUnFilm {
     private String titreFilm;
     private Date anneeSortie;
 
+    public EstUnFilm(long idFichier, String titreFilm, Date anneeSortie) {
+        this.idFichier = idFichier;
+        this.titreFilm = titreFilm;
+        this.anneeSortie = anneeSortie;
+    }
+
     public long getIdFichier() {
         return idFichier;
     }
