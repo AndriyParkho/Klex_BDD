@@ -76,6 +76,8 @@ public final class TransactionFichierFilm {
                     JDBCUtilities.printSQLException(excep);
                 }
             }
+        } finally {
+            ConnectionOracle.closeInstance();
         }
     }
 }
