@@ -33,6 +33,12 @@ public class DAOPiste extends DAO<Piste>{
         return this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeQuery(query);
     }
+    
+    public ResultSet find(String titrePiste, String titreAlbum) throws SQLException {
+        final String query = String.format("SELECT * FROM Piste WHERE titrePiste = %s AND titreAlbum = %s", titrePiste, titreAlbum);
+        return this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
+                .executeQuery(query);
+    }
 
     public void delete(int numPiste, long idAlbum) throws SQLException {
         final String query = String.format("DELETE FROM Piste WHERE numPiste = %d AND idAlbum = %ld", numPiste, idAlbum);

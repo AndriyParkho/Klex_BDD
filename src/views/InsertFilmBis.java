@@ -20,7 +20,6 @@ import javax.swing.filechooser.FileSystemView;
 
 import controller.InsertFilmBisControl;
 import model.aggregates.FichierFilm;
-import model.Film;
 
 public class InsertFilmBis extends View{
 	private JTextField afficheField;

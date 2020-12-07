@@ -93,6 +93,4 @@ public class FluxNbChoice extends View{
 		this.fichierPiste = fichierPiste;
 	}
 	
-	
-
 }

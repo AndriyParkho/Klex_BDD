@@ -40,6 +40,12 @@ public class DAOAlbum extends DAO<Album> {
         return this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeQuery(query);
     }
+    
+    public ResultSet find(String titreAlbum) throws SQLException {
+        final String query = String.format("SELECT * FROM Album WHERE titreAlbum = %s", titreAlbum);
+        return this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
+                .executeQuery(query);
+    }
 
     public void delete(long idAlbum) throws SQLException {
         final String query = String.format("DELETE FROM Album WHERE idAlbum = %ld", idAlbum);
