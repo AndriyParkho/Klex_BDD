@@ -8,8 +8,9 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import connections.JDBCUtilities;
 import model.Utilisateur;
 
-public class DAOUtilisateur {
+public class DAOUtilisateur extends DAO<Utilisateur> {
 
+    @Override
     public void create(Utilisateur utilisateur) throws SQLException {
         final String query = "INSERT INTO Utilisateur VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -26,10 +27,10 @@ public class DAOUtilisateur {
         }
     }
 
-    public void find(String email) throws SQLException {
+    public ResultSet find(String email) throws SQLException {
         final String query = String.format("SELECT * FROM Utilisateur WHERE email = '%s'", email);
-        this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
-                .executeUpdate(query);
+        return this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
+                .executeQuery(query);
     }
 
     public void delete(String email) throws SQLException {

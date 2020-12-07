@@ -15,15 +15,19 @@ public abstract class DAO<T> {
      */
     public abstract void create(T obj) throws SQLException;
 
-    /**
-     * Permet de trouver un objet
-     * @param obj
-     */
-    public abstract T find(T obj) throws SQLException;
+    // /**
+    //  * Permet de trouver un objet
+    //  * @param obj
+    //  */
+    // public abstract void find(T obj) throws SQLException;
 
-    /**
-     * Permet la suppression d'une entrée de la base
-     * @param obj
-     */
-    public abstract void delete(T obj) throws SQLException;
+    // /**
+    //  * Permet la suppression d'une entrée de la base
+    //  * @param obj
+    //  */
+    // public abstract void delete(T obj) throws SQLException;
+
+    public Connection getConnection() {
+        return connection;
+    }
 }
