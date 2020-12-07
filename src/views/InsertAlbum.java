@@ -17,7 +17,6 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileSystemView;
 
 import controller.InsertAlbumControl;
-import model.FichierPiste;
 import model.Piste;
 
 public class InsertAlbum extends View{
@@ -27,12 +26,12 @@ public class InsertAlbum extends View{
 	private JTextField pochetteField;
 	private JButton suivButton = new JButton("Suivant");
 	private JPanel container = new InsertAlbumPanel();
-	private FichierPiste fichierPiste;
+	private Piste piste;
 	private InsertAlbumControl controller = new InsertAlbumControl(this);
 
-	public InsertAlbum(JFrame fenetre, CardLayout switcherView, JPanel containerView, FichierPiste fichierPiste) {
+	public InsertAlbum(JFrame fenetre, CardLayout switcherView, JPanel containerView, Piste piste) {
 		super(fenetre, switcherView, containerView, new String("Ajout d'un album"));
-		this.fichierPiste = fichierPiste;
+		this.piste = piste;
 		
 		super.getContainerView().add(container, "Insertion album");
 		super.getPanels().add("Insertion album");
@@ -177,12 +176,12 @@ public class InsertAlbum extends View{
 		this.suivButton = suivButton;
 	}
 
-	public FichierPiste getFichierPiste() {
-		return fichierPiste;
+	public Piste getPiste() {
+		return piste;
 	}
 
-	public void setFichierPiste(FichierPiste fichierPiste) {
-		this.fichierPiste = fichierPiste;
+	public void setPiste(Piste piste) {
+		this.piste = piste;
 	}
 
 	

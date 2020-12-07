@@ -8,18 +8,11 @@ public class APourRole {
     private long idArtiste;
     private String role;
 
-    public APourRole(String titreFilm, Date anneeSortie, long idArtiste, String role) {
-        this.titreFilm = titreFilm;
-        this.anneeSortie = anneeSortie;
-        this.idArtiste = idArtiste;
-        this.role = role;
-    }
-
     public String getTitreFilm() {
         return titreFilm;
     }
 
-    public void setTitreFilm(final String titreFilm) {
+    public void setTitreFilm(String titreFilm) {
         this.titreFilm = titreFilm;
     }
 
@@ -27,7 +20,7 @@ public class APourRole {
         return anneeSortie;
     }
 
-    public void setAnneeSortie(final Date anneeSortie) {
+    public void setAnneeSortie(Date anneeSortie) {
         this.anneeSortie = anneeSortie;
     }
 
@@ -35,7 +28,7 @@ public class APourRole {
         return idArtiste;
     }
 
-    public void setIdArtiste(final long idArtiste) {
+    public void setIdArtiste(long idArtiste) {
         this.idArtiste = idArtiste;
     }
 
@@ -43,7 +36,7 @@ public class APourRole {
         return role;
     }
 
-    public void setRole(final String role) {
+    public void setRole(String role) {
         this.role = role;
     }
 

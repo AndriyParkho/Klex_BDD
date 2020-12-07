@@ -58,7 +58,6 @@ public class DeleteChoice extends View{
 			add(pisteChoice);
 			valideButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					controller.clicValide();
 				}
 			});
 			
@@ -69,37 +68,12 @@ public class DeleteChoice extends View{
 			JButton backButton = new JButton("<");
 			backButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					controller.clicBack();
 				}
 			});
 			backButton.setBounds(12, 16, 47, 34);
 			add(backButton);
 		}
 
-	}
-
-	public JRadioButton getFilmChoice() {
-		return filmChoice;
-	}
-
-	public void setFilmChoice(JRadioButton filmChoice) {
-		this.filmChoice = filmChoice;
-	}
-
-	public JRadioButton getPisteChoice() {
-		return pisteChoice;
-	}
-
-	public void setPisteChoice(JRadioButton pisteChoice) {
-		this.pisteChoice = pisteChoice;
-	}
-
-	public JButton getValideButton() {
-		return valideButton;
-	}
-
-	public void setValideButton(JButton valideButton) {
-		this.valideButton = valideButton;
 	}
 
 

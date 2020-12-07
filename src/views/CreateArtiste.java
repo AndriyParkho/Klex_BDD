@@ -41,7 +41,7 @@ public class CreateArtiste extends JFrame {
 		this.artisteInconnu = artisteInconnu;
 		this.fichierFilm = fichierFilm;
 		this.fichierPiste = fichierPiste;
-		
+
 		setTitle("Ajout artiste");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 344);
@@ -49,37 +49,37 @@ public class CreateArtiste extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JLabel lblArtisteInconnu = new JLabel("ARTISTE INCONNU !");
 		lblArtisteInconnu.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblArtisteInconnu.setBounds(116, 13, 205, 34);
 		contentPane.add(lblArtisteInconnu);
-		
+
 		JLabel lblNewLabel = new JLabel("Ajoutez l'artiste :");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
 		lblNewLabel.setBounds(154, 44, 140, 22);
 		contentPane.add(lblNewLabel);
-		
+
 		nomField = new JTextField(artisteInconnu);
 		nomField.setBounds(66, 89, 116, 22);
 		contentPane.add(nomField);
 		nomField.setColumns(10);
-		
+
 		JLabel lblNewLabel_1 = new JLabel("Nom :");
 		lblNewLabel_1.setBounds(9, 92, 45, 16);
 		contentPane.add(lblNewLabel_1);
-		
+
 		JLabel lblNewLabel_1_1 = new JLabel("Date de naissance :");
 		lblNewLabel_1_1.setBounds(9, 127, 116, 16);
 		contentPane.add(lblNewLabel_1_1);
-		
+
 		dateField = new JTextField();
 		dateField.setText("jj/mm/yyyy");
 		dateField.addFocusListener(new FocusListener() {
 
 
 			public void focusGained(FocusEvent e) {
-			    dateField.setText(""); 
+			    dateField.setText("");
 			}
 
 
@@ -91,25 +91,25 @@ public class CreateArtiste extends JFrame {
 		dateField.setColumns(10);
 		dateField.setBounds(137, 124, 116, 22);
 		contentPane.add(dateField);
-		
-		JLabel lblNewLabel_1_2 = new JLabel("Spécialité :");
+
+		JLabel lblNewLabel_1_2 = new JLabel("Spï¿½cialitï¿½ :");
 		lblNewLabel_1_2.setBounds(217, 92, 64, 16);
 		contentPane.add(lblNewLabel_1_2);
-		
+
 		specField = new JTextField();
 		specField.setColumns(10);
 		specField.setBounds(293, 89, 116, 22);
 		contentPane.add(specField);
-		
+
 		JLabel lblNewLabel_1_3 = new JLabel("Photo :");
 		lblNewLabel_1_3.setBounds(9, 162, 56, 16);
 		contentPane.add(lblNewLabel_1_3);
-		
+
 		photoField = new JTextField();
 		photoField.setColumns(10);
 		photoField.setBounds(67, 159, 104, 22);
 		contentPane.add(photoField);
-		
+
 		JButton photoButton = new JButton("Parcourir");
 		photoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -124,12 +124,12 @@ public class CreateArtiste extends JFrame {
 		});
 		photoButton.setBounds(178, 159, 85, 22);
 		contentPane.add(photoButton);
-		
+
 		JLabel lblNewLabel_2 = new JLabel("Biographie :");
 		lblNewLabel_2.setBounds(9, 196, 75, 16);
 		contentPane.add(lblNewLabel_2);
-		
-		
+
+
 		bioField.setWrapStyleWord(true);
 		bioField.setLineWrap(true);
 		bioField.setBounds(88, 193, 321, 47);
@@ -139,11 +139,11 @@ public class CreateArtiste extends JFrame {
 				controller.clicValid();
 			}
 		});
-		
-		
+
+
 		valideButton.setBounds(166, 259, 97, 25);
 		contentPane.add(valideButton);
-		
+
 		this.setVisible(true);
 	}
 
@@ -234,6 +234,6 @@ public class CreateArtiste extends JFrame {
 	public void setController(CreateArtisteControl controller) {
 		this.controller = controller;
 	}
-	
-	
+
+
 }

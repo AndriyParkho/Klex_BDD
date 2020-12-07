@@ -18,6 +18,8 @@ public class FenetrePrincipal {
 		
 		frame.add(containerView);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setSize((int) (Toolkit.getDefaultToolkit().getScreenSize().width*0.2), (int) (Toolkit.getDefaultToolkit().getScreenSize().height*0.2));
+		frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 	}
 }

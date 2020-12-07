@@ -1,17 +1,27 @@
 package model;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Objects;
 
 public class FichierFilm {
-	private Fichier fichier;
-	private Film film;
-	private HashSet<Flux> flux;
-	private HashSet<CategorieFilm> categories;
-	private HashSet<ImgExtraiteFilm> imgExtraiteFilms;
-	private HashMap<Artiste, String> artistes;
+	Fichier fichier;
+	Film film;
+	HashSet<CategorieFilm> categorie;
+	HashSet<ImgExtraiteFilm> imgExtraiteFilm;
+	HashMap<Artiste, String> artistes;
+	
+	public FichierFilm(Fichier fichier, Film film, HashSet<CategorieFilm> categorie, HashSet<ImgExtraiteFilm> imgFilm, HashMap<Artiste, String> artistes) {
+		this.fichier = fichier;
+		this.film = film;
+		this.categorie = categorie;
+		this.imgExtraiteFilm = imgFilm;
+		this.artistes = artistes;
+	}
 	
 	public FichierFilm() {
+		
 	}
 
 	public Fichier getFichier() {
@@ -30,28 +40,20 @@ public class FichierFilm {
 		this.film = film;
 	}
 
-	public HashSet<Flux> getFlux() {
-		return flux;
+	public HashSet<CategorieFilm> getCategorie() {
+		return categorie;
 	}
 
-	public void setFlux(HashSet<Flux> flux) {
-		this.flux = flux;
+	public void setCategorie(HashSet<CategorieFilm> categorie) {
+		this.categorie = categorie;
 	}
 
-	public HashSet<CategorieFilm> getCategories() {
-		return categories;
+	public HashSet<ImgExtraiteFilm> getImgExtraiteFilm() {
+		return imgExtraiteFilm;
 	}
 
-	public void setCategories(HashSet<CategorieFilm> categories) {
-		this.categories = categories;
-	}
-
-	public HashSet<ImgExtraiteFilm> getImgExtraiteFilms() {
-		return imgExtraiteFilms;
-	}
-
-	public void setImgExtraiteFilms(HashSet<ImgExtraiteFilm> imgExtraiteFilms) {
-		this.imgExtraiteFilms = imgExtraiteFilms;
+	public void setImgExtraiteFilm(HashSet<ImgExtraiteFilm> imgExtraiteFilm) {
+		this.imgExtraiteFilm = imgExtraiteFilm;
 	}
 
 	public HashMap<Artiste, String> getArtistes() {
@@ -60,6 +62,11 @@ public class FichierFilm {
 
 	public void setArtistes(HashMap<Artiste, String> artistes) {
 		this.artistes = artistes;
-	}
+	};
+	
+	
+	
+	
+	
 	
 }

@@ -5,14 +5,14 @@ import views.InsertPisteBis;
 
 public class InsertAlbumControl {
 	private InsertAlbum view;
-	
+
 	public InsertAlbumControl(InsertAlbum view) {
 		this.view = view;
 	}
-	
+
 	public void clicSuiv() {
-		// Récupérer les infos de l'album dans chaque case et créer l'objet Album pour l'insérer dans le model FichierPiste
-		
+		// Rï¿½cupï¿½rer les infos de l'album dans chaque case et crï¿½er l'objet Album pour l'insï¿½rer dans le model FichierPiste
+
 		new InsertPisteBis(view.getFenetre(), view.getSwitcherView(), view.getContainerView(), view.getFichierPiste());
 	}
 }
