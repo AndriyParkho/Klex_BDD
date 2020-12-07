@@ -9,14 +9,15 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import connections.JDBCUtilities;
 import model.Artiste;
 
-public class DAOArtiste {
+public class DAOArtiste extends DAO<Artiste> {
 
+    @Override
     public void create(Artiste artiste) throws SQLException {
         final String query = "INSERT INTO Artiste VALUES (idArtiste_seq.nextval, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setString(1, artiste.getNom());
-            statement.setDate(2, Date.valueOf(artiste.getDateNaissance()));
+            statement.setDate(2, artiste.getDateNaissance());
             statement.setString(3, artiste.getUrlPhoto());
             statement.setString(4, artiste.getSpecialite());
             statement.setString(5, artiste.getBiographie());

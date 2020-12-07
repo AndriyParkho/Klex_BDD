@@ -8,15 +8,16 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import connections.JDBCUtilities;
 import model.APourRole;
 
-public class DAOAPourRole {
+public class DAOAPourRole extends DAO<APourRole> {
 
+    @Override
     public void create(APourRole aPourRole) throws SQLException {
         final String query = "INSERT INTO APourRole VALUES (?, ?, ?, idArtiste_seq.currval)";
 
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setString(1, aPourRole.getRoleFilm());
             statement.setString(2, aPourRole.getTitreFilm());
-            statement.setDate(3, Date.valueOf(aPourRole.getAnneeSortie()));
+            statement.setDate(3, aPourRole.getAnneeSortie());
             
             statement.executeUpdate();
         }

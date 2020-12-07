@@ -6,8 +6,9 @@ import java.sql.SQLException;
 
 import model.Flux;
 
-public class DAOFlux {
+public class DAOFlux extends DAO<Flux> {
     
+    @Override
     public void create(Flux flux) throws SQLException {
         final String insertFluxQuery = "INSERT INTO Flux VALUES (idFlux_seq.nextval, ?, idFichier_seq.currval, ?, ?)";
     

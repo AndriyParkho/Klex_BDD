@@ -6,8 +6,9 @@ import java.sql.SQLException;
 
 import model.FluxVideo;
 
-public class DAOFluxVideo {
+public class DAOFluxVideo extends DAO<FluxVideo>{
     
+    @Override
     public void create(FluxVideo fluxVideo) throws SQLException {
         final String insertFluxQuery = "INSERT INTO FluxTexte VALUES (idFlux_seq.currval, ?, idFichier_seq.currval, ?, ?, ?, ?)";
     

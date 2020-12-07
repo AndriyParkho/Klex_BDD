@@ -9,8 +9,9 @@ import java.util.HashSet;
 import connections.JDBCUtilities;
 import model.SupporteCodec;
 
-public class DAOSupporteCodec {
+public class DAOSupporteCodec extends DAO<SupporteCodec> {
     
+    @Override
     public void create(SupporteCodec supporteCodec) throws SQLException {
         final String query = "INSERT INTO SupporteCodec VALUES (?, ?, ?, ?)";
 

@@ -8,8 +8,9 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import connections.JDBCUtilities;
 import model.APourInstrument;
 
-public class DAOAPourInstrument {
+public class DAOAPourInstrument extends DAO<APourInstrument> {
 
+    @Override
     public void create(APourInstrument aPourInstrument) throws SQLException {
         final String query = "INSERT INTO APourInstrument VALUES (?, idArtiste_seq.currval, idAlbum_seq.currval, idPiste_seq.currval)";
 

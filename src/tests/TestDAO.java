@@ -74,7 +74,16 @@ public class TestDAO {
             }
 
             if (connecte) {
-                //TODO AJOUT INFORMATIONS
+                System.out.println("Souhaitez-vous entrer un film (tapez film)/une piste(tapez piste)");
+                answer = br.readLine();
+                if (answer.equals("film")) {
+                    //FLOW FILM
+                    System.out.println("Ajout d'un film :");
+                }
+                else {
+                    //FLOW PISTE
+                    System.out.println("Ajout d'une piste :");
+                }
             }
 
         } catch (SQLException e) {e.printStackTrace();}
