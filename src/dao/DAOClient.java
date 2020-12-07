@@ -3,7 +3,9 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 
+import connections.JDBCUtilities;
 import model.Client;
 
 public class DAOClient extends DAO<Client> {
@@ -18,6 +20,18 @@ public class DAOClient extends DAO<Client> {
             statementClient.setInt(3, client.getLargeurMax());
             statementClient.setInt(4, client.getHauteurMax());
             statementClient.executeUpdate();
+        }
+    }
+
+    public void createOrUpdate(Client client) throws SQLException {
+        try {
+            this.create(client);
+        } catch (final SQLIntegrityConstraintViolationException e) {
+            if (e.getErrorCode() != 1) {
+                JDBCUtilities.printSQLException(e);
+            } else {
+                System.out.println(client + " est déjà dans la BDD.");
+            }
         }
     }
 

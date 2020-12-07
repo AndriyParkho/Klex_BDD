@@ -4,6 +4,11 @@ public class AlbumAPourCategorie {
     private long idAlbum;
     private String typeCategorieMusique;
 
+    public AlbumAPourCategorie(long idAlbum, String typeCategorieMusique) {
+        this.idAlbum = idAlbum;
+        this.typeCategorieMusique = typeCategorieMusique;
+    }
+
     public long getIdAlbum() {
         return idAlbum;
     }

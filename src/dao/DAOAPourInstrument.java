@@ -15,7 +15,6 @@ public class DAOAPourInstrument extends DAO<APourInstrument> {
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setString(1, aPourInstrument.getInstrument());
             statement.setInt(2, aPourInstrument.getNumPiste());
-
             statement.executeUpdate();
         }
     }

@@ -5,6 +5,12 @@ public class EstUnePiste {
     private int numPiste;
     private long idAlbum;
 
+    public EstUnePiste(long idFichier, int numPiste, long idAlbum) {
+        this.idFichier = idFichier;
+        this.numPiste = numPiste;
+        this.idAlbum = idAlbum;
+    }
+
     public long getIdFichier() {
         return idFichier;
     }

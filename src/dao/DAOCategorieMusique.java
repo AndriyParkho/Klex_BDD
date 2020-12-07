@@ -3,7 +3,9 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 
+import connections.JDBCUtilities;
 import model.CategorieMusique;
 
 public class DAOCategorieMusique extends DAO<CategorieMusique> {
@@ -15,6 +17,18 @@ public class DAOCategorieMusique extends DAO<CategorieMusique> {
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setString(1, categorieMusique.getCategorie());
             statement.executeUpdate();
+        }
+    }
+
+    public void createOrUpdate(CategorieMusique categorieMusique) throws SQLException {
+        try {
+            this.create(categorieMusique);
+        } catch (final SQLIntegrityConstraintViolationException e) {
+            if (e.getErrorCode() != 1) {
+                JDBCUtilities.printSQLException(e);
+            } else {
+                System.out.println(categorieMusique + " est déjà dans la BDD.");
+            }
         }
     }
 
