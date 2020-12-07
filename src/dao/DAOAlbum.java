@@ -16,7 +16,7 @@ public class DAOAlbum extends DAO<Album> {
     public void create(Album album) throws SQLException {
         final String insertAlbumQuery = "INSERT INTO Album (idAlbum, titreAlbum, nomGroupe, dateSortieAlbum, urlImagePochette) VALUES (idAlbum_seq.nextval, ?, ?, ?, ?)";
 
-        /* String queryId = "SELECT idAlbum_seq.nextval from DUAL";
+        String queryId = "SELECT idAlbum_seq.nextval from DUAL";
         int nextID_from_seq = 0;
         try (ResultSet rs = this.connection.prepareStatement(queryId).executeQuery()) {
             if (rs.next()) {
@@ -24,23 +24,19 @@ public class DAOAlbum extends DAO<Album> {
                 album.setId(nextID_from_seq);
             }
         }
-        System.out.println(nextID_from_seq); */
+        System.out.println(nextID_from_seq);
 
-        System.out.println("Statement Album\n");
         try (PreparedStatement statementAlbum = this.connection.prepareStatement(insertAlbumQuery)) {
             statementAlbum.setString(1, album.getTitre());
             statementAlbum.setString(2, album.getGroupe());
             statementAlbum.setDate(3, album.getDateSortie());
             statementAlbum.setString(4, album.getUrlImagePochette());
-
             statementAlbum.executeUpdate();
         }
         // on doit créer les catégories
         for (CategorieMusique categorieMusique : album.getCategoriesMusique()) {
-            System.out.println("Statement CategorieMusique\n");
             DAOFactory.getCategorieMusiqueDAO().createOrUpdate(categorieMusique);
         }
-        // connection.commit(); // NECESSARY because AlbumAPourCategorie references CategorieMusique.typeCategorieMusique and Album.idAlbum ?
 
         for (CategorieMusique categorieMusique : album.getCategoriesMusique()) {
             // insertion dans la table intermédiaire, c'est un nouvel album donc on est sur
@@ -73,6 +69,7 @@ public class DAOAlbum extends DAO<Album> {
         final String query = "SELECT * FROM Album LEFT JOIN AlbumAPourCategorie ON Album.idAlbum = AlbumAPourCategorie.idAlbum AND Album.idAlbum = "
                 + id
                 + " INNER JOIN CategorieMusique ON CategorieMusique.typeCategorieMusique = AlbumAPourCategorie.typeCategorieMusique";
+        System.out.println(query);
         try (ResultSet rs = this.connection
                 .createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE).executeQuery(query)) {
             // le ResultSet n'est pas vide, on construit un nouvel objet qui contient les
@@ -105,9 +102,9 @@ public class DAOAlbum extends DAO<Album> {
                 + "' WHERE idAlbum = " + album.getId();
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
             final int nbRowsAffected = statement.executeUpdate();
-            if (nbRowsAffected != 1) {
+            /* if (nbRowsAffected != 1) {
                 throw new SQLException("not only one row affected");
-            }
+            } */
         }
         for (CategorieMusique categorieMusique : album.getCategoriesMusique()) {
             // Si la catégorie n'existe pas, on la crèe

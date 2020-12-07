@@ -3,11 +3,8 @@ package tests;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.HashSet;
 import java.util.List;
-
-import org.apache.ibatis.jdbc.ScriptRunner;
 
 import connections.ConnectionOracle;
 import connections.JDBCUtilities;
@@ -27,21 +24,6 @@ public class TestDAOAlbum {
         Connection connection = ConnectionOracle.getInstance();
         try {
 
-            // Initialize the script runner
-            ScriptRunner sr = new ScriptRunner(connection);
-            sr.setEscapeProcessing(false);
-
-            // Drop existing tables
-            try (Statement statement = connection.createStatement()) {
-                for (String tableName : tables) {
-                    statement.executeUpdate(JDBCUtilities.dropIfExist(tableName));
-                    connection.commit();
-                }
-                statement.executeUpdate("DROP SEQUENCE idAlbum_seq");
-                connection.commit();
-            }
-            JDBCUtilities.loadFile(sr, "ressources/CreateTables.sql");
-
             DAOCategorieMusique categorieMusiqueDAO = DAOFactory.getCategorieMusiqueDAO();
 
             System.out.println("\nAvant création d'une catégorie :");
@@ -49,7 +31,11 @@ public class TestDAOAlbum {
             System.out.println(categorieMusiqueDAO.find("EDM"));
 
             CategorieMusique categorieMusique = new CategorieMusique("pop");
-            categorieMusiqueDAO.create(categorieMusique);
+            try {
+                categorieMusiqueDAO.create(categorieMusique);
+            } catch (SQLException e) {
+                connection.rollback();
+            }
             connection.commit();
 
             System.out.println("\nAprès création d'une catégorie :");
@@ -57,8 +43,12 @@ public class TestDAOAlbum {
             System.out.println(categorieMusiqueDAO.find("EDM"));
 
             categorieMusique = new CategorieMusique("EDM");
-            categorieMusiqueDAO.create(categorieMusique);
-            connection.commit();
+            try {
+                categorieMusiqueDAO.create(categorieMusique);
+                connection.commit();
+            } catch (SQLException e) {
+                connection.rollback();
+            }
 
             System.out.println("\nAprès création d'une catégorie :");
             System.out.println(categorieMusiqueDAO.find("pop"));
@@ -91,8 +81,8 @@ public class TestDAOAlbum {
             album.setGroupe("Calvin Harris");
             album.setDateSortie(Date.valueOf("2014-11-03"));
             album.setUrlImagePochette("https://fr.wikipedia.org/wiki/Motion_(album_de_Calvin_Harris)");
-            album.addCategorieMusique(new CategorieMusique("pop"));
-            album.addCategorieMusique(new CategorieMusique("electro"));
+            album.addCategorieMusique(new CategorieMusique("cc"));
+            album.addCategorieMusique(new CategorieMusique("ccc"));
 
             albumDAO.create(album);
             connection.commit();
@@ -109,16 +99,16 @@ public class TestDAOAlbum {
             connection.commit();
 
             System.out.println("\nAprès update d'un album :");
-            System.out.println(albumDAO.find(album.getId()));
+            System.out.println(albumDAO.find(album));
 
             album.setTitre("18 Months");
             album.setGroupe("Calvin Harris");
             album.setDateSortie(Date.valueOf("2012-10-26"));
             album.setUrlImagePochette("https://fr.wikipedia.org/wiki/18_Months");
             album.setCategoriesMusique(new HashSet<CategorieMusique>());
-            album.addCategorieMusique(new CategorieMusique("pop"));
-            album.addCategorieMusique(new CategorieMusique("electro-dance"));
-            album.addCategorieMusique(new CategorieMusique("EDM"));
+            album.addCategorieMusique(new CategorieMusique("fff"));
+            album.addCategorieMusique(new CategorieMusique("ff"));
+            album.addCategorieMusique(new CategorieMusique("ffff"));
 
             albumDAO.create(album);
             connection.commit();
@@ -128,7 +118,7 @@ public class TestDAOAlbum {
             JDBCUtilities.selectAll(connection, "CategorieMusique");
             JDBCUtilities.selectAll(connection, "AlbumAPourCategorie");
 
-            albumDAO.delete(albumDAO.find(1));
+            albumDAO.delete(album);
             connection.commit();
 
             System.out.println("\nAprès delete d'un album :");
@@ -136,7 +126,9 @@ public class TestDAOAlbum {
             JDBCUtilities.selectAll(connection, "CategorieMusique");
             JDBCUtilities.selectAll(connection, "AlbumAPourCategorie");
 
-            album = albumDAO.find(2);
+            System.out.println(album);
+            album = albumDAO.find(album.getId() + 1);
+            System.out.println(album);
             album.setCategoriesMusique(new HashSet<CategorieMusique>());
             album.addCategorieMusique(new CategorieMusique("classique"));
             albumDAO.update(album);
