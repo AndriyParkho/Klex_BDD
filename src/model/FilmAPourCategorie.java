@@ -7,6 +7,12 @@ public class FilmAPourCategorie {
     private Date anneeSortie;
     private String typeCategorieFilm;
 
+    public FilmAPourCategorie(String titreFilm, Date anneeSortie, String typeCategorieFilm) {
+        this.titreFilm = titreFilm;
+        this.anneeSortie = anneeSortie;
+        this.typeCategorieFilm = typeCategorieFilm;
+    }
+    
     public String getTitreFilm() {
         return titreFilm;
     }

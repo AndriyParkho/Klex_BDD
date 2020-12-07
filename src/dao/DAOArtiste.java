@@ -3,7 +3,9 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 
+import connections.JDBCUtilities;
 import model.Artiste;
 
 public class DAOArtiste extends DAO<Artiste> {
@@ -28,6 +30,18 @@ public class DAOArtiste extends DAO<Artiste> {
             statement.setString(4, artiste.getSpecialite());
             statement.setString(5, artiste.getBiographie());
             statement.executeUpdate();
+        }
+    }
+
+    public void createOrUpdate(Artiste artiste) throws SQLException {
+        try {
+            this.create(artiste);
+        } catch (final SQLIntegrityConstraintViolationException e) {
+            if (e.getErrorCode() != 1) {
+                JDBCUtilities.printSQLException(e);
+            } else {
+                System.out.println(artiste + " est déjà dans la BDD.");
+            }
         }
     }
 

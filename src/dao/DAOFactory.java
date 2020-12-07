@@ -45,4 +45,44 @@ public final class DAOFactory {
     public static DAOUtilisateur getUtilisateurDAO() {
         return new DAOUtilisateur();
     }
+
+    public static DAOAPourRole getAPourRole() {
+        return new DAOAPourRole();
+    }
+
+    public static DAOAPourInstrument getAPourInstrument() {
+        return new DAOAPourInstrument();
+    }
+
+    public static DAOAlbumAPourCategorie getAlbumAPourCategorie() {
+        return new DAOAlbumAPourCategorie();
+    }
+
+    public static DAOEstUnFilm getEstUnFilm() {
+        return new DAOEstUnFilm();
+    }
+
+    public static DAOEstUnePiste getEstUnePiste() {
+        return new DAOEstUnePiste();
+    }
+
+    public static DAOFilmAPourCategorie getFilmAPourCategorie () {
+        return new DAOFilmAPourCategorie();
+    }
+
+    public static DAOFlux getFlux () {
+        return new DAOFlux();
+    }
+
+    public static DAOFluxAudio getFluxAudio () {
+        return new DAOFluxAudio();
+    }
+
+    public static DAOFluxVideo getFluxVideo () {
+        return new DAOFluxVideo();
+    }
+
+    public static DAOFluxTexte getFluxTexte () {
+        return new DAOFluxTexte();
+    }
 }

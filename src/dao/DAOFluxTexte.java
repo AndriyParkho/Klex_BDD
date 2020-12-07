@@ -11,7 +11,7 @@ public class DAOFluxTexte extends DAO<FluxTexte> {
     @Override
     public void create(FluxTexte fluxTexte) throws SQLException {
         final String insertFluxQuery = "INSERT INTO FluxTexte VALUES (idFlux_seq.currval, ?, idFichier_seq.currval, ?, ?, ?)";
-    
+
         try (PreparedStatement statementFlux = this.connection.prepareStatement(insertFluxQuery)) {
             statementFlux.setInt(1, fluxTexte.getDebit());
             statementFlux.setString(2, fluxTexte.getNomCodec());
