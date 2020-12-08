@@ -48,9 +48,9 @@ public class InsertFilmBisControl {
 		for(String art : artistes) {
 			Artiste artiste = new Artiste();
 			DAOArtiste artisteDAO = DAOFactory.getArtisteDAO();
-			String[] artspe = art.replaceAll("\\(|\\)| ", "").split(",");
-			String nomArtiste = artspe[0];
-			String role = artspe[1];
+			String[] artspe = art.split(",");
+			String nomArtiste = artspe[0].replaceAll("\\(", "");
+			String role = artspe[1].replaceAll("\\)| ", "");
 			
 			try(ResultSet resArt = artisteDAO.find(nomArtiste)){
 				if(resArt.next()) {
@@ -62,7 +62,7 @@ public class InsertFilmBisControl {
 					artiste.setUrlPhoto(resArt.getString("urlPhoto"));
 					view.getFichierFilm().getArtistes().put(artiste, role);
 				} else {
-					new CreateArtiste(artiste.getNom(), role, view.getFichierFilm(), null);
+					new CreateArtiste(nomArtiste, role, view.getFichierFilm(), null);
 				}
 			}catch(SQLException e) {
 				System.out.println(e);
