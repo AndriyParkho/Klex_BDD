@@ -1,5 +1,7 @@
 package controller;
 
+import java.sql.Date;
+
 import views.InsertAlbum;
 import views.InsertPisteBis;
 
@@ -11,7 +13,10 @@ public class InsertAlbumControl {
 	}
 	
 	public void clicSuiv() {
-		// Récupérer les infos de l'album dans chaque case et créer l'objet Album pour l'insérer dans le model FichierPiste
+		view.getFichierPiste().getAlbum().setDateSortie(Date.valueOf(view.getDateField().getText()));
+		view.getFichierPiste().getAlbum().setGroupe(view.getGroupeField().getText());
+		view.getFichierPiste().getAlbum().setUrlImagePochette(view.getPochetteField().getText());
+		
 		new InsertPisteBis(view.getFenetre(), view.getSwitcherView(), view.getContainerView(), view.getFichierPiste());
 	}
 }
