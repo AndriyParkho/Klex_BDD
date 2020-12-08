@@ -6,6 +6,13 @@ public class SupporteCodec {
     private String nomCodec;
     private String typeCodec;
 
+    public SupporteCodec(String marque, String modele, String nomCodec, String typeCodec) {
+        this.marque = marque;
+        this.modele = modele;
+        this.nomCodec = nomCodec;
+        this.typeCodec = typeCodec;
+    }
+
     public String getMarque() {
         return marque;
     }

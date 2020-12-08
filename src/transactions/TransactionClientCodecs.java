@@ -7,6 +7,7 @@ import connections.ConnectionOracle;
 import connections.JDBCUtilities;
 import dao.DAOFactory;
 import model.Codec;
+import model.SupporteCodec;
 import model.aggregates.ClientCodecs;
 
 public final class TransactionClientCodecs {
@@ -17,8 +18,10 @@ public final class TransactionClientCodecs {
 
             for (Codec codec : clientCodecs.getCodecs()) {
                 DAOFactory.getCodecDAO().createOrUpdate(codec);
+                DAOFactory.getSupporteCodec().createOrUpdate(new SupporteCodec(clientCodecs.getClient().getMarque(),
+                        clientCodecs.getClient().getModele(), codec.getNom(), codec.getType()));
             }
-            
+
             connection.commit();
         } catch (SQLException e) {
             System.err.println("sql error !");

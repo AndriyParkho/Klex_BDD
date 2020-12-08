@@ -26,6 +26,10 @@ public final class DAOFactory {
         return new DAOClient();
     }
 
+    public static DAOSupporteCodec getSupporteCodec() {
+        return new DAOSupporteCodec();
+    }
+
     public static DAOFichier getFichierDAO() {
         return new DAOFichier();
     }
