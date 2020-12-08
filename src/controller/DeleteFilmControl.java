@@ -45,10 +45,10 @@ public class DeleteFilmControl {
 					
 					//transaction pour supprimer le film
 				}else {
-					System.out.println("film non trouvé");
+					System.out.println("film non trouv\\u00E9");
 					// email non trouvé dans la BDD
-					JDialog erreur = new JDialog(view.getFenetre(),"erreur");
-					JLabel label = new JLabel("film non trouvé", SwingConstants.CENTER);
+					JDialog erreur = new JDialog(view.getFenetre(),"Erreur");
+					JLabel label = new JLabel("Film non trouv\\u00E9", SwingConstants.CENTER);
 					erreur.add(label);
 					erreur.setSize(250, 100);
 					erreur.setLocationRelativeTo(null);

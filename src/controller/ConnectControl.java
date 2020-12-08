@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -71,5 +72,12 @@ public class ConnectControl {
 			System.out.println("erreur");
 			//fenetre erreur
 		}
+	}
+	
+	public void clicBack() {
+		view.getSwitcherView().show(view.getContainerView(), "Acceuil");
+		view.getFenetre().setTitle("Acceuil");
+		view.getFenetre().setSize((int) (Toolkit.getDefaultToolkit().getScreenSize().width*0.2), (int) (Toolkit.getDefaultToolkit().getScreenSize().height*0.2));
+        view.getFenetre().setLocationRelativeTo(null);
 	}
 }

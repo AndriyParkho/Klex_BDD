@@ -22,7 +22,6 @@ public class SignUp extends View {
 	private JTextField langueField;
 	private JTextField codeField;
 	private JButton validButton = new JButton("Valider");
-	private JButton backButton = new JButton("<");
 	private JSpinner ageField = new JSpinner();
 	private JPanel container = new SignUpPanel();
 	private SignUpControl controller = new SignUpControl(this);
@@ -171,14 +170,6 @@ public class SignUp extends View {
 
 	public void setValidButton(JButton validButton) {
 		this.validButton = validButton;
-	}
-
-	public JButton getBackButton() {
-		return backButton;
-	}
-
-	public void setBackButton(JButton backButton) {
-		this.backButton = backButton;
 	}
 
 	public JPanel getContainer() {

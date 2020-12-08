@@ -69,6 +69,16 @@ public class Connexion extends View {
 			});
 			connectButton.setBounds(179, 248, 116, 25);
 			add(connectButton);
+			
+			JButton backButton = new JButton("<");
+			backButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					controller.clicBack();
+				}
+			});
+			backButton.setIcon(null);
+			backButton.setBounds(12, 13, 47, 34);
+			add(backButton);
 
 		}
 	}

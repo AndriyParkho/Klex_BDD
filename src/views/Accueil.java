@@ -24,7 +24,6 @@ public class Accueil extends View {
 	
 	public Accueil(JFrame fenetre, CardLayout switcherView, JPanel containerView) {
 		super(fenetre, switcherView, containerView, new String("Acceuil"));
-		container.setBackground(Color.WHITE);
 		
 		connectButton.addActionListener(new ConnectListener());
 		signUpButton.addActionListener(new SignUpListener());
