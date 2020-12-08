@@ -2,6 +2,7 @@ package views;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,24 +26,20 @@ import controller.CreateClientControl;
 import model.aggregates.ClientCodecs;
 
 public class CreateClient extends JFrame {
-	private String marqueInconnu;
-	private String modeleInconnu;
 	private JPanel contentPane;
 	private JTextField marqueField;
 	private JTextField modeleField;
 	private ArrayList<InsertCodecPanel> codecPanels = new ArrayList<InsertCodecPanel>();
 	private JSpinner largeurField = new JSpinner();
 	private JSpinner hauteurField = new JSpinner();
-	private ClientCodecs client = new ClientCodecs();
+	private String marqueInconnu;
+	private String modeleInconnu;
 	private CreateClientControl controller = new CreateClientControl(this);
 
 	/**
 	 * Create the frame.
 	 */
 	public CreateClient(String marqueInconnu, String modeleInconnu) {
-		this.marqueInconnu = marqueInconnu;
-		this.modeleInconnu = modeleInconnu;
-		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 370);
 		contentPane = new JPanel();
@@ -65,7 +62,7 @@ public class CreateClient extends JFrame {
 		contentPane.add(lblNewLabel_1);
 		
 		marqueField = new JTextField();
-		marqueField.setText(this.marqueInconnu);
+		marqueField.setText(marqueInconnu);
 		marqueField.setColumns(10);
 		marqueField.setBounds(77, 89, 116, 22);
 		contentPane.add(marqueField);
@@ -75,7 +72,7 @@ public class CreateClient extends JFrame {
 		contentPane.add(lblNewLabel_1_2);
 		
 		modeleField = new JTextField();
-		modeleField.setText(this.modeleInconnu);
+		modeleField.setText(modeleInconnu);
 		modeleField.setColumns(10);
 		modeleField.setBounds(296, 89, 116, 22);
 		contentPane.add(modeleField);
@@ -135,7 +132,8 @@ public class CreateClient extends JFrame {
 		contentPane.add(valideButton);
 		codecPanels.add(codecInit);
 		
-		this.setVisible(true);;
+		this.setLocationRelativeTo(null);
+		this.setVisible(true);
 	}
 	
 	class InsertCodecPanel extends JPanel {
@@ -201,14 +199,6 @@ public class CreateClient extends JFrame {
 		}	
 	}
 
-	public JPanel getContentPane() {
-		return contentPane;
-	}
-
-	public void setContentPane(JPanel contentPane) {
-		this.contentPane = contentPane;
-	}
-
 	public JTextField getMarqueField() {
 		return marqueField;
 	}
@@ -264,14 +254,6 @@ public class CreateClient extends JFrame {
 	public void setModeleInconnu(String modeleInconnu) {
 		this.modeleInconnu = modeleInconnu;
 	}
-
-	public ClientCodecs getClient() {
-		return client;
-	}
-
-	public void setClient(ClientCodecs client) {
-		this.client = client;
-	}
 	
-	
+
 }

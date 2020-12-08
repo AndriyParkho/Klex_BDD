@@ -87,4 +87,54 @@ public class SelectClient extends View{
 
 	}
 
+
+	public JTextField getMarqueField() {
+		return marqueField;
+	}
+
+
+	public void setMarqueField(JTextField marqueField) {
+		this.marqueField = marqueField;
+	}
+
+
+	public JTextField getModeleField() {
+		return modeleField;
+	}
+
+
+	public void setModeleField(JTextField modeleField) {
+		this.modeleField = modeleField;
+	}
+
+
+	public JButton getBackButton() {
+		return backButton;
+	}
+
+
+	public void setBackButton(JButton backButton) {
+		this.backButton = backButton;
+	}
+
+
+	public JButton getSuivButton() {
+		return suivButton;
+	}
+
+
+	public void setSuivButton(JButton suivButton) {
+		this.suivButton = suivButton;
+	}
+
+
+	public Client getClient() {
+		return client;
+	}
+
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+	
 }
