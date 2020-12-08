@@ -35,6 +35,7 @@ public class ConnectControl {
 		
 		try(ResultSet rs = utilisateurDAO.find(email)) {
 			if(!rs.next()) {
+				System.out.println("Email non trouvé");
 				// email non trouvé dans la BDD
 				JDialog erreur = new JDialog(view.getFenetre(),"erreur");
 				JLabel label = new JLabel("email incorrect", SwingConstants.CENTER);
@@ -44,14 +45,18 @@ public class ConnectControl {
 				erreur.setVisible(true);
 				
 			}else {
-				util = new Utilisateur(email, rs.getString(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getInt(5));
+				System.out.println("Email trouvé");
+				util = new Utilisateur(email, rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getInt(6));
 				int codeUser = util.getCode();
+
 				
 				if (code == codeUser) {
+					System.out.println("Code bon");
 					// code bon
 					View.setUtilConnected(util);
 					new Fonctions(view.getFenetre(), view.getSwitcherView(), view.getContainerView());
 				} else {
+					System.out.println("code incorrect");
 					// code incorrect
 					JDialog erreur = new JDialog(view.getFenetre(),"erreur");
 					JLabel label = new JLabel("code incorrect", SwingConstants.CENTER);
