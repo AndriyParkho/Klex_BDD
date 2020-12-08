@@ -55,7 +55,7 @@ public class DAOPiste extends DAO<Piste> {
     }
 
     public ResultSet find(String titrePiste, String titreAlbum) throws SQLException {
-        final String query = String.format("SELECT * FROM Piste WHERE titrePiste = '%s' AND titreAlbum = '%s'",
+        final String query = String.format("SELECT * FROM Piste pi JOIN Album al ON pi.idAlbum = al.idAlbum WHERE pi.titrePiste = '%s' AND al.titreAlbum = '%s'",
                 titrePiste, titreAlbum);
         return this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeQuery(query);

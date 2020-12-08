@@ -14,9 +14,9 @@ public class FichierPiste {
 	private Fichier fichier;
 	private Piste piste;
 	private Album album;
-	private HashSet<CategorieMusique> categories;
-	private HashSet<Flux> flux;
-	private HashMap<Artiste, String> artistes;
+	private HashSet<CategorieMusique> categories = new HashSet<CategorieMusique>();
+	private HashSet<Flux> flux = new HashSet<Flux>();
+	private HashMap<Artiste, String> artistes = new HashMap<Artiste, String>();
 	
 	public Piste getPiste() {
 		return piste;

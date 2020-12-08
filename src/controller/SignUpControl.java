@@ -49,6 +49,7 @@ public class SignUpControl {
 				String langueDiffusion = view.getLangueField().getText();
 				int code = Integer.parseInt(view.getCodeField().getText());
 				util = new Utilisateur(email, nom, prenom, age, langueDiffusion, code);
+				System.out.println(util);
 				TransactionUtilisateur.execute(util);
 				new Connexion(view.getFenetre(), view.getSwitcherView(), view.getContainerView());
 			}

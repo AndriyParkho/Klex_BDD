@@ -13,10 +13,10 @@ import model.ImgExtraiteFilm;
 public class FichierFilm {
 	private Fichier fichier;
 	private Film film;
-	private HashSet<Flux> flux;
-	private HashSet<CategorieFilm> categories;
-	private HashSet<ImgExtraiteFilm> imgExtraiteFilms;
-	private HashMap<Artiste, String> artistes;
+	private HashSet<Flux> flux = new HashSet<Flux>();
+	private HashSet<CategorieFilm> categories = new HashSet<CategorieFilm>();
+	private HashSet<ImgExtraiteFilm> imgExtraiteFilms = new HashSet<ImgExtraiteFilm>();
+	private HashMap<Artiste, String> artistes = new HashMap<Artiste, String>();
 	
 	public FichierFilm() {
 	}

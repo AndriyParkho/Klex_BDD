@@ -1,5 +1,6 @@
 package views;
 
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,10 +39,10 @@ public class CreateArtiste extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CreateArtiste(String artisteInconnu, String roleOuInstru, FichierFilm fichierFilm, FichierPiste fichierPiste) {
+	public CreateArtiste(String artisteInconnu, String roleOuInstru) {
 		this.artisteInconnu = artisteInconnu;
-		this.fichierFilm = fichierFilm;
-		this.fichierPiste = fichierPiste;
+//		this.fichierFilm = fichierFilm;
+//		this.fichierPiste = fichierPiste;
 		this.roleOuInstru = roleOuInstru;
 		
 		setTitle("Ajout artiste");
@@ -94,7 +95,8 @@ public class CreateArtiste extends JFrame {
 		dateField.setBounds(137, 124, 116, 22);
 		contentPane.add(dateField);
 		
-		JLabel lblNewLabel_1_2 = new JLabel("Sp���cialit��� :");
+
+		JLabel lblNewLabel_1_2 = new JLabel("Sp\u00E9cialit\u00E9 :");
 		lblNewLabel_1_2.setBounds(217, 92, 64, 16);
 		contentPane.add(lblNewLabel_1_2);
 		
@@ -138,7 +140,7 @@ public class CreateArtiste extends JFrame {
 		contentPane.add(bioField);
 		valideButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.clicValid();
+//				controller.clicValid();
 			}
 		});
 		
@@ -245,5 +247,15 @@ public class CreateArtiste extends JFrame {
 		this.controller = controller;
 	}
 	
-	
+	static public void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					CreateArtiste frame = new CreateArtiste("TEST", "test");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 }

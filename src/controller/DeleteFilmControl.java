@@ -19,8 +19,8 @@ public class DeleteFilmControl {
 	public DeleteFilmControl(DeleteFilm view) {
 		this.view = view;
 	}
-	
-	public void clicSuiv(){
+
+	public void clicSuiv() {
 		String titreFilm = view.getTitreField().getText();
 		String anneeSortie = view.getAnneeField().getText()+"-01-01";
 		DAOFilm film = new DAOFilm();

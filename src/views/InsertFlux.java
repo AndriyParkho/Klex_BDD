@@ -27,7 +27,9 @@ public class InsertFlux extends View{
 	private JTextField codecField;
 	private JTextField langueTxtField;
 	private JTextField langueAudioField;
-	private ButtonGroup choixFlux = new ButtonGroup();
+	private JRadioButton txtChoix = new JRadioButton("Flux de texte");
+	private JRadioButton audioChoix = new JRadioButton("Flux audio");
+	private JRadioButton videoChoix = new JRadioButton("Flux vid\u00E9o");
 	private JSpinner debitField = new JSpinner();
 	private JComboBox echantField = new JComboBox();
 	private JSpinner largeurField = new JSpinner();
@@ -70,18 +72,19 @@ public class InsertFlux extends View{
 			lblNewLabel.setBounds(31, 61, 79, 16);
 			add(lblNewLabel);
 			
-			JRadioButton txtChoix = new JRadioButton("Flux de texte");
+			ButtonGroup choixFlux = new ButtonGroup();
+			
 			txtChoix.setSelected(true);
 			txtChoix.setBounds(41, 86, 101, 25);
 			choixFlux.add(txtChoix);
 			add(txtChoix);
 			
-			JRadioButton audioChoix = new JRadioButton("Flux audio");
+			
 			audioChoix.setBounds(172, 86, 87, 25);
 			choixFlux.add(audioChoix);
 			add(audioChoix);
 			
-			JRadioButton videoChoix = new JRadioButton("Flux vid\u00E9o");
+			
 			videoChoix.setBounds(303, 86, 87, 25);
 			choixFlux.add(videoChoix);
 			add(videoChoix);
@@ -164,7 +167,7 @@ public class InsertFlux extends View{
 			audioPanel.add(lblNewLabel_3);
 			
 			
-			echantField.setModel(new DefaultComboBoxModel(new String[] {"16", "24", "32"}));
+			echantField.setModel(new DefaultComboBoxModel(new Integer[] {16, 24, 32}));
 			echantField.setBounds(142, 48, 48, 22);
 			audioPanel.add(echantField);
 			
@@ -244,12 +247,28 @@ public class InsertFlux extends View{
 		this.langueAudioField = langueAudioField;
 	}
 
-	public ButtonGroup getChoixFlux() {
-		return choixFlux;
+	public JRadioButton getTxtChoix() {
+		return txtChoix;
 	}
 
-	public void setChoixFlux(ButtonGroup choixFlux) {
-		this.choixFlux = choixFlux;
+	public void setTxtChoix(JRadioButton txtChoix) {
+		this.txtChoix = txtChoix;
+	}
+
+	public JRadioButton getAudioChoix() {
+		return audioChoix;
+	}
+
+	public void setAudioChoix(JRadioButton audioChoix) {
+		this.audioChoix = audioChoix;
+	}
+
+	public JRadioButton getVideoChoix() {
+		return videoChoix;
+	}
+
+	public void setVideoChoix(JRadioButton videoChoix) {
+		this.videoChoix = videoChoix;
 	}
 
 	public JSpinner getDebitField() {
