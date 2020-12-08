@@ -12,8 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.InsertPisteControl;
-import model.FichierPiste;
-import model.Piste;
+import model.aggregates.FichierPiste;
 
 public class InsertPiste extends View{
 	private JTextField titrePisteField;
@@ -21,7 +20,7 @@ public class InsertPiste extends View{
 	private JButton backButton = new JButton("<");
 	private JButton suivButton = new JButton("Suivant");
 	private JPanel container = new InsertPistePanel();
-	private FichierPiste fichierPiste;
+	private FichierPiste fichierPiste = new FichierPiste();
 	private InsertPisteControl controller = new InsertPisteControl(this);
 	
 	public InsertPiste(JFrame fenetre, CardLayout switcherView, JPanel containerView) {

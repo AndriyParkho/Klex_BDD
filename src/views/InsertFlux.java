@@ -18,7 +18,8 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import controller.InsertFluxControl;
-import model.Flux;
+import model.aggregates.FichierFilm;
+import model.aggregates.FichierPiste;
 
 public class InsertFlux extends View{
 	private int numeroFlux;
@@ -33,10 +34,13 @@ public class InsertFlux extends View{
 	private JSpinner hauteurField = new JSpinner();
 	private JPanel container;
 	private InsertFluxControl controller = new InsertFluxControl(this);
-	private Flux flux;
+	private FichierFilm fichierFilm;
+	private FichierPiste fichierPiste;
 
-	public InsertFlux(JFrame fenetre, CardLayout switcherView, JPanel containerView, int numeroFlux, int nbMaxFlux) {
+	public InsertFlux(JFrame fenetre, CardLayout switcherView, JPanel containerView, int numeroFlux, int nbMaxFlux, FichierFilm fichierFilm, FichierPiste fichierPiste) {
 		super(fenetre, switcherView, containerView, new String("Ajout d'un flux"));
+		this.fichierFilm = fichierFilm;
+		this.fichierPiste = fichierPiste;
 		this.numeroFlux = numeroFlux;
 		this.nbMaxFlux = nbMaxFlux;
 		container = new InsertFluxPanel();
@@ -280,12 +284,21 @@ public class InsertFlux extends View{
 		this.hauteurField = hauteurField;
 	}
 
-	public Flux getFlux() {
-		return flux;
+	public FichierFilm getFichierFilm() {
+		return fichierFilm;
 	}
 
-	public void setFlux(Flux flux) {
-		this.flux = flux;
+	public void setFichierFilm(FichierFilm fichierFilm) {
+		this.fichierFilm = fichierFilm;
 	}
+
+	public FichierPiste getFichierPiste() {
+		return fichierPiste;
+	}
+
+	public void setFichierPiste(FichierPiste fichierPiste) {
+		this.fichierPiste = fichierPiste;
+	}
+	
 
 }

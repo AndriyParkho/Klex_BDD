@@ -17,8 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileSystemView;
 
 import controller.InsertAlbumControl;
-import model.FichierPiste;
-import model.Piste;
+import model.aggregates.FichierPiste;
 
 public class InsertAlbum extends View{
 	private JTextField titreField;
@@ -33,6 +32,7 @@ public class InsertAlbum extends View{
 	public InsertAlbum(JFrame fenetre, CardLayout switcherView, JPanel containerView, FichierPiste fichierPiste) {
 		super(fenetre, switcherView, containerView, new String("Ajout d'un album"));
 		this.fichierPiste = fichierPiste;
+		this.titreField.setText(fichierPiste.getAlbum().getTitre());
 		
 		super.getContainerView().add(container, "Insertion album");
 		super.getPanels().add("Insertion album");

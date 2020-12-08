@@ -17,8 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import controller.InsertPisteBisControl;
-import model.Film;
-import model.Piste;
+import model.aggregates.FichierPiste;
 
 public class InsertPisteBis extends View{
 	private JTextField titreField;
@@ -27,12 +26,13 @@ public class InsertPisteBis extends View{
 	private JSpinner numeroField = new JSpinner();
 	private JTextArea artisteField = new JTextArea();
 	private JPanel container = new InsertPisteBisPanel();
-	private Piste piste;
+	private FichierPiste fichierPiste;
 	private InsertPisteBisControl controller = new InsertPisteBisControl(this);
 
-	public InsertPisteBis(JFrame fenetre, CardLayout switcherView, JPanel containerView, Piste piste) {
+	public InsertPisteBis(JFrame fenetre, CardLayout switcherView, JPanel containerView, FichierPiste fichierPiste) {
 		super(fenetre, switcherView, containerView, new String("Ajout d'une piste"));
-		this.piste = piste;
+		this.fichierPiste = fichierPiste;
+		this.titreField.setText(fichierPiste.getPiste().getTitre());
 		
 		super.getContainerView().add(container, "Insertion piste 2");
 		super.getPanels().add("Insertion piste 2");
@@ -193,12 +193,12 @@ public class InsertPisteBis extends View{
 		this.artisteField = artisteField;
 	}
 
-	public Piste getPiste() {
-		return piste;
+	public FichierPiste getFichierPiste() {
+		return fichierPiste;
 	}
 
-	public void setPiste(Piste piste) {
-		this.piste = piste;
+	public void setFichierPiste(FichierPiste fichierPiste) {
+		this.fichierPiste = fichierPiste;
 	}
 
 	

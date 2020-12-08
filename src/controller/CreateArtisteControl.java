@@ -2,6 +2,7 @@ package controller;
 
 import java.awt.event.WindowEvent;
 
+import model.aggregates.FichierFilm;
 import views.CreateArtiste;
 
 public class CreateArtisteControl {
@@ -12,8 +13,15 @@ public class CreateArtisteControl {
 	}
 	
 	public void clicValid() {
-		// Récupérer toutes les infos de l'artiste dans chaque case 
-		// et rajoute l'artiste à la liste d'artiste du modèle fichierFilm ou fichierPiste (celui qui est non null)
+		// Rï¿½cupï¿½rer toutes les infos de l'artiste dans chaque case 
+		// et rajoute l'artiste ï¿½ la liste d'artiste du modï¿½le fichierFilm ou fichierPiste (celui qui est non null)
+		
+		String nomArtiste = view.getNomField().getText();
+		String dateArtiste = view.getDateField().getText();
+		String specArtiste = view.getSpecField().getText();
+		String photoArtiste = view.getPhotoField().getText();
+		String bioArtiste = view.getBioField().getText();
+		FichierFilm fichier = view.getFichierFilm();
 		
 		view.dispatchEvent(new WindowEvent(view, WindowEvent.WINDOW_CLOSING)); // La fenetre se ferme
 	}

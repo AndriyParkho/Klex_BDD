@@ -19,8 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileSystemView;
 
 import controller.InsertFilmBisControl;
-import model.FichierFilm;
-import model.Film;
+import model.aggregates.FichierFilm;
 
 public class InsertFilmBis extends View{
 	private JTextField afficheField;
@@ -37,7 +36,7 @@ public class InsertFilmBis extends View{
 	private InsertFilmBisControl controller = new InsertFilmBisControl(this);
 
 	public InsertFilmBis(JFrame fenetre, CardLayout switcherView, JPanel containerView, FichierFilm fichierFilm) {
-		super(fenetre, switcherView, containerView, new String("Insérer un film"));
+		super(fenetre, switcherView, containerView, new String("Insï¿½rer un film"));
 		this.fichierFilm = fichierFilm;
 		
 		super.getContainerView().add(container, "Insertion film 2");
@@ -67,7 +66,7 @@ public class InsertFilmBis extends View{
 			resumeField.setBounds(29, 82, 392, 62);
 			add(resumeField);
 			
-			JLabel lblNewLabel = new JLabel("Résumé :");
+			JLabel lblNewLabel = new JLabel("Rï¿½sumï¿½ :");
 			lblNewLabel.setBounds(29, 60, 56, 16);
 			add(lblNewLabel);
 			
@@ -103,7 +102,7 @@ public class InsertFilmBis extends View{
 			afficheButton.setBounds(353, 157, 85, 22);
 			add(afficheButton);
 			
-			JLabel lblNewLabel_2 = new JLabel("Catégorie(s) :");
+			JLabel lblNewLabel_2 = new JLabel("Catï¿½gorie(s) :");
 			lblNewLabel_2.setBounds(29, 189, 247, 16);
 			add(lblNewLabel_2);
 			
@@ -166,7 +165,7 @@ public class InsertFilmBis extends View{
 			suivButton.setBounds(179, 321, 97, 25);
 			add(suivButton);
 			
-			JLabel lblNewLabel_4 = new JLabel("Artiste(s) et rôle:");
+			JLabel lblNewLabel_4 = new JLabel("Artiste(s) et rï¿½le:");
 			lblNewLabel_4.setBounds(290, 189, 112, 16);
 			add(lblNewLabel_4);
 			
@@ -265,28 +264,13 @@ public class InsertFilmBis extends View{
 		this.artisteField = artisteField;
 	}
 
-	public JPanel getContainer() {
-		return container;
+	public FichierFilm getFichierFilm() {
+		return fichierFilm;
 	}
 
-	public void setContainer(JPanel container) {
-		this.container = container;
+	public void setFichierFilm(FichierFilm fichierFilm) {
+		this.fichierFilm = fichierFilm;
 	}
-
-	public Film getFilm() {
-		return film;
-	}
-
-	public void setFilm(Film film) {
-		this.film = film;
-	}
-
-	public InsertFilmBisControl getController() {
-		return controller;
-	}
-
-	public void setController(InsertFilmBisControl controller) {
-		this.controller = controller;
-	}
+	
 	
 }

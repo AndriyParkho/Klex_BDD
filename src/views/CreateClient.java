@@ -2,7 +2,6 @@ package views;
 
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +21,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.CaretListener;
 
+import controller.CreateClientControl;
+import model.aggregates.ClientCodecs;
+
 public class CreateClient extends JFrame {
 	private String marqueInconnu;
 	private String modeleInconnu;
@@ -31,6 +33,8 @@ public class CreateClient extends JFrame {
 	private ArrayList<InsertCodecPanel> codecPanels = new ArrayList<InsertCodecPanel>();
 	private JSpinner largeurField = new JSpinner();
 	private JSpinner hauteurField = new JSpinner();
+	private ClientCodecs client = new ClientCodecs();
+	private CreateClientControl controller = new CreateClientControl(this);
 
 	/**
 	 * Create the frame.
@@ -124,6 +128,7 @@ public class CreateClient extends JFrame {
 		JButton valideButton = new JButton("Valider");
 		valideButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				controller.clicValid();
 			}
 		});
 		valideButton.setBounds(177, 285, 97, 25);
@@ -242,6 +247,30 @@ public class CreateClient extends JFrame {
 
 	public void setHauteurField(JSpinner hauteurField) {
 		this.hauteurField = hauteurField;
+	}
+
+	public String getMarqueInconnu() {
+		return marqueInconnu;
+	}
+
+	public void setMarqueInconnu(String marqueInconnu) {
+		this.marqueInconnu = marqueInconnu;
+	}
+
+	public String getModeleInconnu() {
+		return modeleInconnu;
+	}
+
+	public void setModeleInconnu(String modeleInconnu) {
+		this.modeleInconnu = modeleInconnu;
+	}
+
+	public ClientCodecs getClient() {
+		return client;
+	}
+
+	public void setClient(ClientCodecs client) {
+		this.client = client;
 	}
 	
 	

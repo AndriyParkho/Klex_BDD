@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.InsertFilmControl;
-import model.FichierFilm;
+import model.aggregates.FichierFilm;
 import model.Film;
 
 public class InsertFilm extends View{
@@ -21,11 +21,11 @@ public class InsertFilm extends View{
 	private JButton backButton = new JButton("<");
 	private JButton suivButton = new JButton("Suivant");
 	private JPanel container = new InsertFilmPanel();
-	private FichierFilm fichierFilm;
+	private FichierFilm fichierFilm = new FichierFilm();
 	private InsertFilmControl controller = new InsertFilmControl(this);
 	
 	public InsertFilm(JFrame fenetre, CardLayout switcherView, JPanel containerView) {
-		super(fenetre, switcherView, containerView, new String("Insérer un film"));
+		super(fenetre, switcherView, containerView, new String("Insï¿½rer un film"));
 		
 		super.getContainerView().add(container, "Insertion film 1");
 		super.getPanels().add("Insertion film 1");
@@ -72,7 +72,7 @@ public class InsertFilm extends View{
 			anneeField.setBounds(109, 96, 116, 22);
 			add(anneeField);
 			
-			JLabel lblAnnenDe = new JLabel("Année :");
+			JLabel lblAnnenDe = new JLabel("Annï¿½e :");
 			lblAnnenDe.setBounds(50, 99, 47, 16);
 			add(lblAnnenDe);
 			suivButton.addActionListener(new ActionListener() {
@@ -139,13 +139,16 @@ public class InsertFilm extends View{
 	}
 
 
-	public Film getFilm() {
-		return film;
+	public FichierFilm getFichierFilm() {
+		return fichierFilm;
 	}
 
 
-	public void setFilm(Film film) {
-		this.film = film;
+	public void setFichierFilm(FichierFilm fichierFilm) {
+		this.fichierFilm = fichierFilm;
 	}
+
+
+	
 
 }

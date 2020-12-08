@@ -16,6 +16,6 @@ public class FluxNbChoiceControl {
 		int nbFluxMax = (int) view.getNombreField().getValue();
 		// Créer un insert flux avec le model fichierFilm ou fichierPiste ça dépend le quel est non null
 		// TODO
-		new InsertFlux(view.getFenetre(), view.getSwitcherView(), view.getContainerView(), 1, nbFluxMax);
+		new InsertFlux(view.getFenetre(), view.getSwitcherView(), view.getContainerView(), 1, nbFluxMax, view.getFichierFilm(), view.getFichierPiste());
 	}
 }

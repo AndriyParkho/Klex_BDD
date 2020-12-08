@@ -20,5 +20,8 @@ public class InsertChoiceControl {
 	
 	public void clicBack() {
 		view.getSwitcherView().show(view.getContainerView(), "Fonctions");
+		view.getFenetre().setTitle("Fonctions");
+		view.getFenetre().setSize(453, 350);
+		view.getFenetre().setLocationRelativeTo(null);
 	}
 }
