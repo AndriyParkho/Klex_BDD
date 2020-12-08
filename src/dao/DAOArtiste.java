@@ -55,6 +55,12 @@ public class DAOArtiste extends DAO<Artiste> {
         return this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeQuery(query);
     }
+    
+    public ResultSet find(String nomArtiste) throws SQLException {
+        final String query = String.format("SELECT * FROM Artiste WHERE nomArtiste = %s", nomArtiste);
+        return this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
+                .executeQuery(query);
+    }
 
     public void delete(long idArtiste) throws SQLException {
         final String query = String.format("DELETE FROM Artiste WHERE idArtiste = %ld", idArtiste);

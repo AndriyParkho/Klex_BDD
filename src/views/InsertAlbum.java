@@ -32,6 +32,7 @@ public class InsertAlbum extends View{
 	public InsertAlbum(JFrame fenetre, CardLayout switcherView, JPanel containerView, FichierPiste fichierPiste) {
 		super(fenetre, switcherView, containerView, new String("Ajout d'un album"));
 		this.fichierPiste = fichierPiste;
+		this.titreField.setText(fichierPiste.getAlbum().getTitre());
 		
 		super.getContainerView().add(container, "Insertion album");
 		super.getPanels().add("Insertion album");

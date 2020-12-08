@@ -32,6 +32,7 @@ public class InsertPisteBis extends View{
 	public InsertPisteBis(JFrame fenetre, CardLayout switcherView, JPanel containerView, FichierPiste fichierPiste) {
 		super(fenetre, switcherView, containerView, new String("Ajout d'une piste"));
 		this.fichierPiste = fichierPiste;
+		this.titreField.setText(fichierPiste.getPiste().getTitre());
 		
 		super.getContainerView().add(container, "Insertion piste 2");
 		super.getPanels().add("Insertion piste 2");

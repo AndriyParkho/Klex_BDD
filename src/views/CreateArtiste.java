@@ -30,6 +30,7 @@ public class CreateArtiste extends JFrame {
 	private JTextField photoField;
 	private JButton valideButton = new JButton("Valider");
 	private JTextArea bioField = new JTextArea();
+	private String roleOuInstru;
 	private FichierFilm fichierFilm;
 	private FichierPiste fichierPiste;
 	private CreateArtisteControl controller = new CreateArtisteControl(this);
@@ -37,10 +38,11 @@ public class CreateArtiste extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CreateArtiste(String artisteInconnu, FichierFilm fichierFilm, FichierPiste fichierPiste) {
+	public CreateArtiste(String artisteInconnu, String roleOuInstru, FichierFilm fichierFilm, FichierPiste fichierPiste) {
 		this.artisteInconnu = artisteInconnu;
 		this.fichierFilm = fichierFilm;
 		this.fichierPiste = fichierPiste;
+		this.roleOuInstru = roleOuInstru;
 		
 		setTitle("Ajout artiste");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

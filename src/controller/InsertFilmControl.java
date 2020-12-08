@@ -17,7 +17,6 @@ import views.InsertFilmBis;
 public class InsertFilmControl {
 	private InsertFilm view;
 	private DAOFilm  DAOfilm = new DAOFilm();
-	private FichierFilm fichierFilm;
 	
 	public InsertFilmControl(InsertFilm view) {
 		this.view = view;
@@ -32,13 +31,10 @@ public class InsertFilmControl {
 		}
 		Date anneeSortie =  Date.valueOf(annee); 
 		System.out.println(anneeSortie);
-		fichierFilm = new FichierFilm();
 		Film film = new Film();
 		film.setAnneeSortie(anneeSortie);
 		film.setTitreFilm(titreFilm);
-		fichierFilm.setFilm(film);
-		//System.out.println(fichierFilm.getFilm());
-		// Si le film n'existe pas dans la bdd
+		view.getFichierFilm().setFilm(film);
 		
 
 		try (ResultSet res =  DAOfilm.find(titreFilm, anneeSortie)){
@@ -63,5 +59,8 @@ public class InsertFilmControl {
 	
 	public void clicBack() {
 		view.getSwitcherView().show(view.getContainerView(), "Choix insertion");
+		view.getFenetre().setTitle("Choix d'insertion");
+		view.getFenetre().setSize(282, 210);
+		view.getFenetre().setLocationRelativeTo(null);
 	}
 }

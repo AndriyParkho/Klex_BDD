@@ -8,13 +8,13 @@ import dao.DAOFactory;
 import dao.DAOPiste;
 import model.Album;
 import model.Piste;
+import views.FluxNbChoice;
 import views.InsertAlbum;
 import views.InsertPiste;
+import views.InsertPisteBis;
 
 public class InsertPisteControl {
 	private InsertPiste view;
-	private DAOPiste bddPiste = DAOFactory.getPisteDAO();
-	private DAOAlbum bddAlbum = DAOFactory.getAlbumDAO();
 	
 	public InsertPisteControl(InsertPiste view) {
 		this.view = view;
@@ -25,6 +25,8 @@ public class InsertPisteControl {
 		String titreAlbum = view.getTitreAlbumField().getText();
 		Piste piste = new Piste();
 		Album album = new Album();
+		DAOPiste bddPiste = DAOFactory.getPisteDAO();
+		DAOAlbum bddAlbum = DAOFactory.getAlbumDAO();
 		ResultSet pisteSearch;
 		ResultSet albumSearch;
 		try {
@@ -32,21 +34,50 @@ public class InsertPisteControl {
 			albumSearch = bddAlbum.find(titreAlbum);
 			
 			if(pisteSearch.next()) {
+				piste.setNum(pisteSearch.getInt("numPiste"));
+				piste.setDuree(pisteSearch.getString("dureePiste"));
+				piste.setIdAlbum(pisteSearch.getInt("idAlbum"));
+				piste.setTitre(titrePiste);
 				
+				albumSearch.next();
+				album.setId(albumSearch.getLong("idAlbum"));
+				album.setDateSortie(albumSearch.getDate("dateSortieAlbum"));
+				album.setGroupe(albumSearch.getString("nomGroupe"));
+				album.setTitre(titreAlbum);
+				album.setUrlImagePochette(albumSearch.getString("urlImagePochette"));
+				
+				view.getFichierPiste().setAlbum(album);
+				view.getFichierPiste().setPiste(piste);
+				
+				new FluxNbChoice(view.getFenetre(), view.getSwitcherView(), view.getContainerView(), null, view.getFichierPiste());
+			} else if(albumSearch.next()) {
+				piste.setTitre(titrePiste);
+				piste.setIdAlbum(albumSearch.getLong("idAlbum"));
+				
+				album.setId(albumSearch.getLong("idAlbum"));
+				album.setDateSortie(albumSearch.getDate("dateSortieAlbum"));
+				album.setGroupe(albumSearch.getString("nomGroupe"));
+				album.setTitre(titreAlbum);
+				album.setUrlImagePochette(albumSearch.getString("urlImagePochette"));
+				
+				view.getFichierPiste().setAlbum(album);
+				view.getFichierPiste().setPiste(piste);
+				
+				new InsertPisteBis(view.getFenetre(), view.getSwitcherView(), view.getContainerView(), view.getFichierPiste());
+			} else {
+				piste.setTitre(titrePiste);
+				album.setTitre(titreAlbum);
+				
+				view.getFichierPiste().setAlbum(album);
+				view.getFichierPiste().setPiste(piste);
+				
+				new InsertAlbum(view.getFenetre(), view.getSwitcherView(), view.getContainerView(), view.getFichierPiste());
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		// TODO 3 cas à distinguer :
-		// Soit l'album et la piste existe donc les récup dans la bdd + ajouter dans le FichierPiste et envoyer écran flux
-		// Soit la piste n'existe pas mais l'album si donc récup album et afficher écran créer piste
-		// Soit aucun des deux n'existe donc écran album (puis y aura écran piste) mais garder le peu d'info de la piste et album
-		
-		
-		new InsertAlbum(view.getFenetre(), view.getSwitcherView(), view.getContainerView(), view.getFichierPiste());
-//		new InsertPisteBis(view.getFenetre(), view.getSwitcherView(), view.getContainerView(), view.getPiste(), view.getFichierPiste());
 	}
-	
+
 	public void clicBack() {
 		view.getSwitcherView().show(view.getContainerView(), "Choix insertion");
 		view.getFenetre().setTitle("Choix d'insertion");

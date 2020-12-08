@@ -5,15 +5,16 @@ import java.sql.SQLException;
 
 import dao.DAOArtiste;
 import dao.DAOCategorieFilm;
+import dao.DAOFactory;
 import model.Artiste;
 import model.CategorieFilm;
 import model.ImgExtraiteFilm;
 import views.CreateArtiste;
+import views.FluxNbChoice;
 import views.InsertFilmBis;
 
 public class InsertFilmBisControl {
 	private InsertFilmBis view;
-	//private DAOFichierFilm fichierFilmDAO= new DAOFichierFilm();
 	
 	public InsertFilmBisControl(InsertFilmBis view) {
 		this.view = view;
@@ -34,15 +35,6 @@ public class InsertFilmBisControl {
 		for(String cat : categories) {
 			CategorieFilm categorieFilm = new CategorieFilm(cat);
 			DAOCategorieFilm catDAO= new DAOCategorieFilm();
-			try (ResultSet resCat =  catDAO.find(categorieFilm)){
-				if( !resCat.next()) {
-					catDAO.create(categorieFilm);
-				}
-			//faire une view pour cr�er une cat�gorie
-		
-			}catch(SQLException e) {
-				System.out.println(e);
-			}
 			view.getFichierFilm().getCategories().add(categorieFilm);
 
 		}
@@ -55,25 +47,28 @@ public class InsertFilmBisControl {
 		
 		for(String art : artistes) {
 			Artiste artiste = new Artiste();
-			DAOArtiste artisteDAO = new DAOArtiste();
-			String[] artspe = art.split("(//,//)");
-			artiste.setNom(artspe[0]);
+			DAOArtiste artisteDAO = DAOFactory.getArtisteDAO();
+			String[] artspe = art.replaceAll("\\(|\\)| ", "").split(",");
+			String nomArtiste = artspe[0];
 			String role = artspe[1];
-			artiste.setSpecialite(role);
 			
-			try(ResultSet resArt = artisteDAO.find(artiste)){
-				if(!resArt.next()) {
-					CreateArtiste viewArtiste = new CreateArtiste(artiste.getNom(), view.getFichierFilm(), null);
+			try(ResultSet resArt = artisteDAO.find(nomArtiste)){
+				if(resArt.next()) {
+					artiste.setId(resArt.getLong("idArtiste"));
+					artiste.setNom(nomArtiste);
+					artiste.setBiographie(resArt.getString("biographie"));
+					artiste.setDateNaissance(resArt.getDate("dateNaissance"));
+					artiste.setSpecialite(resArt.getString("specialite"));
+					artiste.setUrlPhoto(resArt.getString("urlPhoto"));
+					view.getFichierFilm().getArtistes().put(artiste, role);
+				} else {
+					new CreateArtiste(artiste.getNom(), role, view.getFichierFilm(), null);
 				}
 			}catch(SQLException e) {
 				System.out.println(e);
 			}
-			view.getFichierFilm().getArtistes().put(artiste, role);
 		}
 		
-		
-		
-		
-		// fichierFilmDAO.create(fichierFilm);
+		new FluxNbChoice(view.getFenetre(), view.getSwitcherView(), view.getContainerView(), view.getFichierFilm() ,null);
 	}
 }
