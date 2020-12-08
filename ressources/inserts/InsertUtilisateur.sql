@@ -1,5 +1,5 @@
 insert into Utilisateur values (
-    'theo.manfredi@grenoble-inp.fr',
+    'theo.manfredi',
     'Manfredi',
     'Theo',
     22,
