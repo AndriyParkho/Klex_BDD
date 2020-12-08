@@ -9,7 +9,10 @@ import javax.swing.SwingConstants;
 
 import dao.DAOUtilisateur;
 import model.Utilisateur;
+import views.FenetrePrincipal;
 import views.SignUp;
+import views.Accueil;
+import views.Connexion;
 
 public class SignUpControl {
 	private SignUp view;
@@ -22,7 +25,7 @@ public class SignUpControl {
 	
 	public void clicBack() {
 		// TODO Auto-generated method stub
-		
+		new Accueil(view.getFenetre(), view.getSwitcherView(), view.getContainerView());
 	}
 
 	public void clicValid() {
@@ -49,7 +52,7 @@ public class SignUpControl {
 						util = new Utilisateur(email, nom, prenom, age, langueDiffusion, code);
 						try{
 							bddUtil.create(util);
-							//renvoyer sur la page de connexion
+							new Connexion(view.getFenetre(), view.getSwitcherView(), view.getContainerView());
 						}catch(SQLException e) {
 							System.out.println(e);
 						}

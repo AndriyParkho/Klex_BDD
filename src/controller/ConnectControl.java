@@ -1,12 +1,15 @@
 package controller;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import connections.ConnectionOracle;
 import dao.DAOUtilisateur;
 import model.Utilisateur;
 import views.Connexion;
@@ -21,13 +24,14 @@ public class ConnectControl {
 		this.view = view;
 	}
 
-	public void clicToConnect() {
+	public void clicToConnect() throws SQLException {
 		
 		String email = view.getMailField().getText();
 		int code = Integer.parseInt(view.getCodeField().getText());
 		
 		DAOUtilisateur utilisateurDAO = new DAOUtilisateur();
 		//util.setCode(code);
+		
 		try(ResultSet resUtil = utilisateurDAO.find(email)) {
 			if(!resUtil.next()) {
 				System.out.println("pas d'user");
@@ -41,7 +45,7 @@ public class ConnectControl {
 			}else {
 				util = new Utilisateur(email);
 				//int codeUser = util.getCode();
-				//if(code = codeUtilisateur Trouvé){
+				//if(code = codeUtilisateur Trouvï¿½){
 					//util = utilisateurtrouv
 					//View.setUtilConnecte;
 					
@@ -62,6 +66,7 @@ public class ConnectControl {
 			//fenetre erreur
 		}
 		//Ce qui va se passer quand on appui sur se Connecter
+		
 	}
 	
 }
