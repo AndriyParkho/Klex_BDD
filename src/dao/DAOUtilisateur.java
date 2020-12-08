@@ -3,7 +3,9 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 
+import connections.JDBCUtilities;
 import model.Utilisateur;
 
 public class DAOUtilisateur extends DAO<Utilisateur> {
@@ -21,6 +23,18 @@ public class DAOUtilisateur extends DAO<Utilisateur> {
             statement.setString(5, utilisateur.getLangueDiffusion());
             statement.setInt(6, utilisateur.getCode());
             statement.executeUpdate();
+        }
+    }
+
+    public void createOrUpdate(Utilisateur utilisateur) throws SQLException {
+        try {
+            this.create(utilisateur);
+        } catch (final SQLIntegrityConstraintViolationException e) {
+            if (e.getErrorCode() != 1) {
+                JDBCUtilities.printSQLException(e);
+            } else {
+                System.out.println(utilisateur + " est déjà dans la BDD.");
+            }
         }
     }
 

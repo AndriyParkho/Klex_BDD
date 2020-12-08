@@ -4,7 +4,9 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 
+import connections.JDBCUtilities;
 import model.ImgExtraiteFilm;
 
 public class DAOImgExtraiteFilm extends DAO<ImgExtraiteFilm> {
@@ -18,6 +20,18 @@ public class DAOImgExtraiteFilm extends DAO<ImgExtraiteFilm> {
             statement.setString(2, imgExtraiteFilm.getTitreFilm());
             statement.setDate(3, imgExtraiteFilm.getAnneeSortie());
             statement.executeUpdate();
+        }
+    }
+
+    public void createOrUpdate(ImgExtraiteFilm imgExtraiteFilm) throws SQLException {
+        try {
+            this.create(imgExtraiteFilm);
+        } catch (final SQLIntegrityConstraintViolationException e) {
+            if (e.getErrorCode() != 1) {
+                JDBCUtilities.printSQLException(e);
+            } else {
+                System.out.println(imgExtraiteFilm + " est déjà dans la BDD.");
+            }
         }
     }
 

@@ -29,7 +29,7 @@ public final class TransactionFichierFilm {
             // APourRole references Artiste (idArtiste) and Film (titreFilm, anneeSortie)
 
             DAOFactory.getFichierDAO().create(fichierFilm.getFichier());
-            DAOFactory.getFilmDAO().create(fichierFilm.getFilm());
+            DAOFactory.getFilmDAO().createOrUpdate(fichierFilm.getFilm());
             DAOFactory.getEstUnFilm().create(new EstUnFilm(fichierFilm.getFichier().getId(),
                     fichierFilm.getFilm().getTitreFilm(), fichierFilm.getFilm().getAnneeSortie()));
             
@@ -47,20 +47,20 @@ public final class TransactionFichierFilm {
             // on doit créer les catégories et les liens
             for (CategorieFilm categorieFilm : fichierFilm.getCategories()) {
                 DAOFactory.getCategorieFilmDAO().createOrUpdate(categorieFilm);
-                DAOFactory.getFilmAPourCategorie().create(new FilmAPourCategorie(fichierFilm.getFilm().getTitreFilm(),
+                DAOFactory.getFilmAPourCategorie().createOrUpdate(new FilmAPourCategorie(fichierFilm.getFilm().getTitreFilm(),
                         fichierFilm.getFilm().getAnneeSortie(), categorieFilm.getCategorie()));
             }
 
             // on doit créer les artistes et les liens
             for (Map.Entry<Artiste, String> entry : fichierFilm.getArtistes().entrySet()) {
                 DAOFactory.getArtisteDAO().createOrUpdate(entry.getKey());
-                DAOFactory.getAPourRole().create(new APourRole(fichierFilm.getFilm().getTitreFilm(),
+                DAOFactory.getAPourRole().createOrUpdate(new APourRole(fichierFilm.getFilm().getTitreFilm(),
                         fichierFilm.getFilm().getAnneeSortie(), entry.getKey().getId(), entry.getValue()));
             }
 
             // on doit créer les ImgExtraitesFilm
             for (ImgExtraiteFilm imgExtraiteFilm : fichierFilm.getImgExtraiteFilms()) {
-                DAOFactory.getImgExtraiteFilmDAO().create(imgExtraiteFilm);
+                DAOFactory.getImgExtraiteFilmDAO().createOrUpdate(imgExtraiteFilm);
             }
 
             connection.commit();

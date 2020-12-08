@@ -10,7 +10,6 @@ public class DAOFlux extends DAO<Flux> {
 
     @Override
     public void create(Flux flux) throws SQLException {
-        final String insertFluxQuery = "INSERT INTO Flux VALUES (idFlux_seq.nextval, ?, idFichier_seq.currval, ?, ?)";
 
         String queryId = "SELECT idFlux_seq.nextval from DUAL";
         int nextID_from_seq = 0;
@@ -21,6 +20,7 @@ public class DAOFlux extends DAO<Flux> {
             }
         }
 
+        final String insertFluxQuery = "INSERT INTO Flux VALUES (idFlux_seq.currval, ?, idFichier_seq.currval, ?, ?)";
         try (PreparedStatement statementFlux = this.connection.prepareStatement(insertFluxQuery)) {
             statementFlux.setInt(1, flux.getDebit());
             statementFlux.setString(2, flux.getNomCodec());

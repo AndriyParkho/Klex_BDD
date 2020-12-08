@@ -12,24 +12,36 @@ public class DAOArtiste extends DAO<Artiste> {
 
     @Override
     public void create(Artiste artiste) throws SQLException {
-        final String query = "INSERT INTO Artiste VALUES (idArtiste_seq.nextval, ?, ?, ?, ?, ?)";
-
-        String queryId = "SELECT idArtiste_seq.nextval from DUAL";
+        // on check si l'artiste existe déjà
+        boolean artisteAlreadyExist = false;
         int nextID_from_seq = 0;
-        try (ResultSet rs = this.connection.prepareStatement(queryId).executeQuery()) {
+        try (ResultSet rs = this.find(artiste.getNom())) {
             if (rs.next()) {
+                artisteAlreadyExist = true;
                 nextID_from_seq = rs.getInt(1);
                 artiste.setId(nextID_from_seq);
             }
         }
 
-        try (PreparedStatement statement = this.connection.prepareStatement(query)) {
-            statement.setString(1, artiste.getNom());
-            statement.setDate(2, artiste.getDateNaissance());
-            statement.setString(3, artiste.getUrlPhoto());
-            statement.setString(4, artiste.getSpecialite());
-            statement.setString(5, artiste.getBiographie());
-            statement.executeUpdate();
+        // si l'album n'existe pas on le crè
+        if (!artisteAlreadyExist) {
+            String queryId = "SELECT idArtiste_seq.nextval from DUAL";
+            try (ResultSet rs = this.connection.prepareStatement(queryId).executeQuery()) {
+                if (rs.next()) {
+                    nextID_from_seq = rs.getInt(1);
+                    artiste.setId(nextID_from_seq);
+                }
+            }
+
+            final String query = "INSERT INTO Artiste VALUES (idArtiste_seq.currval, ?, ?, ?, ?, ?)";
+            try (PreparedStatement statement = this.connection.prepareStatement(query)) {
+                statement.setString(1, artiste.getNom());
+                statement.setDate(2, artiste.getDateNaissance());
+                statement.setString(3, artiste.getUrlPhoto());
+                statement.setString(4, artiste.getSpecialite());
+                statement.setString(5, artiste.getBiographie());
+                statement.executeUpdate();
+            }
         }
     }
 
@@ -57,7 +69,7 @@ public class DAOArtiste extends DAO<Artiste> {
     }
     
     public ResultSet find(String nomArtiste) throws SQLException {
-        final String query = String.format("SELECT * FROM Artiste WHERE nomArtiste = %s", nomArtiste);
+        final String query = String.format("SELECT * FROM Artiste WHERE nomArtiste = '%s'", nomArtiste);
         return this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeQuery(query);
     }

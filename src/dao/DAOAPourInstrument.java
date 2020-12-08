@@ -3,19 +3,35 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 
+import connections.JDBCUtilities;
 import model.APourInstrument;
 
 public class DAOAPourInstrument extends DAO<APourInstrument> {
 
     @Override
     public void create(APourInstrument aPourInstrument) throws SQLException {
-        final String query = "INSERT INTO APourInstrument VALUES (?, idArtiste_seq.currval, idAlbum_seq.currval, ?)";
+        final String query = "INSERT INTO APourInstrument VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setString(1, aPourInstrument.getInstrument());
-            statement.setInt(2, aPourInstrument.getNumPiste());
+            statement.setLong(2, aPourInstrument.getIdArtiste());
+            statement.setLong(3, aPourInstrument.getIdAlbum());
+            statement.setInt(4, aPourInstrument.getNumPiste());
             statement.executeUpdate();
+        }
+    }
+
+    public void createOrUpdate(APourInstrument aPourInstrument) throws SQLException {
+        try {
+            this.create(aPourInstrument);
+        } catch (final SQLIntegrityConstraintViolationException e) {
+            if (e.getErrorCode() != 1) {
+                JDBCUtilities.printSQLException(e);
+            } else {
+                System.out.println(aPourInstrument + " est déjà dans la BDD.");
+            }
         }
     }
 

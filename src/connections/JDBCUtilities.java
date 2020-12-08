@@ -53,6 +53,13 @@ public final class JDBCUtilities {
         }
     }
 
+    /**
+     * SELECT 'DROP TABLE "' || TABLE_NAME || '" CASCADE CONSTRAINTS;' FROM user_tables;
+     * SELECT 'DROP SEQUENCE ' || SEQUENCE_NAME || ';' FROM user_sequences;
+     * 
+     * @param tableName
+     * @return
+     */
     public static String dropIfExist(final String tableName) {
         return "BEGIN EXECUTE IMMEDIATE 'DROP TABLE " + tableName
                 + " CASCADE CONSTRAINTS'; EXCEPTION WHEN OTHERS THEN IF SQLCODE != -942 THEN RAISE; END IF; END;";

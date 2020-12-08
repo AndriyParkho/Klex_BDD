@@ -35,13 +35,13 @@ public class DAOFichier extends DAO<Fichier> {
     }
 
     public ResultSet find(long idFichier) throws SQLException {
-        final String query = String.format("SELECT * FROM Fichier WHERE idFichier = '%ld'", idFichier);
+        final String query = String.format("SELECT * FROM Fichier WHERE idFichier = %ld", idFichier);
         return this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeQuery(query);
     }
 
     public void delete(long idFichier) throws SQLException {
-        final String query = String.format("DELETE FROM Fichier WHERE idFichier = '%ld'", idFichier);
+        final String query = String.format("DELETE FROM Fichier WHERE idFichier = %ld", idFichier);
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeUpdate(query);
     }

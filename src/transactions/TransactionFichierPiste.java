@@ -25,8 +25,11 @@ public final class TransactionFichierPiste {
         try {
             // fichier, piste, album et lien
             DAOFactory.getFichierDAO().create(fichierPiste.getFichier());
-            DAOFactory.getPisteDAO().create(fichierPiste.getPiste());
-            DAOFactory.getAlbumDAO().create(fichierPiste.getAlbum());
+            
+            DAOFactory.getAlbumDAO().createOrUpdate(fichierPiste.getAlbum());
+            fichierPiste.getPiste().setIdAlbum(fichierPiste.getAlbum().getId());
+
+            DAOFactory.getPisteDAO().createOrUpdate(fichierPiste.getPiste()); // création d'un nouveau fichier pour la même piste
             DAOFactory.getEstUnePiste().create(new EstUnePiste(fichierPiste.getFichier().getId(),
                     fichierPiste.getPiste().getNum(), fichierPiste.getPiste().getIdAlbum()));
 
@@ -44,16 +47,16 @@ public final class TransactionFichierPiste {
             // on doit créer les catégories et les liens
             for (CategorieMusique categorieMusique : fichierPiste.getCategories()) {
                 DAOFactory.getCategorieMusiqueDAO().createOrUpdate(categorieMusique);
-                DAOFactory.getAlbumAPourCategorie().create(
+                DAOFactory.getAlbumAPourCategorie().createOrUpdate(
                         new AlbumAPourCategorie(fichierPiste.getAlbum().getId(), categorieMusique.getCategorie()));
-                DAOFactory.getPisteAPourCategorie().create(new PisteAPourCategorie(fichierPiste.getPiste().getNum(),
+                DAOFactory.getPisteAPourCategorie().createOrUpdate(new PisteAPourCategorie(fichierPiste.getPiste().getNum(),
                         fichierPiste.getAlbum().getId(), categorieMusique.getCategorie()));
             }
 
             // on doit créer les artistes et les liens
             for (Map.Entry<Artiste, String> entry : fichierPiste.getArtistes().entrySet()) {
                 DAOFactory.getArtisteDAO().createOrUpdate(entry.getKey());
-                DAOFactory.getAPourInstrument().create(new APourInstrument(entry.getKey().getId(),
+                DAOFactory.getAPourInstrument().createOrUpdate(new APourInstrument(entry.getKey().getId(),
                         fichierPiste.getPiste().getNum(), fichierPiste.getAlbum().getId(), entry.getValue()));
             }
 

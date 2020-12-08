@@ -10,11 +10,12 @@ public class DAOEstUnePiste extends DAO<EstUnePiste> {
 
     @Override
     public void create(EstUnePiste estUnePiste) throws SQLException {
-        final String query = "INSERT INTO EstUnePiste VALUES (idFichier_seq.currval, ?, idAlbum_seq.currval)";
+        final String query = "INSERT INTO EstUnePiste VALUES (idFichier_seq.currval, ?, ?)";
 
         System.out.println("Statement EstUnePiste\n");
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setInt(1, estUnePiste.getNumPiste());
+            statement.setLong(2, estUnePiste.getIdAlbum());
             statement.executeUpdate();
         }
     }

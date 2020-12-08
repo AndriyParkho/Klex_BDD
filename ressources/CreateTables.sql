@@ -1,3 +1,8 @@
+CREATE TABLE CategorieMusique(
+  typeCategorieMusique varchar(50) NOT NULL,
+  CONSTRAINT pkCategorieMusique PRIMARY KEY (typeCategorieMusique)
+);
+
 CREATE SEQUENCE idAlbum_seq;
 CREATE TABLE Album(
   idAlbum integer NOT NULL,
@@ -101,11 +106,6 @@ CREATE TABLE CategorieFilm(
   CONSTRAINT pkCategorieFilm PRIMARY KEY (typeCategorieFilm)
 );
 
-CREATE TABLE CategorieMusique(
-  typeCategorieMusique varchar(50) NOT NULL,
-  CONSTRAINT pkCategorieMusique PRIMARY KEY (typeCategorieMusique)
-);
-
 /*
 Il faut peut-être rajouter une contrainte de valeur pour anneeSortie
 Il faut vérifier que resume existe pour Oracle sinon VARCHAR(65000)
@@ -160,9 +160,9 @@ CREATE TABLE APourRole(
 
 CREATE TABLE APourInstrument(
   instrument varchar(50) NOT NULL,
-  idArtiste integer NOT NULL,
+  idArtiste integer NOT NULL REFERENCES Artiste (idArtiste) ON DELETE CASCADE,
   idAlbum integer NOT NULL,
-  numPiste integer NOT NULL REFERENCES Artiste (idArtiste) ON DELETE CASCADE,
+  numPiste integer NOT NULL,
   CONSTRAINT fkAPourInstrumentPiste FOREIGN KEY (numPiste, idAlbum) REFERENCES Piste (numPiste, idAlbum) ON DELETE CASCADE,
   CONSTRAINT pkAPourInstrument PRIMARY KEY (idArtiste, numPiste)
 );
@@ -206,7 +206,7 @@ CREATE TABLE FluxAudio(
 /* references pour idFichier, debit et nomCodec ? */
 CREATE TABLE FluxVideo(
   idFlux integer NOT NULL REFERENCES Flux (idFlux) ON DELETE CASCADE,
-  debit float NOT NULL CHECK (debit > 0),
+  debit integer NOT NULL CHECK (debit > 0),
   idFichier integer NOT NULL,
   nomCodec varchar(20) NOT NULL,
   typeCodec varchar(20) NOT NULL,
