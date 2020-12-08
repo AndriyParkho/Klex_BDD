@@ -94,7 +94,7 @@ public class CreateArtiste extends JFrame {
 		dateField.setBounds(137, 124, 116, 22);
 		contentPane.add(dateField);
 		
-		JLabel lblNewLabel_1_2 = new JLabel("Sp�cialit� :");
+		JLabel lblNewLabel_1_2 = new JLabel("Sp���cialit��� :");
 		lblNewLabel_1_2.setBounds(217, 92, 64, 16);
 		contentPane.add(lblNewLabel_1_2);
 		
@@ -147,6 +147,14 @@ public class CreateArtiste extends JFrame {
 		contentPane.add(valideButton);
 		
 		this.setVisible(true);
+	}
+
+	public String getRoleOuInstru() {
+		return roleOuInstru;
+	}
+
+	public void setRoleOuInstru(String roleOuInstru) {
+		this.roleOuInstru = roleOuInstru;
 	}
 
 	public String getArtisteInconnu() {
