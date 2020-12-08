@@ -94,7 +94,7 @@ public class InsertFlux extends View{
 			add(lblNewLabel_1);
 			
 			
-			debitField.setModel(new SpinnerNumberModel(0.0, 0.0, null, 0.1));
+			debitField.setModel(new SpinnerNumberModel(new Float(0.0), new Float(0.0), null, new Float(0.1)));
 			debitField.setBounds(80, 128, 62, 22);
 			add(debitField);
 			

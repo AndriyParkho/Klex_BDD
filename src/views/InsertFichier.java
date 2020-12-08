@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 
 import controller.InsertFichierControl;
 import model.aggregates.FichierFilm;
@@ -74,6 +75,7 @@ public class InsertFichier extends View{
 			add(lblAnnenDe);
 			suivButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					controller.clicSuiv();
 				}
 			});
 			
@@ -81,7 +83,7 @@ public class InsertFichier extends View{
 			suivButton.setBounds(93, 131, 97, 25);
 			add(suivButton);
 			
-			
+			tailleField.setModel(new SpinnerNumberModel(new Long(0), null, Long.MAX_VALUE, new Long(1)));
 			tailleField.setBounds(109, 61, 47, 22);
 			add(tailleField);
 			

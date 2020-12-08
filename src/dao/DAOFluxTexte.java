@@ -13,7 +13,7 @@ public class DAOFluxTexte extends DAO<FluxTexte> {
         final String insertFluxQuery = "INSERT INTO FluxTexte VALUES (idFlux_seq.currval, ?, idFichier_seq.currval, ?, ?, ?)";
 
         try (PreparedStatement statementFlux = this.connection.prepareStatement(insertFluxQuery)) {
-            statementFlux.setInt(1, fluxTexte.getDebit());
+            statementFlux.setFloat(1, fluxTexte.getDebit());
             statementFlux.setString(2, fluxTexte.getNomCodec());
             statementFlux.setString(3, fluxTexte.getTypeCodec());
             statementFlux.setString(4, fluxTexte.getLangue());

@@ -20,7 +20,7 @@ public class InsertFluxControl {
 			newFlux.setEchantillonnage((int) view.getEchantField().getSelectedItem());
 			newFlux.setLangue(view.getLangueAudioField().getText());
 			newFlux.setTypeCodec("audio");
-			newFlux.setDebit((int)view.getDebitField().getValue());
+			newFlux.setDebit((float)view.getDebitField().getValue());
 			newFlux.setNomCodec(view.getCodecField().getText());
 			if(view.getFichierFilm() != null) {
 				view.getFichierFilm().getFlux().add(newFlux);
@@ -31,7 +31,7 @@ public class InsertFluxControl {
 			FluxTexte newFlux = new FluxTexte();
 			newFlux.setLangue(view.getLangueTxtField().getText());
 			newFlux.setTypeCodec("texte");
-			newFlux.setDebit((int)view.getDebitField().getValue());
+			newFlux.setDebit((float)view.getDebitField().getValue());
 			newFlux.setNomCodec(view.getCodecField().getText());
 			if(view.getFichierFilm() != null) {
 				view.getFichierFilm().getFlux().add(newFlux);
@@ -43,7 +43,7 @@ public class InsertFluxControl {
 			newFlux.setHauteur((int) view.getHauteurField().getValue());
 			newFlux.setLargeur((int) view.getLargeurField().getValue());
 			newFlux.setTypeCodec("video");
-			newFlux.setDebit((int)view.getDebitField().getValue());
+			newFlux.setDebit((float)view.getDebitField().getValue());
 			newFlux.setNomCodec(view.getCodecField().getText());
 			if(view.getFichierFilm() != null) {
 				view.getFichierFilm().getFlux().add(newFlux);

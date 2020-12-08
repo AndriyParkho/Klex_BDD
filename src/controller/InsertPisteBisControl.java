@@ -36,6 +36,8 @@ public class InsertPisteBisControl {
 			String[] artspe = art.replaceAll("\\(|\\)| ", "").split(",");
 			String nomArtiste = artspe[0];
 			String instrument = artspe[1];
+			System.out.println(art);
+			System.out.println(nomArtiste);
 			
 			try(ResultSet resArt = artisteDAO.find(nomArtiste)){
 				if(resArt.next()) {
@@ -47,7 +49,7 @@ public class InsertPisteBisControl {
 					artiste.setUrlPhoto(resArt.getString("urlPhoto"));
 					view.getFichierPiste().getArtistes().put(artiste, instrument);
 				} else {
-					new CreateArtiste(artiste.getNom(), instrument, null, view.getFichierPiste());
+					new CreateArtiste(nomArtiste, instrument, null, view.getFichierPiste());
 				}
 			}catch(SQLException e) {
 				System.out.println(e);

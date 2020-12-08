@@ -42,6 +42,7 @@ public class InsertFichierControl {
 			TransactionFichierFilm.execute(view.getFichierFilm());
 		} else if(view.getFichierPiste() != null) {
 			view.getFichierPiste().setFichier(fichier);
+			System.out.println(view.getFichierPiste());
 			TransactionFichierPiste.execute(view.getFichierPiste());
 		}
 		// Vérifie le quel des deux FichierFilm ou FichierPiste est null et

@@ -37,13 +37,28 @@ public class CreateArtiste extends JFrame {
 	private CreateArtisteControl controller = new CreateArtisteControl(this);
 
 	/**
+	 * Launch the application.
+	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					CreateArtiste frame = new CreateArtiste("TEST", "test", null, null);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
+
+	/**
 	 * Create the frame.
 	 */
-	public CreateArtiste(String artisteInconnu, String roleOuInstru) {
+	public CreateArtiste(String artisteInconnu, String roleOuInstru, FichierFilm fichierFilm, FichierPiste fichierPiste) {
 		this.artisteInconnu = artisteInconnu;
-//		this.fichierFilm = fichierFilm;
-//		this.fichierPiste = fichierPiste;
 		this.roleOuInstru = roleOuInstru;
+		this.fichierFilm = fichierFilm;
+		this.fichierPiste = fichierPiste;
 		
 		setTitle("Ajout artiste");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -63,8 +78,9 @@ public class CreateArtiste extends JFrame {
 		lblNewLabel.setBounds(154, 44, 140, 22);
 		contentPane.add(lblNewLabel);
 		
-		nomField = new JTextField(artisteInconnu);
+		nomField = new JTextField();
 		nomField.setBounds(66, 89, 116, 22);
+		nomField.setText(this.artisteInconnu);
 		contentPane.add(nomField);
 		nomField.setColumns(10);
 		
@@ -95,7 +111,6 @@ public class CreateArtiste extends JFrame {
 		dateField.setBounds(137, 124, 116, 22);
 		contentPane.add(dateField);
 		
-
 		JLabel lblNewLabel_1_2 = new JLabel("Sp\u00E9cialit\u00E9 :");
 		lblNewLabel_1_2.setBounds(217, 92, 64, 16);
 		contentPane.add(lblNewLabel_1_2);
@@ -140,7 +155,7 @@ public class CreateArtiste extends JFrame {
 		contentPane.add(bioField);
 		valideButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				controller.clicValid();
+				controller.clicValid();
 			}
 		});
 		
@@ -148,15 +163,8 @@ public class CreateArtiste extends JFrame {
 		valideButton.setBounds(166, 259, 97, 25);
 		contentPane.add(valideButton);
 		
+		this.setLocationRelativeTo(null);
 		this.setVisible(true);
-	}
-
-	public String getRoleOuInstru() {
-		return roleOuInstru;
-	}
-
-	public void setRoleOuInstru(String roleOuInstru) {
-		this.roleOuInstru = roleOuInstru;
 	}
 
 	public String getArtisteInconnu() {
@@ -165,14 +173,6 @@ public class CreateArtiste extends JFrame {
 
 	public void setArtisteInconnu(String artisteInconnu) {
 		this.artisteInconnu = artisteInconnu;
-	}
-
-	public JPanel getContentPane() {
-		return contentPane;
-	}
-
-	public void setContentPane(JPanel contentPane) {
-		this.contentPane = contentPane;
 	}
 
 	public JTextField getNomField() {
@@ -223,6 +223,14 @@ public class CreateArtiste extends JFrame {
 		this.bioField = bioField;
 	}
 
+	public String getRoleOuInstru() {
+		return roleOuInstru;
+	}
+
+	public void setRoleOuInstru(String roleOuInstru) {
+		this.roleOuInstru = roleOuInstru;
+	}
+
 	public FichierFilm getFichierFilm() {
 		return fichierFilm;
 	}
@@ -239,23 +247,4 @@ public class CreateArtiste extends JFrame {
 		this.fichierPiste = fichierPiste;
 	}
 
-	public CreateArtisteControl getController() {
-		return controller;
-	}
-
-	public void setController(CreateArtisteControl controller) {
-		this.controller = controller;
-	}
-	
-	static public void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CreateArtiste frame = new CreateArtiste("TEST", "test");
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 }

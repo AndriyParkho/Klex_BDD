@@ -13,7 +13,7 @@ public class DAOFluxAudio extends DAO<FluxAudio>{
         final String insertFluxQuery = "INSERT INTO FluxAudio VALUES (idFlux_seq.currval, ?, idFichier_seq.currval, ?, ?, ?, ?)";
     
         try (PreparedStatement statementFlux = this.connection.prepareStatement(insertFluxQuery)) {
-            statementFlux.setInt(1, fluxAudio.getDebit());
+            statementFlux.setFloat(1, fluxAudio.getDebit());
             statementFlux.setString(2, fluxAudio.getNomCodec());
             statementFlux.setString(3, fluxAudio.getTypeCodec());
             statementFlux.setInt(4, fluxAudio.getEchantillonnage());

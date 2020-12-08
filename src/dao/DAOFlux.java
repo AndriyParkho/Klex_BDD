@@ -22,7 +22,7 @@ public class DAOFlux extends DAO<Flux> {
 
         final String insertFluxQuery = "INSERT INTO Flux VALUES (idFlux_seq.currval, ?, idFichier_seq.currval, ?, ?)";
         try (PreparedStatement statementFlux = this.connection.prepareStatement(insertFluxQuery)) {
-            statementFlux.setInt(1, flux.getDebit());
+            statementFlux.setFloat(1, flux.getDebit());
             statementFlux.setString(2, flux.getNomCodec());
             statementFlux.setString(3, flux.getTypeCodec());
             statementFlux.executeUpdate();

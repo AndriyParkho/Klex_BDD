@@ -2,7 +2,7 @@ package model;
 
 public abstract class Flux {
     private long id;
-    private int debit;
+    private float debit;
     private long idFichier;
     private String nomCodec;
     private String typeCodec;
@@ -15,11 +15,11 @@ public abstract class Flux {
         this.id = id;
     }
 
-    public int getDebit() {
+    public float getDebit() {
         return debit;
     }
 
-    public void setDebit(int debit) {
+    public void setDebit(float debit) {
         this.debit = debit;
     }
 

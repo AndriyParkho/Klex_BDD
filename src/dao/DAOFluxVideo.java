@@ -13,7 +13,7 @@ public class DAOFluxVideo extends DAO<FluxVideo> {
         final String insertFluxQuery = "INSERT INTO FluxVideo VALUES (idFlux_seq.currval, ?, idFichier_seq.currval, ?, ?, ?, ?)";
 
         try (PreparedStatement statementFlux = this.connection.prepareStatement(insertFluxQuery)) {
-            statementFlux.setInt(1, fluxVideo.getDebit());
+            statementFlux.setFloat(1, fluxVideo.getDebit());
             statementFlux.setString(2, fluxVideo.getNomCodec());
             statementFlux.setString(3, fluxVideo.getTypeCodec());
             statementFlux.setInt(4, fluxVideo.getLargeur());
