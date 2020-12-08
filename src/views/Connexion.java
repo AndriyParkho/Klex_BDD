@@ -3,6 +3,7 @@ package views;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -58,7 +59,12 @@ public class Connexion extends View {
 			
 			connectButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					controller.clicToConnect();
+					try {
+						controller.clicToConnect();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			});
 			connectButton.setBounds(179, 248, 116, 25);

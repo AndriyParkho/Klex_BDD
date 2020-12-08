@@ -88,7 +88,7 @@ public class TestJDBC {
 
             // Initialize the script runner
             ScriptRunner sr = new ScriptRunner(connection);
-            sr.setEscapeProcessing(false);
+            // sr.setEscapeProcessing(false);
 
             // Drop existing tables
             try (Statement statement = connection.createStatement()) {
@@ -101,8 +101,8 @@ public class TestJDBC {
             }
 
             // Running the script
-            JDBCUtilities.loadFile(sr, "ressources/transaction.sql");
-            /* JDBCUtilities.loadFile(sr, "ressources/CreateTables.sql");
+            // JDBCUtilities.loadFile(sr, "ressources/transaction.sql");
+            JDBCUtilities.loadFile(sr, "ressources/CreateTables.sql");
             JDBCUtilities.loadFile(sr, "ressources/inserts/InsertCategorieMusique.sql");
             JDBCUtilities.loadFile(sr, "ressources/inserts/InsertAlbum.sql");
             JDBCUtilities.loadFile(sr, "ressources/inserts/InsertAlbumAPourCategorie.sql");
@@ -149,7 +149,7 @@ public class TestJDBC {
             JDBCUtilities.selectAll(connection, "Flux");
             JDBCUtilities.selectAll(connection, "FluxTexte");
             JDBCUtilities.selectAll(connection, "FluxAudio");
-            JDBCUtilities.selectAll(connection, "FluxVideo"); */
+            JDBCUtilities.selectAll(connection, "FluxVideo");
 
         } catch (SQLException e) {
             System.err.println("sql error !");
