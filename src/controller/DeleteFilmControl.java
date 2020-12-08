@@ -1,5 +1,12 @@
 package controller;
 
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import dao.DAOFilm;
+import model.Film;
+import transactions.TransactionFichierFilm;
 import views.DeleteFilm;
 
 public class DeleteFilmControl {
@@ -9,9 +16,18 @@ public class DeleteFilmControl {
 		this.view = view;
 	}
 	
-	public void clicSuiv() {
-		// Récupère les id du film et lance la fonction de suppression du film 
-		
+	public void clicSuiv() throws SQLException {
+		String titreFilm = view.getTitreField().getText();
+		String anneeSortie = view.getAnneeField().getText()+"-01-01";
+//		DAOFilm film = new DAOFilm();
+//		ResultSet rs = film.find(titreFilm, Date.valueOf(anneeSortie));
+//		if (!rs.next()) {
+//			// le film cherchÃ© n'existe pas
+//			System.out.println("Le film cherche n'existe pas");
+//		} else {
+//			// le film cherche existe
+//			//TODO
+//		}
 	}
 	
 	public void clicBack() {

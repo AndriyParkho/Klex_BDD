@@ -8,6 +8,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 
 import connections.JDBCUtilities;
 import model.Film;
+import transactions.TransactionFichierFilm;
 
 public class DAOFilm extends DAO<Film> {
 
