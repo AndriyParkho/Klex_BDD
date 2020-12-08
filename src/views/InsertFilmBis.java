@@ -36,7 +36,7 @@ public class InsertFilmBis extends View{
 	private InsertFilmBisControl controller = new InsertFilmBisControl(this);
 
 	public InsertFilmBis(JFrame fenetre, CardLayout switcherView, JPanel containerView, FichierFilm fichierFilm) {
-		super(fenetre, switcherView, containerView, new String("Ins�rer un film"));
+		super(fenetre, switcherView, containerView, new String("Ins\u00E9rer un film"));
 		this.fichierFilm = fichierFilm;
 		
 		super.getContainerView().add(container, "Insertion film 2");
@@ -66,7 +66,7 @@ public class InsertFilmBis extends View{
 			resumeField.setBounds(29, 82, 392, 62);
 			add(resumeField);
 			
-			JLabel lblNewLabel = new JLabel("R�sum� :");
+			JLabel lblNewLabel = new JLabel("R\u00E9sum\u00E9 :");
 			lblNewLabel.setBounds(29, 60, 56, 16);
 			add(lblNewLabel);
 			
@@ -102,7 +102,7 @@ public class InsertFilmBis extends View{
 			afficheButton.setBounds(353, 157, 85, 22);
 			add(afficheButton);
 			
-			JLabel lblNewLabel_2 = new JLabel("Cat�gorie(s) :");
+			JLabel lblNewLabel_2 = new JLabel("Cat\u00E9gorie(s) :");
 			lblNewLabel_2.setBounds(29, 189, 247, 16);
 			add(lblNewLabel_2);
 			
@@ -165,7 +165,7 @@ public class InsertFilmBis extends View{
 			suivButton.setBounds(179, 321, 97, 25);
 			add(suivButton);
 			
-			JLabel lblNewLabel_4 = new JLabel("Artiste(s) et r�le:");
+			JLabel lblNewLabel_4 = new JLabel("Artiste(s) et role:");
 			lblNewLabel_4.setBounds(290, 189, 112, 16);
 			add(lblNewLabel_4);
 			

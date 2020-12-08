@@ -33,9 +33,9 @@ public class InsertPisteBisControl {
 		for(String art : artistes) {
 			Artiste artiste = new Artiste();
 			DAOArtiste artisteDAO = DAOFactory.getArtisteDAO();
-			String[] artspe = art.replaceAll("\\(|\\)| ", "").split(",");
-			String nomArtiste = artspe[0];
-			String instrument = artspe[1];
+			String[] artspe = art.split(",");
+			String nomArtiste = artspe[0].replaceAll("\\(", "");
+			String instrument = artspe[1].replaceAll("\\)| ", "");
 			System.out.println(art);
 			System.out.println(nomArtiste);
 			

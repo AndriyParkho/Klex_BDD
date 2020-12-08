@@ -68,5 +68,11 @@ public class FichierFilm {
 	public void setArtistes(HashMap<Artiste, String> artistes) {
 		this.artistes = artistes;
 	}
+
+	@Override
+	public String toString() {
+		return "FichierFilm [fichier=" + fichier + ", film=" + film + ", flux=" + flux + ", categories=" + categories
+				+ ", imgExtraiteFilms=" + imgExtraiteFilms + ", artistes=" + artistes + "]";
+	}
 	
 }

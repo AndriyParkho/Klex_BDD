@@ -33,7 +33,7 @@ public class InsertFilmBisControl {
 		view.getFichierFilm().getFilm().setAgeMin(ageMin);
 		
 		for(String cat : categories) {
-			CategorieFilm categorieFilm = new CategorieFilm(cat);
+			CategorieFilm categorieFilm = new CategorieFilm(cat.replaceAll(" ", ""));
 			DAOCategorieFilm catDAO= new DAOCategorieFilm();
 			view.getFichierFilm().getCategories().add(categorieFilm);
 

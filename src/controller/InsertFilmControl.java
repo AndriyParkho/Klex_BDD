@@ -35,9 +35,6 @@ public class InsertFilmControl {
 		DAOFilm  DAOfilm = DAOFactory.getFilmDAO();
 		ResultSet resFilm;
 		Film film = new Film();
-		film.setAnneeSortie(anneeSortie);
-		film.setTitreFilm(titreFilm);
-		view.getFichierFilm().setFilm(film);
 		
 
 		try{

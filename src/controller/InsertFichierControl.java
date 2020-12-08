@@ -39,6 +39,7 @@ public class InsertFichierControl {
 		
 		if(view.getFichierFilm() != null) {
 			view.getFichierFilm().setFichier(fichier);
+			System.out.println(view.getFichierFilm());
 			TransactionFichierFilm.execute(view.getFichierFilm());
 		} else if(view.getFichierPiste() != null) {
 			view.getFichierPiste().setFichier(fichier);

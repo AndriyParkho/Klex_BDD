@@ -25,7 +25,7 @@ public class InsertFilm extends View{
 	private InsertFilmControl controller = new InsertFilmControl(this);
 	
 	public InsertFilm(JFrame fenetre, CardLayout switcherView, JPanel containerView) {
-		super(fenetre, switcherView, containerView, new String("Ins�rer un film"));
+		super(fenetre, switcherView, containerView, new String("Ins\u00E9rer un film"));
 		
 		super.getContainerView().add(container, "Insertion film 1");
 		super.getPanels().add("Insertion film 1");
@@ -72,7 +72,7 @@ public class InsertFilm extends View{
 			anneeField.setBounds(109, 96, 116, 22);
 			add(anneeField);
 			
-			JLabel lblAnnenDe = new JLabel("Ann�e :");
+			JLabel lblAnnenDe = new JLabel("Ann\u00E9e :");
 			lblAnnenDe.setBounds(50, 99, 47, 16);
 			add(lblAnnenDe);
 			suivButton.addActionListener(new ActionListener() {
