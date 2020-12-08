@@ -22,32 +22,45 @@ public class DeleteFilmControl {
 
 	public void clicSuiv() {
 		String titreFilm = view.getTitreField().getText();
-		String anneeSortie = view.getAnneeField().getText()+"-01-01";
-		DAOFilm film = new DAOFilm();
-		ResultSet rs = film.find(titreFilm, Date.valueOf(anneeSortie));
-		try {
-			if(rs.next()) {
-				
-			}else {
-				System.out.println("film non trouvé");
-				// email non trouvé dans la BDD
-				JDialog erreur = new JDialog(view.getFenetre(),"erreur");
-				JLabel label = new JLabel("film non trouvé", SwingConstants.CENTER);
-				erreur.add(label);
-				erreur.setSize(250, 100);
-				erreur.setLocationRelativeTo(null);
-				erreur.setVisible(true);
+		String annee = view.getAnneeField().getText();
+		if(annee.length()<= 4) {
+			annee+="-01-01";
+		}
+		Date anneeSortie =  Date.valueOf(annee); 
+		Film film = new Film();
+		film.setAnneeSortie(anneeSortie);
+		film.setTitreFilm(titreFilm);
+		DAOFilm filmDAO = new DAOFilm();
+		ResultSet resFilm;
+		try{
+			resFilm = filmDAO.find(titreFilm,anneeSortie);
+		
+			try {
+				if(resFilm.next()) {
+					film.setTitreFilm(resFilm.getString("titreFilm"));
+					film.setAgeMin(resFilm.getInt("ageMin"));
+					film.setAnneeSortie(resFilm.getDate("anneeSortie"));
+					film.setResume(resFilm.getString("resume"));
+					film.setUrlAffiche(resFilm.getString("urlAffiche"));
+					
+					//transaction pour supprimer le film
+				}else {
+					System.out.println("film non trouvé");
+					// email non trouvé dans la BDD
+					JDialog erreur = new JDialog(view.getFenetre(),"erreur");
+					JLabel label = new JLabel("film non trouvé", SwingConstants.CENTER);
+					erreur.add(label);
+					erreur.setSize(250, 100);
+					erreur.setLocationRelativeTo(null);
+					erreur.setVisible(true);
+					
+					clicBack();
+				}
+			}catch(SQLException e) {
 			}
 		}catch(SQLException e) {
-			
 		}
-		//		if (!rs.next()) {
-//			// le film cherch�� n'existe pas
-//			System.out.println("Le film cherche n'existe pas");
-//		} else {
-//			// le film cherche existe
-//			//TODO
-//		}
+
 	}
 	
 	public void clicBack() {
