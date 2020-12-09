@@ -53,6 +53,7 @@ public final class TransactionFichierFilm {
 
             // on doit créer les artistes et les liens
             for (Map.Entry<Artiste, String> entry : fichierFilm.getArtistes().entrySet()) {
+                System.out.println(entry.getKey() + " " + entry.getValue());
                 DAOFactory.getArtisteDAO().createOrUpdate(entry.getKey());
                 DAOFactory.getAPourRole().createOrUpdate(new APourRole(fichierFilm.getFilm().getTitreFilm(),
                         fichierFilm.getFilm().getAnneeSortie(), entry.getKey().getId(), entry.getValue()));

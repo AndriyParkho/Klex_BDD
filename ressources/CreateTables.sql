@@ -38,7 +38,7 @@ CREATE TABLE Piste(
   -- idPiste integer,
   numPiste integer NOT NULL,
   titrePiste varchar(50) NOT NULL,
-  dureePiste interval day (0) to second(0) NOT NULL, -- select only hour-min-seconds, see REGEXP_SUBSTR
+  dureePiste interval day (0) to second(0) NOT NULL, -- select only hour-min-seconds
   idAlbum integer NOT NULL REFERENCES Album (idAlbum) ON DELETE CASCADE, -- la suppression d'un album supprime ses pistes
   idFichier integer NOT NULL REFERENCES Fichier (idFichier) ON DELETE CASCADE, -- la suppression d'un fichier supprime la piste associée
   CONSTRAINT pkPiste PRIMARY KEY (numPiste, idAlbum)

@@ -80,7 +80,12 @@ public class Artiste {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
+        result = prime * result + ((biographie == null) ? 0 : biographie.hashCode());
+        result = prime * result + ((dateNaissance == null) ? 0 : dateNaissance.hashCode());
         result = prime * result + (int) (id ^ (id >>> 32));
+        result = prime * result + ((nom == null) ? 0 : nom.hashCode());
+        result = prime * result + ((specialite == null) ? 0 : specialite.hashCode());
+        result = prime * result + ((urlPhoto == null) ? 0 : urlPhoto.hashCode());
         return result;
     }
 
@@ -93,7 +98,32 @@ public class Artiste {
         if (getClass() != obj.getClass())
             return false;
         Artiste other = (Artiste) obj;
+        if (biographie == null) {
+            if (other.biographie != null)
+                return false;
+        } else if (!biographie.equals(other.biographie))
+            return false;
+        if (dateNaissance == null) {
+            if (other.dateNaissance != null)
+                return false;
+        } else if (!dateNaissance.equals(other.dateNaissance))
+            return false;
         if (id != other.id)
+            return false;
+        if (nom == null) {
+            if (other.nom != null)
+                return false;
+        } else if (!nom.equals(other.nom))
+            return false;
+        if (specialite == null) {
+            if (other.specialite != null)
+                return false;
+        } else if (!specialite.equals(other.specialite))
+            return false;
+        if (urlPhoto == null) {
+            if (other.urlPhoto != null)
+                return false;
+        } else if (!urlPhoto.equals(other.urlPhoto))
             return false;
         return true;
     }
