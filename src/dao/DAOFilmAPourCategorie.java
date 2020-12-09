@@ -45,7 +45,7 @@ public class DAOFilmAPourCategorie extends DAO<FilmAPourCategorie> {
 
     public ResultSet find(String titreFilm, Date anneeSortie, String typeCategorieFilm) throws SQLException {
         final String query = String.format(
-                "SELECT * FROM FilmAPourCategorie WHERE titreFilm = '%s' AND anneeSortie = '%s' AND typeCategorieFilm = '%s'",
+                "SELECT * FROM FilmAPourCategorie WHERE titreFilm = '%s' AND anneeSortie = TO_DATE('%s', 'YYYY-MM-DD') AND typeCategorieFilm = '%s'",
                 titreFilm, anneeSortie, typeCategorieFilm);
         return this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeQuery(query);
@@ -53,7 +53,7 @@ public class DAOFilmAPourCategorie extends DAO<FilmAPourCategorie> {
 
     public void delete(String titreFilm, Date anneeSortie, String typeCategorieFilm) throws SQLException {
         final String query = String.format(
-                "SELECT * FROM FilmAPourCategorie WHERE titreFilm = '%s' AND anneeSortie = '%s' AND typeCategorieFilm = '%s'",
+                "SELECT * FROM FilmAPourCategorie WHERE titreFilm = '%s' AND anneeSortie = TO_DATE('%s', 'YYYY-MM-DD') AND typeCategorieFilm = '%s'",
                 titreFilm, anneeSortie, typeCategorieFilm);
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeUpdate(query);

@@ -30,7 +30,7 @@ public class TestTransactionFichierPiste {
         album.setDateSortie(Date.valueOf("2003-09-08"));
 
         Piste piste = new Piste();
-        piste.setDuree("00:04:21");
+        piste.setDuree("00:02:30");
         piste.setNum(13);
         piste.setTitre("Numb");
 

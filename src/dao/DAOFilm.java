@@ -8,7 +8,6 @@ import java.sql.SQLIntegrityConstraintViolationException;
 
 import connections.JDBCUtilities;
 import model.Film;
-import transactions.TransactionFichierFilm;
 
 public class DAOFilm extends DAO<Film> {
 
@@ -44,14 +43,14 @@ public class DAOFilm extends DAO<Film> {
     }
 
     public ResultSet find(String titreFilm, Date anneeSortie) throws SQLException {
-        final String query = String.format("SELECT * FROM Film WHERE titreFilm = '%s' AND anneeSortie = '%s'",
+        final String query = String.format("SELECT * FROM Film WHERE titreFilm = '%s' AND anneeSortie = TO_DATE('%s', 'YYYY-MM-DD')",
                 titreFilm, anneeSortie);
         return this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeQuery(query);
     }
 
     public void delete(String titreFilm, Date anneeSortie) throws SQLException {
-        final String query = String.format("DELETE FROM Film WHERE titreFilm = '%s' AND anneeSortie = '%s'", titreFilm,
+        final String query = String.format("DELETE FROM Film WHERE titreFilm = '%s' AND anneeSortie = TO_DATE('%s', 'YYYY-MM-DD')", titreFilm,
                 anneeSortie);
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeUpdate(query);

@@ -41,13 +41,13 @@ public class DAOImgExtraiteFilm extends DAO<ImgExtraiteFilm> {
     }
 
     public ResultSet find(String urlImg, String titreFilm, Date anneeSortie) throws SQLException {
-        final String query = String.format("SELECT * FROM ImgExtraiteFilm WHERE urlImg = '%s' AND titreFilm = '%s' AND anneeSortie = '%s'", urlImg, titreFilm, anneeSortie);
+        final String query = String.format("SELECT * FROM ImgExtraiteFilm WHERE urlImg = '%s' AND titreFilm = '%s' AND anneeSortie = TO_DATE('%s', 'YYYY-MM-DD')", urlImg, titreFilm, anneeSortie);
         return this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeQuery(query);
     }
 
     public void delete(String urlImg, String titreFilm, Date anneeSortie) throws SQLException {
-        final String query = String.format("DELETE FROM ImgExtraiteFilm WHERE urlImg = '%s' AND titreFilm = '%s' AND anneeSortie = '%s'", urlImg, titreFilm, anneeSortie);
+        final String query = String.format("DELETE FROM ImgExtraiteFilm WHERE urlImg = '%s' AND titreFilm = '%s' AND anneeSortie = TO_DATE('%s', 'YYYY-MM-DD')", urlImg, titreFilm, anneeSortie);
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeUpdate(query);
     }

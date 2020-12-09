@@ -77,7 +77,7 @@ public class DAOAlbum extends DAO<Album> {
 
     public ResultSet find(String titreAlbum, String groupe, Date dateSortie) throws SQLException {
         final String query = String.format(
-                "SELECT * FROM Album WHERE titreAlbum = '%s' AND nomGroupe = '%s' AND dateSortieAlbum = to_date('%s', 'YYYY-MM-DD')", titreAlbum,
+                "SELECT * FROM Album WHERE titreAlbum = '%s' AND nomGroupe = '%s' AND dateSortieAlbum = TO_DATE('%s', 'YYYY-MM-DD')", titreAlbum,
                 groupe, dateSortie);
         return this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeQuery(query);
