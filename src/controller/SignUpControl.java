@@ -10,10 +10,9 @@ import javax.swing.SwingConstants;
 import dao.DAOUtilisateur;
 import model.Utilisateur;
 import transactions.TransactionUtilisateur;
-import views.FenetrePrincipal;
-import views.SignUp;
 import views.Accueil;
 import views.Connexion;
+import views.SignUp;
 
 public class SignUpControl {
 	private SignUp view;

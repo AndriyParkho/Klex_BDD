@@ -1,7 +1,6 @@
 package views;
 
 import java.awt.CardLayout;
-import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;

@@ -1,8 +1,6 @@
 package controller;
 
 import views.FluxNbChoice;
-import views.InsertChoice;
-import views.InsertFilm;
 import views.InsertFlux;
 
 public class FluxNbChoiceControl {

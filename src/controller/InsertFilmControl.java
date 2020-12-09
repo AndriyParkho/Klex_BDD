@@ -4,18 +4,12 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-
 import dao.DAOFactory;
 import dao.DAOFilm;
 import model.Film;
-import model.aggregates.FichierFilm;
 import views.FluxNbChoice;
 import views.InsertFilm;
 import views.InsertFilmBis;
-import views.InsertFlux;
 
 public class InsertFilmControl {
 	private InsertFilm view;

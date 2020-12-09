@@ -1,17 +1,13 @@
 package controller;
 
 import java.awt.Toolkit;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import connections.ConnectionOracle;
-import connections.JDBCUtilities;
 import dao.DAOUtilisateur;
 import model.Utilisateur;
 import views.Connexion;

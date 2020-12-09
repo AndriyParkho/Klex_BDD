@@ -13,7 +13,6 @@ import javax.swing.JTextField;
 
 import controller.InsertFilmControl;
 import model.aggregates.FichierFilm;
-import model.Film;
 
 public class InsertFilm extends View{
 	private JTextField titreField;

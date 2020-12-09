@@ -2,7 +2,6 @@ package controller;
 
 import java.awt.event.WindowEvent;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -10,10 +9,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import connections.JDBCUtilities;
-import dao.DAOArtiste;
 import model.Artiste;
-import model.aggregates.FichierFilm;
 import views.CreateArtiste;
 
 public class CreateArtisteControl {

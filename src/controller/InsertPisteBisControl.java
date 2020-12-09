@@ -8,7 +8,6 @@ import dao.DAOFactory;
 import model.Artiste;
 import model.CategorieMusique;
 import views.CreateArtiste;
-import views.FenetrePrincipal;
 import views.FluxNbChoice;
 import views.InsertPisteBis;
 

@@ -2,7 +2,6 @@ package views;
 
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,7 +22,6 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.CaretListener;
 
 import controller.CreateClientControl;
-import model.aggregates.ClientCodecs;
 
 public class CreateClient extends JFrame {
 	private JPanel contentPane;

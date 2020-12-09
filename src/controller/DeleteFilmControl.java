@@ -10,7 +10,6 @@ import javax.swing.SwingConstants;
 
 import dao.DAOFilm;
 import model.Film;
-import transactions.TransactionFichierFilm;
 import views.DeleteFilm;
 
 public class DeleteFilmControl {

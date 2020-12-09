@@ -13,7 +13,6 @@ import dao.DAOPiste;
 import model.Album;
 import model.Piste;
 import views.DeletePiste;
-import views.InsertAlbum;
 
 public class DeletePisteControl {
 	private DeletePiste view;
