@@ -22,6 +22,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.CaretListener;
 
 import controller.CreateClientControl;
+import model.aggregates.ClientCodecs;
 
 public class CreateClient extends JFrame {
 	private JPanel contentPane;
@@ -33,12 +34,16 @@ public class CreateClient extends JFrame {
 	private String marqueInconnu;
 	private String modeleInconnu;
 	private CreateClientControl controller = new CreateClientControl(this);
+	private ClientCodecs clientCodecs = new ClientCodecs();
 
 	/**
 	 * Create the frame.
 	 */
 	public CreateClient(String marqueInconnu, String modeleInconnu) {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.marqueInconnu = marqueInconnu;
+		this.modeleInconnu = modeleInconnu;
+		
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 370);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -134,7 +139,7 @@ public class CreateClient extends JFrame {
 		this.setVisible(true);
 	}
 	
-	class InsertCodecPanel extends JPanel {
+	public class InsertCodecPanel extends JPanel {
 		private JTextField nomField;
 		private JComboBox typeField = new JComboBox();
 		private int count;
@@ -166,7 +171,7 @@ public class CreateClient extends JFrame {
 			add(lblNewLabel_1_2);
 			
 			
-			typeField.setModel(new DefaultComboBoxModel(new String[] {"Texte", "Audio", "Video"}));
+			typeField.setModel(new DefaultComboBoxModel(new String[] {"texte", "audio", "video"}));
 			typeField.setBounds(286, 25, 116, 22);
 			add(typeField);
 
@@ -252,6 +257,14 @@ public class CreateClient extends JFrame {
 	public void setModeleInconnu(String modeleInconnu) {
 		this.modeleInconnu = modeleInconnu;
 	}
-	
 
+	public ClientCodecs getClientCodecs() {
+		return clientCodecs;
+	}
+
+	public void setClientCodecs(ClientCodecs clientCodecs) {
+		this.clientCodecs = clientCodecs;
+	}
+	
+	
 }

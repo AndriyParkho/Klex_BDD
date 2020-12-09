@@ -10,6 +10,7 @@ import javax.swing.SwingConstants;
 
 import dao.DAOFilm;
 import model.Film;
+import transactions.TransactionDeletes;
 import views.DeleteFilm;
 
 public class DeleteFilmControl {
@@ -25,10 +26,7 @@ public class DeleteFilmControl {
 		if(annee.length()<= 4) {
 			annee+="-01-01";
 		}
-		Date anneeSortie =  Date.valueOf(annee); 
-		Film film = new Film();
-		film.setAnneeSortie(anneeSortie);
-		film.setTitreFilm(titreFilm);
+		Date anneeSortie =  Date.valueOf(annee);
 		DAOFilm filmDAO = new DAOFilm();
 		ResultSet resFilm;
 		try{
@@ -36,18 +34,12 @@ public class DeleteFilmControl {
 		
 			try {
 				if(resFilm.next()) {
-					film.setTitreFilm(resFilm.getString("titreFilm"));
-					film.setAgeMin(resFilm.getInt("ageMin"));
-					film.setAnneeSortie(resFilm.getDate("anneeSortie"));
-					film.setResume(resFilm.getString("resume"));
-					film.setUrlAffiche(resFilm.getString("urlAffiche"));
-					
-					//transaction pour supprimer le film
+					TransactionDeletes.deleteFilm(titreFilm, anneeSortie);
 				}else {
-					System.out.println("film non trouv\\u00E9");
+					System.out.println("film non trouv\u00E9");
 					// email non trouvé dans la BDD
 					JDialog erreur = new JDialog(view.getFenetre(),"Erreur");
-					JLabel label = new JLabel("Film non trouv\\u00E9", SwingConstants.CENTER);
+					JLabel label = new JLabel("Film non trouv\u00E9", SwingConstants.CENTER);
 					erreur.add(label);
 					erreur.setSize(250, 100);
 					erreur.setLocationRelativeTo(null);
