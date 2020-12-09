@@ -21,6 +21,7 @@ public class DAOPiste extends DAO<Piste> {
         // format '09:08:56' pour 9h8m56s
 
         System.out.println("Statement Piste");
+        System.out.println(piste);
         try (PreparedStatement statementAlbum = this.connection.prepareStatement(query)) {
             statementAlbum.setInt(1, piste.getNum());
             statementAlbum.setString(2, piste.getTitre());
