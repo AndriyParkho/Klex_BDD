@@ -15,7 +15,7 @@ import javax.swing.JRadioButton;
 import controller.InsertChoiceControl;
 
 public class InsertChoice extends View{
-	private JLabel lblNewLabel = new JLabel("Ins�rer :");
+	private JLabel lblNewLabel = new JLabel("Ins\u00E9rer :");
 	private JRadioButton filmChoice = new JRadioButton("Un film");
 	private JRadioButton pisteChoice = new JRadioButton("Une piste");
 	private JButton valideButton = new JButton("Valider");
