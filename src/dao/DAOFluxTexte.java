@@ -27,13 +27,13 @@ public class DAOFluxTexte extends DAO<FluxTexte> {
     }
 
     public ResultSet find(long idFlux) throws SQLException {
-        final String query = String.format("SELECT * FROM FluxTexte WHERE idFlux = %ld", idFlux);
+        final String query = String.format("SELECT * FROM FluxTexte WHERE idFlux = %d", idFlux);
         return this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeQuery(query);
     }
 
     public void delete(long idFlux) throws SQLException {
-        final String query = String.format("DELETE FROM FluxTexte WHERE idFlux = %ld", idFlux);
+        final String query = String.format("DELETE FROM FluxTexte WHERE idFlux = %d", idFlux);
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeUpdate(query);
     }

@@ -49,7 +49,7 @@ public class DAOPiste extends DAO<Piste> {
     }
 
     public ResultSet find(int numPiste, long idAlbum) throws SQLException {
-        final String query = String.format("SELECT * FROM Piste WHERE numPiste = %d AND idAlbum = %ld", numPiste,
+        final String query = String.format("SELECT * FROM Piste WHERE numPiste = %d AND idAlbum = %d", numPiste,
                 idAlbum);
         return this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeQuery(query);
@@ -63,7 +63,7 @@ public class DAOPiste extends DAO<Piste> {
     }
 
     public void delete(int numPiste, long idAlbum) throws SQLException {
-        final String query = String.format("DELETE FROM Piste WHERE numPiste = %d AND idAlbum = %ld", numPiste,
+        final String query = String.format("DELETE FROM Piste WHERE numPiste = %d AND idAlbum = %d", numPiste,
                 idAlbum);
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeUpdate(query);

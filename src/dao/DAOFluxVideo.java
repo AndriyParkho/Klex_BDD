@@ -28,13 +28,13 @@ public class DAOFluxVideo extends DAO<FluxVideo> {
     }
 
     public ResultSet find(long idFlux) throws SQLException {
-        final String query = String.format("SELECT * FROM FluxVideo WHERE idFlux = %ld", idFlux);
+        final String query = String.format("SELECT * FROM FluxVideo WHERE idFlux = %d", idFlux);
         return this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeQuery(query);
     }
 
     public void delete(long idFlux) throws SQLException {
-        final String query = String.format("DELETE FROM FluxVideo WHERE idFlux = %ld", idFlux);
+        final String query = String.format("DELETE FROM FluxVideo WHERE idFlux = %d", idFlux);
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeUpdate(query);
     }

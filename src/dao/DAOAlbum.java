@@ -64,7 +64,7 @@ public class DAOAlbum extends DAO<Album> {
     }
 
     public ResultSet find(long idAlbum) throws SQLException {
-        final String query = String.format("SELECT * FROM Album WHERE idAlbum = %ld", idAlbum);
+        final String query = String.format("SELECT * FROM Album WHERE idAlbum = %d", idAlbum);
         return this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeQuery(query);
     }
@@ -84,7 +84,7 @@ public class DAOAlbum extends DAO<Album> {
     }
 
     public void delete(long idAlbum) throws SQLException {
-        final String query = String.format("DELETE FROM Album WHERE idAlbum = %ld", idAlbum);
+        final String query = String.format("DELETE FROM Album WHERE idAlbum = %d", idAlbum);
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeUpdate(query);
     }

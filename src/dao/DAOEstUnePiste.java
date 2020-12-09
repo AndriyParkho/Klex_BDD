@@ -27,7 +27,7 @@ public class DAOEstUnePiste extends DAO<EstUnePiste> {
 
     public ResultSet find(long idFichier, long numPiste, long idAlbum) throws SQLException {
         final String query = String.format(
-                "SELECT * FROM EstUnePiste WHERE idFichier = %ld AND numPiste = %ld AND idAlbum = %ld", idFichier,
+                "SELECT * FROM EstUnePiste WHERE idFichier = %l AND numPiste = %l AND idAlbum = %l", idFichier,
                 numPiste, idAlbum);
         return this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeQuery(query);
@@ -35,7 +35,7 @@ public class DAOEstUnePiste extends DAO<EstUnePiste> {
 
     public void delete(long idFichier, long numPiste, long idAlbum) throws SQLException {
         final String query = String.format(
-                "DELETE FROM EstUnePiste WHERE idFichier = %ld AND numPiste = %ld AND idAlbum = %ld", idFichier,
+                "DELETE FROM EstUnePiste WHERE idFichier = %l AND numPiste = %l AND idAlbum = %l", idFichier,
                 numPiste, idAlbum);
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeUpdate(query);

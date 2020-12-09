@@ -43,7 +43,7 @@ public class DAOPisteAPourCategorie extends DAO<PisteAPourCategorie> {
 
     public ResultSet find(int numPiste, long idAlbum, String typeCategorieMusique) throws SQLException {
         final String query = String.format(
-                "SELECT * FROM PisteAPourCategorie WHERE numPiste = %d AND idAlbum = %ld AND typeCategorieMusique = '%s'",
+                "SELECT * FROM PisteAPourCategorie WHERE numPiste = %d AND idAlbum = %d AND typeCategorieMusique = '%s'",
                 numPiste, idAlbum, typeCategorieMusique);
         return this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeQuery(query);
@@ -51,7 +51,7 @@ public class DAOPisteAPourCategorie extends DAO<PisteAPourCategorie> {
 
     public void delete(int numPiste, long idAlbum, String typeCategorieMusique) throws SQLException {
         final String query = String.format(
-                "DELETE FROM PisteAPourCategorie WHERE numPiste = %d AND idAlbum = %ld AND typeCategorieMusique = '%s'",
+                "DELETE FROM PisteAPourCategorie WHERE numPiste = %d AND idAlbum = %d AND typeCategorieMusique = '%s'",
                 numPiste, idAlbum, typeCategorieMusique);
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeUpdate(query);

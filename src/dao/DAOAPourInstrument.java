@@ -41,14 +41,14 @@ public class DAOAPourInstrument extends DAO<APourInstrument> {
     }
 
     public ResultSet find(long idArtiste, int numPiste) throws SQLException {
-        final String query = String.format("SELECT * FROM APourInstrument WHERE idArtiste = %ld AND numPiste = %ld",
+        final String query = String.format("SELECT * FROM APourInstrument WHERE idArtiste = %d AND numPiste = %d",
                 idArtiste, numPiste);
         return this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeQuery(query);
     }
 
     public void delete(long idArtiste, int numPiste) throws SQLException {
-        final String query = String.format("DELETE FROM APourInstrument WHERE idArtiste = %ld AND numPiste = %ld",
+        final String query = String.format("DELETE FROM APourInstrument WHERE idArtiste = %d AND numPiste = %d",
                 idArtiste, numPiste);
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeUpdate(query);

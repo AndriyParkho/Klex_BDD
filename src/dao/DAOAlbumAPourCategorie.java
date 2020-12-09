@@ -41,7 +41,7 @@ public class DAOAlbumAPourCategorie extends DAO<AlbumAPourCategorie> {
 
     public ResultSet find(long idAlbum, String typeCategorieMusique) throws SQLException {
         final String query = String.format(
-                "SELECT * FROM AlbumAPourCategorie WHERE idAlbum = %ld AND typeCategorieMusique = '%s'", idAlbum,
+                "SELECT * FROM AlbumAPourCategorie WHERE idAlbum = %d AND typeCategorieMusique = '%s'", idAlbum,
                 typeCategorieMusique);
         return this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeQuery(query);
@@ -49,7 +49,7 @@ public class DAOAlbumAPourCategorie extends DAO<AlbumAPourCategorie> {
 
     public void delete(long idAlbum, String typeCategorieMusique) throws SQLException {
         final String query = String.format(
-                "DELETE FROM AlbumAPourCategorie WHERE idAlbum = %ld AND typeCategorieMusique = '%s'", idAlbum,
+                "DELETE FROM AlbumAPourCategorie WHERE idAlbum = %d AND typeCategorieMusique = '%s'", idAlbum,
                 typeCategorieMusique);
         this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                 .executeUpdate(query);
