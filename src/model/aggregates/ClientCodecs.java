@@ -7,7 +7,7 @@ import model.Codec;
 
 public class ClientCodecs {
     private Client client;
-    private HashSet<Codec> codecs;
+    private HashSet<Codec> codecs = new HashSet<Codec>();
 
     public Client getClient() {
         return client;
@@ -24,4 +24,11 @@ public class ClientCodecs {
     public void setCodecs(HashSet<Codec> codecs) {
         this.codecs = codecs;
     }
+
+	@Override
+	public String toString() {
+		return "ClientCodecs [client=" + client + ", codecs=" + codecs + "]";
+	}
+    
+    
 }

@@ -11,10 +11,10 @@ import javax.swing.JPanel;
 import controller.FonctionsControl;
 
 public class Fonctions extends View {
-	private JButton insertButton = new JButton("Ins�rer un nouveau fichier");
-	private JButton selectButton = new JButton("S�lection d'un contenu");
+	private JButton insertButton = new JButton("Ins\u00E9rer un nouveau fichier");
+	private JButton selectButton = new JButton("S\u00E9lection d'un contenu");
 	private JButton deleteButton = new JButton("Supprimer un contenu");
-	private JButton discntButton = new JButton("Se d�connecter");
+	private JButton discntButton = new JButton("Se d\u00E9connecter");
 	private JPanel container = new FonctionPanel();
 	private FonctionsControl controller = new FonctionsControl(this);
 

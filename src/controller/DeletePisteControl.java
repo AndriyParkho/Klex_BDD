@@ -12,6 +12,7 @@ import dao.DAOFactory;
 import dao.DAOPiste;
 import model.Album;
 import model.Piste;
+import transactions.TransactionDeletes;
 import views.DeletePiste;
 
 public class DeletePisteControl {
@@ -24,8 +25,6 @@ public class DeletePisteControl {
 	public void clicSuiv() {
 		String titrePiste = view.getTitrePisteField().getText();
 		String titreAlbum = view.getTitreAlbumField().getText();
-		Piste piste = new Piste();
-		Album album = new Album();
 		DAOPiste bddPiste = DAOFactory.getPisteDAO();
 		DAOAlbum bddAlbum = DAOFactory.getAlbumDAO();
 		ResultSet pisteSearch;
@@ -35,26 +34,14 @@ public class DeletePisteControl {
 			pisteSearch = bddPiste.find(titrePiste, titreAlbum);
 			albumSearch = bddAlbum.find(titreAlbum);
 			
-			if(pisteSearch.next()) {
-				piste.setNum(pisteSearch.getInt("numPiste"));
-				piste.setDuree(pisteSearch.getString("dureePiste"));
-				piste.setIdAlbum(pisteSearch.getInt("idAlbum"));
-				piste.setTitre(titrePiste);
-				
-				albumSearch.next();
-				album.setId(albumSearch.getLong("idAlbum"));
-				album.setDateSortie(albumSearch.getDate("dateSortieAlbum"));
-				album.setGroupe(albumSearch.getString("nomGroupe"));
-				album.setTitre(titreAlbum);
-				album.setUrlImagePochette(albumSearch.getString("urlImagePochette"));
-				
-				//transaction pour supprimer la piste
+			if(pisteSearch.next()) {				
+				TransactionDeletes.deletePiste(titrePiste, titreAlbum);
 			
 			}else {
-				System.out.println("piste non trouvée");
+				System.out.println("piste non trouv\u00E9e");
 				// email non trouvé dans la BDD
 				JDialog erreur = new JDialog(view.getFenetre(),"erreur");
-				JLabel label = new JLabel("piste non trouvée", SwingConstants.CENTER);
+				JLabel label = new JLabel("piste non trouv\u00E9e", SwingConstants.CENTER);
 				erreur.add(label);
 				erreur.setSize(250, 100);
 				erreur.setLocationRelativeTo(null);

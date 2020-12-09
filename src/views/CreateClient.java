@@ -22,6 +22,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.CaretListener;
 
 import controller.CreateClientControl;
+import model.aggregates.ClientCodecs;
 
 public class CreateClient extends JFrame {
 	private JPanel contentPane;
@@ -33,11 +34,15 @@ public class CreateClient extends JFrame {
 	private String marqueInconnu;
 	private String modeleInconnu;
 	private CreateClientControl controller = new CreateClientControl(this);
+	private ClientCodecs clientCodecs = new ClientCodecs();
 
 	/**
 	 * Create the frame.
 	 */
 	public CreateClient(String marqueInconnu, String modeleInconnu) {
+		this.marqueInconnu = marqueInconnu;
+		this.modeleInconnu = modeleInconnu;
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 370);
 		contentPane = new JPanel();
@@ -134,7 +139,7 @@ public class CreateClient extends JFrame {
 		this.setVisible(true);
 	}
 	
-	class InsertCodecPanel extends JPanel {
+	public class InsertCodecPanel extends JPanel {
 		private JTextField nomField;
 		private JComboBox typeField = new JComboBox();
 		private int count;
@@ -252,6 +257,14 @@ public class CreateClient extends JFrame {
 	public void setModeleInconnu(String modeleInconnu) {
 		this.modeleInconnu = modeleInconnu;
 	}
-	
 
+	public ClientCodecs getClientCodecs() {
+		return clientCodecs;
+	}
+
+	public void setClientCodecs(ClientCodecs clientCodecs) {
+		this.clientCodecs = clientCodecs;
+	}
+	
+	
 }
