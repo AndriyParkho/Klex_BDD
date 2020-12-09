@@ -22,6 +22,6 @@ public class FluxAudio extends Flux {
 
     @Override
     public String toString() {
-        return "FluxTexte [" + super.toString() + ", langue=" + langue + ", echantillonnage=" + echantillonnage + "]";
+        return "FluxAudio [" + super.toString() + ", langue=" + langue + ", echantillonnage=" + echantillonnage + "]";
     }
 }

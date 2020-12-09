@@ -22,6 +22,6 @@ public class FluxVideo extends Flux {
 
     @Override
     public String toString() {
-        return "FluxTexte [" + super.toString() + ", largeurImage=" + largeur + ", hauteurImage=" + hauteur + "]";
+        return "FluxVideo [" + super.toString() + ", largeurImage=" + largeur + ", hauteurImage=" + hauteur + "]";
     }
 }

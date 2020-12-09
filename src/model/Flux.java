@@ -57,7 +57,11 @@ public abstract class Flux {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
+        result = prime * result + Float.floatToIntBits(debit);
         result = prime * result + (int) (id ^ (id >>> 32));
+        result = prime * result + (int) (idFichier ^ (idFichier >>> 32));
+        result = prime * result + ((nomCodec == null) ? 0 : nomCodec.hashCode());
+        result = prime * result + ((typeCodec == null) ? 0 : typeCodec.hashCode());
         return result;
     }
 
@@ -70,7 +74,21 @@ public abstract class Flux {
         if (getClass() != obj.getClass())
             return false;
         Flux other = (Flux) obj;
+        if (Float.floatToIntBits(debit) != Float.floatToIntBits(other.debit))
+            return false;
         if (id != other.id)
+            return false;
+        if (idFichier != other.idFichier)
+            return false;
+        if (nomCodec == null) {
+            if (other.nomCodec != null)
+                return false;
+        } else if (!nomCodec.equals(other.nomCodec))
+            return false;
+        if (typeCodec == null) {
+            if (other.typeCodec != null)
+                return false;
+        } else if (!typeCodec.equals(other.typeCodec))
             return false;
         return true;
     }

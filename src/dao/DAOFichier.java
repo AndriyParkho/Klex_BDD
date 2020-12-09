@@ -10,8 +10,6 @@ public class DAOFichier extends DAO<Fichier> {
 
     @Override
     public void create(Fichier fichier) throws SQLException {
-        final String query = "INSERT INTO Fichier VALUES (idFichier_seq.nextval, ?, ?, ?)";
-
         String queryId = "SELECT idFichier_seq.nextval from DUAL";
         int nextID_from_seq = 0;
         try (ResultSet rs = this.connection.prepareStatement(queryId).executeQuery()) {
@@ -21,6 +19,8 @@ public class DAOFichier extends DAO<Fichier> {
             }
         }
 
+        System.out.println(fichier);
+        final String query = "INSERT INTO Fichier VALUES (idFichier_seq.currval, ?, ?, ?)";
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setLong(1, fichier.getTaille());
             statement.setDate(2, fichier.getDateDepot());

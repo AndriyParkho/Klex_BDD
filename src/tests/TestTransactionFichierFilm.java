@@ -36,7 +36,7 @@ public class TestTransactionFichierFilm {
         fluxAudio.setEchantillonnage(16);
         fluxAudio.setLangue("Français");
         fluxAudio.setNomCodec("MPEG2");
-        fluxAudio.setTypeCodec("audio");
+        fluxAudio.setTypeCodec("video");
         flux.add(fluxAudio);
 
         FluxVideo fluxVideo = new FluxVideo();
