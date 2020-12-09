@@ -33,7 +33,9 @@ public final class Selections {
                         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
                         try {
+                                System.out.println("Entrer le titre du film: ");
                                 titreFilm = br.readLine();// rs.getString("titreFilm");
+                                System.out.println("Entrer l'année de sortie (format YYYY-MM-DD): ");
                                 anneeSortie = Date.valueOf(br.readLine());// rs.getDate("anneeSortie");
                         } catch (IOException e) {
                                 System.out.println("Erreur d'entrée");
@@ -72,7 +74,9 @@ public final class Selections {
                         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
                         try {
+                                System.out.println("Entrer le numéro de la Piste: ");
                                 numPiste = Integer.parseInt(br.readLine()); // rs.getInt("numPiste");
+                                System.out.println("Entrer l'identifiant de l'Album: ");
                                 idAlbum = Long.parseLong(br.readLine()); // rs.getLong("idAlbum");
                         } catch (IOException e) {
                                 System.out.println("Erreur d'entrée");
