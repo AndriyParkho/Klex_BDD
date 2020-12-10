@@ -166,7 +166,7 @@ public class InsertFilmBis extends View{
 			add(suivButton);
 			
 			JLabel lblNewLabel_4 = new JLabel("Artiste(s) et role:");
-			lblNewLabel_4.setBounds(290, 189, 112, 16);
+			lblNewLabel_4.setBounds(290, 189, 131, 16);
 			add(lblNewLabel_4);
 			
 			

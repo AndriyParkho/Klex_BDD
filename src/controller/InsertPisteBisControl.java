@@ -19,6 +19,7 @@ public class InsertPisteBisControl {
 	}
 	
 	public void clicSuiv() {
+		boolean artisteExist = true;
 		view.getFichierPiste().getPiste().setDuree(view.getDureeField().getText());
 		view.getFichierPiste().getPiste().setNum((int) view.getNumeroField().getValue());
 		String categories[] = (view.getCategField().getText()).split(";");
@@ -48,13 +49,15 @@ public class InsertPisteBisControl {
 					artiste.setUrlPhoto(resArt.getString("urlPhoto"));
 					view.getFichierPiste().getArtistes().put(artiste, instrument);
 				} else {
+					artisteExist = false;
 					new CreateArtiste(nomArtiste, instrument, null, view.getFichierPiste());
 				}
 			}catch(SQLException e) {
 				System.out.println(e);
 			}
 		}
-		
-		new FluxNbChoice(view.getFenetre(), view.getSwitcherView(), view.getContainerView(), null, view.getFichierPiste());
+		if(artisteExist) {
+			new FluxNbChoice(view.getFenetre(), view.getSwitcherView(), view.getContainerView(), null, view.getFichierPiste());
+		}
 	}
 }

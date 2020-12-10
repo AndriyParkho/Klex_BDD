@@ -21,6 +21,7 @@ public class InsertFilmBisControl {
 	}
 	
 	public void clicSuiv() {
+		boolean artisteExist = true;
 		String resume = view.getResumeField().getText();
 		String image[] = (view.getAfficheField().getText()).split(";");
 		String categories[] = (view.getCategField().getText()).split(";");
@@ -62,13 +63,16 @@ public class InsertFilmBisControl {
 					artiste.setUrlPhoto(resArt.getString("urlPhoto"));
 					view.getFichierFilm().getArtistes().put(artiste, role);
 				} else {
+					artisteExist = false;
 					new CreateArtiste(nomArtiste, role, view.getFichierFilm(), null);
 				}
 			}catch(SQLException e) {
 				System.out.println(e);
 			}
 		}
+		if(artisteExist) {
+			new FluxNbChoice(view.getFenetre(), view.getSwitcherView(), view.getContainerView(), view.getFichierFilm() ,null);
+		}
 		
-		new FluxNbChoice(view.getFenetre(), view.getSwitcherView(), view.getContainerView(), view.getFichierFilm() ,null);
 	}
 }
