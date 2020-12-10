@@ -1,20 +1,8 @@
 INSERT INTO AlbumAPourCategorie
-VALUES (1, 'electro');
+VALUES (1, 'rap');
 
 INSERT INTO AlbumAPourCategorie
-VALUES (1, 'electro house');
+VALUES (2, 'rap');
 
 INSERT INTO AlbumAPourCategorie
-VALUES (1, 'house');
-
-INSERT INTO AlbumAPourCategorie
-VALUES (1, 'EDM');
-
-INSERT INTO AlbumAPourCategorie
-VALUES (1, 'pop');
-
-INSERT INTO AlbumAPourCategorie
-VALUES (2, 'electro house');
-
-INSERT INTO AlbumAPourCategorie
-VALUES (2, 'pop');
+VALUES (2, 'electro');

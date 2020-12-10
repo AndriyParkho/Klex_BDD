@@ -14,6 +14,9 @@ INSERT INTO Codec
 VALUES ('MP3', 'audio');
 
 INSERT INTO Codec
+VALUES ('MP4', 'video');
+
+INSERT INTO Codec
 VALUES ('MPEG4', 'audio');
 
 INSERT INTO Codec

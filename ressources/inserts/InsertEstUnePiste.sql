@@ -5,4 +5,4 @@ INSERT INTO EstUnePiste
 VALUES (2, 2, 1);
 
 INSERT INTO EstUnePiste
-VALUES (3, 3, 2);
+VALUES (3, 1, 2);
