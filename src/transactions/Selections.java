@@ -30,27 +30,31 @@ public final class Selections {
                                 .executeQuery(filmQuery)) {
 
                         System.out.println(JDBCUtilities.dumpResultSet(rs));
-                        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                        rs.beforeFirst();
+                        if (rs.next()) {
+                                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-                        try {
-                                System.out.println("Entrer le titre du film: ");
-                                titreFilm = br.readLine();// rs.getString("titreFilm");
-                                System.out.println("Entrer l'année de sortie (format YYYY-MM-DD): ");
-                                anneeSortie = Date.valueOf(br.readLine());// rs.getDate("anneeSortie");
-                        } catch (IOException e) {
-                                System.out.println("Erreur d'entrée");
+                                try {
+                                        System.out.println("Entrer le titre du film: ");
+                                        titreFilm = br.readLine();// rs.getString("titreFilm");
+                                        System.out.println("Entrer l'année de sortie (format YYYY-MM-DD): ");
+                                        anneeSortie = Date.valueOf(br.readLine());// rs.getDate("anneeSortie");
+                                } catch (IOException e) {
+                                        System.out.println("Erreur d'entrée");
+                                }
+
+                                System.out.println("TitreFilm: " + titreFilm + ", AnneeSortie: " + anneeSortie);
+                                final String fichiersQuery = String.format(
+                                                "SELECT Film.titreFilm, Film.anneeSortie, Film.resume, Film.ageMin, Film.urlAffiche, Fichier.taille, Fichier.dateDepot "
+                                                                + "FROM Film LEFT JOIN EstUnFilm ON Film.titreFilm = EstUnFilm.titreFilm AND Film.anneeSortie = EstUnFilm.anneeSortie "
+                                                                + "INNER JOIN Fichier ON Fichier.idFichier = EstUnFilm.idFichier AND Film.titreFilm = '%s' AND "
+                                                                + "Film.anneeSortie = TO_DATE('%s', 'YYYY-MM-DD')",
+                                                titreFilm, anneeSortie);
+                                return connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+                                                ResultSet.CONCUR_UPDATABLE).executeQuery(fichiersQuery);
                         }
-
-                        System.out.println("TitreFilm: " + titreFilm + ", AnneeSortie: " + anneeSortie);
-                        final String fichiersQuery = String.format(
-                                        "SELECT Film.titreFilm, Film.anneeSortie, Film.resume, Film.ageMin, Film.urlAffiche, Fichier.taille, Fichier.dateDepot "
-                                                        + "FROM Film LEFT JOIN EstUnFilm ON Film.titreFilm = EstUnFilm.titreFilm AND Film.anneeSortie = EstUnFilm.anneeSortie "
-                                                        + "INNER JOIN Fichier ON Fichier.idFichier = EstUnFilm.idFichier AND Film.titreFilm = '%s' AND "
-                                                        + "Film.anneeSortie = TO_DATE('%s', 'YYYY-MM-DD')",
-                                        titreFilm, anneeSortie);
-                        return connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
-                                        .executeQuery(fichiersQuery);
                 }
+                return null;
         }
 
         public static ResultSet findPiste(Connection connection, String categorie, String marque, String modele,
@@ -71,27 +75,31 @@ public final class Selections {
                                 .createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
                                 .executeQuery(pisteQuery)) {
                         System.out.println(JDBCUtilities.dumpResultSet(rs));
-                        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                        rs.beforeFirst();
+                        if (rs.next()) {
+                                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-                        try {
-                                System.out.println("Entrer le numéro de la Piste: ");
-                                numPiste = Integer.parseInt(br.readLine()); // rs.getInt("numPiste");
-                                System.out.println("Entrer l'identifiant de l'Album: ");
-                                idAlbum = Long.parseLong(br.readLine()); // rs.getLong("idAlbum");
-                        } catch (IOException e) {
-                                System.out.println("Erreur d'entrée");
+                                try {
+                                        System.out.println("Entrer le numéro de la Piste: ");
+                                        numPiste = Integer.parseInt(br.readLine()); // rs.getInt("numPiste");
+                                        System.out.println("Entrer l'identifiant de l'Album: ");
+                                        idAlbum = Long.parseLong(br.readLine()); // rs.getLong("idAlbum");
+                                } catch (IOException e) {
+                                        System.out.println("Erreur d'entrée");
+                                }
+
+                                System.out.println("NumPiste: " + numPiste + ", idAlbum: " + idAlbum);
+                                final String fichiersQuery = String.format(
+                                                "SELECT Piste.numPiste, Piste.titrePiste, Album.titreAlbum, Piste.dureePiste, Album.nomGroupe, Album.dateSortieAlbum, "
+                                                                + "Album.urlImagePochette, Fichier.taille, Fichier.dateDepot "
+                                                                + "FROM Piste LEFT JOIN EstUnePiste ON Piste.numPiste = EstUnePiste.numPiste AND Piste.idAlbum = EstUnePiste.idAlbum "
+                                                                + "INNER JOIN Fichier ON Fichier.idFichier = EstUnePiste.idFichier AND Piste.numPiste = %d AND Piste.idAlbum = %d "
+                                                                + "JOIN Album ON Piste.idAlbum = Album.idAlbum",
+                                                numPiste, idAlbum);
+                                return connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
+                                                .executeQuery(fichiersQuery);
                         }
-
-                        System.out.println("NumPiste: " + numPiste + ", idAlbum: " + idAlbum);
-                        final String fichiersQuery = String.format(
-                                        "SELECT Piste.numPiste, Piste.titrePiste, Album.titreAlbum, Piste.dureePiste, Album.nomGroupe, Album.dateSortieAlbum, "
-                                                        + "Album.urlImagePochette, Fichier.taille, Fichier.dateDepot "
-                                                        + "FROM Piste LEFT JOIN EstUnePiste ON Piste.numPiste = EstUnePiste.numPiste AND Piste.idAlbum = EstUnePiste.idAlbum "
-                                                        + "INNER JOIN Fichier ON Fichier.idFichier = EstUnePiste.idFichier AND Piste.numPiste = %d AND Piste.idAlbum = %d "
-                                                        + "JOIN Album ON Piste.idAlbum = Album.idAlbum",
-                                        numPiste, idAlbum);
-                        return connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-                                        ResultSet.CONCUR_UPDATABLE).executeQuery(fichiersQuery);
                 }
+                return null;
         }
 }
