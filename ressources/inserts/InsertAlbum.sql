@@ -1,5 +1,5 @@
-INSERT INTO Album (titreAlbum, nomGroupe, dateSortieAlbum, urlImagePochette)
-VALUES ('Motion', 'Calvin Harris', to_date('03/11/2014', 'dd/mm/yyyy'), 'https://fr.wikipedia.org/wiki/Motion_(album_de_Calvin_Harris)');
+INSERT INTO "ALBUM" ("IDALBUM", "TITREALBUM", "NOMGROUPE", "DATESORTIEALBUM", "URLIMAGEPOCHETTE")
+VALUES ('1', 'Hera', 'Georgio', to_date('01/01/2016', 'dd/mm/yyyy'), 'www.photoalbumhera.com');
 
-INSERT INTO Album (titreAlbum, nomGroupe, dateSortieAlbum, urlImagePochette)
-VALUES ('18 Months', 'Calvin Harris', to_date('26/10/2012', 'dd/mm/yyyy'), 'https://fr.wikipedia.org/wiki/18_Months');
+INSERT INTO "ALBUM" ("IDALBUM", "TITREALBUM", "NOMGROUPE", "DATESORTIEALBUM", "URLIMAGEPOCHETTE")
+VALUES ('2', 'Inconnu', 'Georgio', to_date('01/01/2021', 'dd/mm/yyyy'), 'www.photoalbumhera2.com');

@@ -1,8 +1,9 @@
 INSERT INTO APourInstrument
-VALUES ('Guitare', 1, 1, 1);
+VALUES ('Voix', 1, 1, 1);
 
 INSERT INTO APourInstrument
-VALUES ('Accordeon', 3, 1, 1);
+VALUES ('Voix', 1, 1, 2);
 
 INSERT INTO APourInstrument
-VALUES ('Piano', 4, 2, 3);
+VALUES ('Voix', 1, 2, 1);
+

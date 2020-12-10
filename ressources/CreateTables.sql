@@ -164,7 +164,7 @@ CREATE TABLE APourInstrument(
   idAlbum integer NOT NULL,
   numPiste integer NOT NULL,
   CONSTRAINT fkAPourInstrumentPiste FOREIGN KEY (numPiste, idAlbum) REFERENCES Piste (numPiste, idAlbum) ON DELETE CASCADE,
-  CONSTRAINT pkAPourInstrument PRIMARY KEY (idArtiste, numPiste)
+  CONSTRAINT pkAPourInstrument PRIMARY KEY (idAlbum, numPiste)
 );
 
 /* revoir la taille pour les nom de codec */
