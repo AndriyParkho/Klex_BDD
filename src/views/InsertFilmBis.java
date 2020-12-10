@@ -57,7 +57,7 @@ public class InsertFilmBis extends View{
 			
 			JLabel lblFilmInfos = new JLabel("Film infos :");
 			lblFilmInfos.setFont(new Font("Tahoma", Font.BOLD, 18));
-			lblFilmInfos.setBounds(172, 13, 104, 16);
+			lblFilmInfos.setBounds(172, 13, 119, 16);
 			add(lblFilmInfos);
 			resumeField.setWrapStyleWord(true);
 			resumeField.setLineWrap(true);

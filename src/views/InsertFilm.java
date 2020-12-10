@@ -45,7 +45,7 @@ public class InsertFilm extends View{
 			
 			JLabel lblFilmInfos = new JLabel("Film infos :");
 			lblFilmInfos.setFont(new Font("Tahoma", Font.BOLD, 18));
-			lblFilmInfos.setBounds(93, 13, 104, 16);
+			lblFilmInfos.setBounds(93, 13, 123, 16);
 			add(lblFilmInfos);
 			backButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
