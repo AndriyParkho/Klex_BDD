@@ -16,7 +16,7 @@ public final class TransactionSelectFilm {
                 if (rs != null) {
                     System.out.println(JDBCUtilities.dumpResultSet(rs));
                 } else {
-                    System.out.println("Aucune entr\u00E9e ne correspond � votre recherche");
+                    System.out.println("Aucune entrée ne correspond à votre recherche");
                 }
             }
             connection.commit();
