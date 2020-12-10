@@ -53,7 +53,7 @@ public class InsertFichier extends View{
 			
 			JLabel lblFilmInfos = new JLabel("Fichier infos :");
 			lblFilmInfos.setFont(new Font("Tahoma", Font.BOLD, 18));
-			lblFilmInfos.setBounds(75, 13, 130, 16);
+			lblFilmInfos.setBounds(75, 13, 150, 16);
 			add(lblFilmInfos);
 			
 			JLabel lblNewLabel = new JLabel("Taille :");
@@ -71,7 +71,7 @@ public class InsertFichier extends View{
 			add(dateField);
 			
 			JLabel lblAnnenDe = new JLabel("Date d\u00E9pot :");
-			lblAnnenDe.setBounds(26, 99, 80, 16);
+			lblAnnenDe.setBounds(26, 99, 90, 16);
 			add(lblAnnenDe);
 			suivButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {

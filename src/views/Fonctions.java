@@ -43,7 +43,7 @@ public class Fonctions extends View {
 			});
 			
 			
-			insertButton.setBounds(136, 71, 184, 36);
+			insertButton.setBounds(122, 71, 215, 36);
 			add(insertButton);
 			selectButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -52,7 +52,7 @@ public class Fonctions extends View {
 			});
 			
 			
-			selectButton.setBounds(135, 130, 184, 36);
+			selectButton.setBounds(122, 130, 215, 36);
 			add(selectButton);
 			deleteButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -61,7 +61,7 @@ public class Fonctions extends View {
 			});
 			
 			
-			deleteButton.setBounds(136, 191, 184, 36);
+			deleteButton.setBounds(122, 191, 215, 36);
 			add(deleteButton);
 			discntButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -70,7 +70,7 @@ public class Fonctions extends View {
 			});
 			
 			
-			discntButton.setBounds(12, 13, 121, 25);
+			discntButton.setBounds(12, 13, 133, 25);
 			add(discntButton);
 
 		}
