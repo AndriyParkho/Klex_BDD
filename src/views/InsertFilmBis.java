@@ -57,7 +57,7 @@ public class InsertFilmBis extends View{
 			
 			JLabel lblFilmInfos = new JLabel("Film infos :");
 			lblFilmInfos.setFont(new Font("Tahoma", Font.BOLD, 18));
-			lblFilmInfos.setBounds(172, 13, 104, 16);
+			lblFilmInfos.setBounds(172, 13, 119, 16);
 			add(lblFilmInfos);
 			resumeField.setWrapStyleWord(true);
 			resumeField.setLineWrap(true);
@@ -166,7 +166,7 @@ public class InsertFilmBis extends View{
 			add(suivButton);
 			
 			JLabel lblNewLabel_4 = new JLabel("Artiste(s) et role:");
-			lblNewLabel_4.setBounds(290, 189, 112, 16);
+			lblNewLabel_4.setBounds(290, 189, 131, 16);
 			add(lblNewLabel_4);
 			
 			

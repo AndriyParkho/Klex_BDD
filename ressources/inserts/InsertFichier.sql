@@ -1,48 +1,58 @@
-insert into Fichier (taille, dateDepot, email) values (
+insert into Fichier values (
+    1,
     25000,
     to_date('07/03/2020', 'dd/mm/yyyy'),
     'theo.manfredi@grenoble-inp.fr'
 );
 
-insert into Fichier (taille, dateDepot, email) values (
-    760000,
-    to_date('13/04/2019', 'dd/mm/yyyy'),
+insert into Fichier values (
+    2,
+    87000,
+    to_date('07/03/2020', 'dd/mm/yyyy'),
     'theo.manfredi@grenoble-inp.fr'
 );
 
-insert into Fichier (taille, dateDepot, email) values (
-    3000000,
-    to_date('30/12/2010', 'dd/mm/yyyy'),
-    'madelines.salles@grenoble-inp.fr'
+insert into Fichier values (
+    3,
+    309000,
+    to_date('07/03/2020', 'dd/mm/yyyy'),
+    'theo.manfredi@grenoble-inp.fr'
 );
 
-insert into Fichier (taille, dateDepot, email) values (
-    4982901,
-    to_date('14/02/2018', 'dd/mm/yyyy'),
-    'madelines.salles@grenoble-inp.fr'
+insert into Fichier values (
+    4,
+    309000,
+    to_date('07/03/2020', 'dd/mm/yyyy'),
+    'theo.manfredi@grenoble-inp.fr'
 );
 
-insert into Fichier (taille, dateDepot, email) values (
-    378208,
-    to_date('28/11/2013', 'dd/mm/yyyy'),
-    'andriy.parkhomenko@grenoble-inp.fr'
+insert into Fichier values (
+    5,
+    309000,
+    to_date('07/03/2020', 'dd/mm/yyyy'),
+    'theo.manfredi@grenoble-inp.fr'
 );
 
-insert into Fichier (taille, dateDepot, email) values (
-    730275,
-    to_date('09/09/2019', 'dd/mm/yyyy'),
-    'nicolas.vincent@grenoble-inp.fr'
+
+insert into Fichier values (
+    6,
+    309000,
+    to_date('07/03/2020', 'dd/mm/yyyy'),
+    'theo.manfredi@grenoble-inp.fr'
 );
 
-insert into Fichier (taille, dateDepot, email) values (
-    378208,
-    to_date('24/11/2013', 'dd/mm/yyyy'),
-    'andriy.parkhomenko@grenoble-inp.fr'
+
+insert into Fichier values (
+    7,
+    309000,
+    to_date('07/03/2020', 'dd/mm/yyyy'),
+    'theo.manfredi@grenoble-inp.fr'
 );
 
-insert into Fichier (taille, dateDepot, email) values (
-    730275,
-    to_date('04/09/2019', 'dd/mm/yyyy'),
-    'nicolas.vincent@grenoble-inp.fr'
-);
 
+insert into Fichier values (
+    8,
+    309000,
+    to_date('07/03/2020', 'dd/mm/yyyy'),
+    'theo.manfredi@grenoble-inp.fr'
+);

@@ -53,7 +53,7 @@ public class SignUp extends View {
 			
 			JLabel lblNewLabel = new JLabel("INSCRIPTION");
 			lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-			lblNewLabel.setBounds(158, 13, 152, 34);
+			lblNewLabel.setBounds(158, 13, 163, 34);
 			add(lblNewLabel);
 			
 			JLabel lblNewLabel_1 = new JLabel("Nom :");

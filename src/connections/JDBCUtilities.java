@@ -44,13 +44,8 @@ public final class JDBCUtilities {
         return false;
     }
 
-    public static void loadFile(final ScriptRunner sr, final String fileName) {
-        try {
-            sr.runScript(new BufferedReader(new FileReader(fileName)));
-        } catch (final FileNotFoundException e) {
-            System.err.println("file not found !");
-            e.printStackTrace();
-        }
+    public static void loadFile(final ScriptRunner sr, final String fileName) throws FileNotFoundException {
+    	sr.runScript(new BufferedReader(new FileReader(fileName)));
     }
 
     /**

@@ -35,7 +35,7 @@ public class Search extends View{
 		super.getPanels().add("Recherche");
 		super.getSwitcherView().show(super.getContainerView() , "Recherche");
 
-		super.getFenetre().setSize(282, 210);
+		super.getFenetre().setSize(320, 320);
 		super.getFenetre().setLocationRelativeTo(null);
 	}
 

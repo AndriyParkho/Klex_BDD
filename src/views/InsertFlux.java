@@ -75,22 +75,22 @@ public class InsertFlux extends View{
 			ButtonGroup choixFlux = new ButtonGroup();
 			
 			txtChoix.setSelected(true);
-			txtChoix.setBounds(41, 86, 101, 25);
+			txtChoix.setBounds(41, 86, 112, 25);
 			choixFlux.add(txtChoix);
 			add(txtChoix);
 			
 			
-			audioChoix.setBounds(172, 86, 87, 25);
+			audioChoix.setBounds(172, 86, 102, 25);
 			choixFlux.add(audioChoix);
 			add(audioChoix);
 			
 			
-			videoChoix.setBounds(303, 86, 87, 25);
+			videoChoix.setBounds(303, 86, 102, 25);
 			choixFlux.add(videoChoix);
 			add(videoChoix);
 			
 			JLabel lblNewLabel_1 = new JLabel("D\u00E9bit :");
-			lblNewLabel_1.setBounds(31, 131, 45, 16);
+			lblNewLabel_1.setBounds(31, 131, 62, 16);
 			add(lblNewLabel_1);
 			
 			
@@ -141,7 +141,7 @@ public class InsertFlux extends View{
 			textPanel.setLayout(null);
 			
 			JLabel lblNewLabel_2_1 = new JLabel("Langue :");
-			lblNewLabel_2_1.setBounds(31, 16, 56, 16);
+			lblNewLabel_2_1.setBounds(31, 16, 68, 16);
 			textPanel.add(lblNewLabel_2_1);
 			
 			langueTxtField = new JTextField();
@@ -154,7 +154,7 @@ public class InsertFlux extends View{
 			audioPanel.setLayout(null);
 			
 			JLabel lblNewLabel_2_1_1 = new JLabel("Langue :");
-			lblNewLabel_2_1_1.setBounds(32, 16, 56, 16);
+			lblNewLabel_2_1_1.setBounds(31, 16, 68, 16);
 			audioPanel.add(lblNewLabel_2_1_1);
 			
 			langueAudioField = new JTextField();
@@ -163,7 +163,7 @@ public class InsertFlux extends View{
 			audioPanel.add(langueAudioField);
 			
 			JLabel lblNewLabel_3 = new JLabel("Echantillonnage :");
-			lblNewLabel_3.setBounds(32, 48, 98, 16);
+			lblNewLabel_3.setBounds(32, 48, 116, 16);
 			audioPanel.add(lblNewLabel_3);
 			
 			
@@ -180,7 +180,7 @@ public class InsertFlux extends View{
 			videoPanel.setLayout(null);
 			
 			JLabel lblNewLabel_5 = new JLabel("Largeur :");
-			lblNewLabel_5.setBounds(34, 13, 56, 16);
+			lblNewLabel_5.setBounds(34, 13, 73, 16);
 			videoPanel.add(lblNewLabel_5);
 			
 			
@@ -192,7 +192,7 @@ public class InsertFlux extends View{
 			videoPanel.add(hauteurField);
 			
 			JLabel lblNewLabel_5_1 = new JLabel("Hauteur :");
-			lblNewLabel_5_1.setBounds(34, 54, 56, 16);
+			lblNewLabel_5_1.setBounds(34, 54, 73, 16);
 			videoPanel.add(lblNewLabel_5_1);
 			
 			JButton suivButton = new JButton("Suivant");

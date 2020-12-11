@@ -1,8 +1,11 @@
 package controller;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import connections.ConnectionOracle;
+import connections.JDBCUtilities;
 import dao.DAOClient;
 import dao.DAOFactory;
 import model.Client;
@@ -24,6 +27,9 @@ public class SelectClientControl {
 		
 		DAOClient bddClient = DAOFactory.getClientDAO();
 		ResultSet searchClient;
+		
+		Connection connection = ConnectionOracle.getInstance();
+		
 		try {
 			searchClient = bddClient.find(marque, modele);
 			
@@ -37,9 +43,22 @@ public class SelectClientControl {
 			} else {
 				new CreateClient(marque, modele);
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+			connection.commit();
+		}catch(SQLException e) {
+			System.err.println("sql error !");
+            JDBCUtilities.printSQLException(e);
+
+            if (connection != null) {
+                try {
+                    System.err.print("Transaction is being rolled back");
+                    connection.rollback();
+                } catch (SQLException excep) {
+                    JDBCUtilities.printSQLException(excep);
+                }
+            }
+        } finally {
+            ConnectionOracle.closeInstance();
+        }
 	}
 	
 	public void clicBack() {

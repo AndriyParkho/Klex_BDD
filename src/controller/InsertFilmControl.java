@@ -1,9 +1,12 @@
 package controller;
 
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import connections.ConnectionOracle;
+import connections.JDBCUtilities;
 import dao.DAOFactory;
 import dao.DAOFilm;
 import model.Film;
@@ -30,7 +33,8 @@ public class InsertFilmControl {
 		ResultSet resFilm;
 		Film film = new Film();
 		
-
+		Connection connection = ConnectionOracle.getInstance();
+		
 		try{
 			resFilm = DAOfilm.find(titreFilm, anneeSortie);
 			
@@ -53,10 +57,22 @@ public class InsertFilmControl {
 				new InsertFilmBis(view.getFenetre(), view.getSwitcherView(), view.getContainerView(), view.getFichierFilm());
 
 			}
-			
+			connection.commit();
 		}catch(SQLException e) {
-			e.printStackTrace();		
-		}
+			System.err.println("sql error !");
+            JDBCUtilities.printSQLException(e);
+
+            if (connection != null) {
+                try {
+                    System.err.print("Transaction is being rolled back");
+                    connection.rollback();
+                } catch (SQLException excep) {
+                    JDBCUtilities.printSQLException(excep);
+                }
+            }
+        } finally {
+            ConnectionOracle.closeInstance();
+        }
 		
 		
 	}

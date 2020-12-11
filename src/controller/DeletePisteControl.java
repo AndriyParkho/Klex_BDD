@@ -1,5 +1,6 @@
 package controller;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -7,6 +8,8 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import connections.ConnectionOracle;
+import connections.JDBCUtilities;
 import dao.DAOAlbum;
 import dao.DAOFactory;
 import dao.DAOPiste;
@@ -30,6 +33,8 @@ public class DeletePisteControl {
 		ResultSet pisteSearch;
 		ResultSet albumSearch;
 		
+		Connection connection = ConnectionOracle.getInstance();
+		
 		try {
 			pisteSearch = bddPiste.find(titrePiste, titreAlbum);
 			albumSearch = bddAlbum.find(titreAlbum);
@@ -49,11 +54,22 @@ public class DeletePisteControl {
 				
 				clicBack();
 			}
-			
-		}catch(SQLException e ) {
-				
-			}
-		// R�cup�re les infos de la piste et lance la fonction de suppression de la piste
+			connection.commit();
+		}catch(SQLException e) {
+			System.err.println("sql error !");
+            JDBCUtilities.printSQLException(e);
+
+            if (connection != null) {
+                try {
+                    System.err.print("Transaction is being rolled back");
+                    connection.rollback();
+                } catch (SQLException excep) {
+                    JDBCUtilities.printSQLException(excep);
+                }
+            }
+        } finally {
+            ConnectionOracle.closeInstance();
+        }
 	}
 	
 	public void clicBack() {

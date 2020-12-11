@@ -1,8 +1,11 @@
 package controller;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import connections.ConnectionOracle;
+import connections.JDBCUtilities;
 import dao.DAOAlbum;
 import dao.DAOFactory;
 import dao.DAOPiste;
@@ -29,6 +32,9 @@ public class InsertPisteControl {
 		DAOAlbum bddAlbum = DAOFactory.getAlbumDAO();
 		ResultSet pisteSearch;
 		ResultSet albumSearch;
+		
+		Connection connection = ConnectionOracle.getInstance();
+		
 		try {
 			pisteSearch = bddPiste.find(titrePiste, titreAlbum);
 			albumSearch = bddAlbum.find(titreAlbum);
@@ -73,9 +79,22 @@ public class InsertPisteControl {
 				
 				new InsertAlbum(view.getFenetre(), view.getSwitcherView(), view.getContainerView(), view.getFichierPiste());
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+			connection.commit();
+		}catch(SQLException e) {
+			System.err.println("sql error !");
+            JDBCUtilities.printSQLException(e);
+
+            if (connection != null) {
+                try {
+                    System.err.print("Transaction is being rolled back");
+                    connection.rollback();
+                } catch (SQLException excep) {
+                    JDBCUtilities.printSQLException(excep);
+                }
+            }
+        } finally {
+            ConnectionOracle.closeInstance();
+        }
 	}
 
 	public void clicBack() {
