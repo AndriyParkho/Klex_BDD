@@ -39,6 +39,8 @@ public class TestInsert {
         	JDBCUtilities.loadFile(sr, "ressources/inserts/InsertImgExtraiteFilm.sql");
         	JDBCUtilities.loadFile(sr, "ressources/inserts/InsertFluxVideo.sql");
         	JDBCUtilities.loadFile(sr, "ressources/inserts/InsertFluxTexte.sql");
+        	JDBCUtilities.loadFile(sr, "ressources/inserts/InsertEstUnFilm.sql");
+        	
             
             connection.commit();
         } catch (SQLException e) {
