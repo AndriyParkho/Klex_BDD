@@ -1,8 +1,11 @@
 package controller;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import connections.ConnectionOracle;
+import connections.JDBCUtilities;
 import dao.DAOArtiste;
 import dao.DAOCategorieFilm;
 import dao.DAOFactory;
@@ -36,6 +39,8 @@ public class InsertFilmBisControl {
 			view.getFichierFilm().getFilm().setResume(resume);
 			view.getFichierFilm().getFilm().setUrlAffiche(affiche);
 			view.getFichierFilm().getFilm().setAgeMin(ageMin);
+			
+			Connection connection = ConnectionOracle.getInstance();
 			
 			for(String cat : categories) {
 				CategorieFilm categorieFilm = new CategorieFilm(cat.replaceAll(" ", ""));
@@ -71,9 +76,22 @@ public class InsertFilmBisControl {
 						new CreateArtiste(nomArtiste, role, view.getFichierFilm(), null);
 						artisteExist = true;
 					}
+					connection.commit();
 				}catch(SQLException e) {
-					System.out.println(e);
-				}
+					System.err.println("sql error !");
+		            JDBCUtilities.printSQLException(e);
+
+		            if (connection != null) {
+		                try {
+		                    System.err.print("Transaction is being rolled back");
+		                    connection.rollback();
+		                } catch (SQLException excep) {
+		                    JDBCUtilities.printSQLException(excep);
+		                }
+		            }
+		        } finally {
+		            ConnectionOracle.closeInstance();
+		        }
 			}
 			
 			if(allArtisteExist) {

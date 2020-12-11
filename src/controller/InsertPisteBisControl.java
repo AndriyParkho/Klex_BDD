@@ -1,8 +1,11 @@
 package controller;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import connections.ConnectionOracle;
+import connections.JDBCUtilities;
 import dao.DAOArtiste;
 import dao.DAOFactory;
 import model.Artiste;
@@ -28,6 +31,8 @@ public class InsertPisteBisControl {
 			view.getFichierPiste().getPiste().setNum((int) view.getNumeroField().getValue());
 			String categories[] = (view.getCategField().getText()).split(";");
 			String artistes[] = (view.getArtisteField().getText()).split(";");
+			
+			Connection connection = ConnectionOracle.getInstance();
 			
 			for(String cat : categories) {
 				CategorieMusique catMusique = new CategorieMusique(cat.replaceAll(" ", ""));
@@ -57,9 +62,22 @@ public class InsertPisteBisControl {
 						new CreateArtiste(nomArtiste, instrument, null, view.getFichierPiste());
 						artisteExist = true;
 					}
+					connection.commit();
 				}catch(SQLException e) {
-					System.out.println(e);
-				}
+					System.err.println("sql error !");
+		            JDBCUtilities.printSQLException(e);
+
+		            if (connection != null) {
+		                try {
+		                    System.err.print("Transaction is being rolled back");
+		                    connection.rollback();
+		                } catch (SQLException excep) {
+		                    JDBCUtilities.printSQLException(excep);
+		                }
+		            }
+		        } finally {
+		            ConnectionOracle.closeInstance();
+		        }
 			}
 			if(allArtisteExist) {
 				new FluxNbChoice(view.getFenetre(), view.getSwitcherView(), view.getContainerView(), null, view.getFichierPiste());

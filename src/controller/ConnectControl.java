@@ -1,6 +1,7 @@
 package controller;
 
 import java.awt.Toolkit;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -8,6 +9,8 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import connections.ConnectionOracle;
+import connections.JDBCUtilities;
 import dao.DAOUtilisateur;
 import model.Utilisateur;
 import views.Connexion;
@@ -29,6 +32,8 @@ public class ConnectControl {
 		
 		DAOUtilisateur utilisateurDAO = new DAOUtilisateur();
 //		System.out.println(JDBCUtilities.dumpResultSet(utilisateurDAO.find(email)));
+		
+		Connection connection = ConnectionOracle.getInstance();
 		
 		try(ResultSet rs = utilisateurDAO.find(email)) {
 			if(!rs.next()) {
@@ -63,11 +68,22 @@ public class ConnectControl {
 					erreur.setVisible(true);
 				}
 			}
-			
-		}catch(SQLException sqlE) {
-			System.out.println("erreur");
-			//fenetre erreur
-		}
+			connection.commit();
+		}catch(SQLException e) {
+			System.err.println("sql error !");
+            JDBCUtilities.printSQLException(e);
+
+            if (connection != null) {
+                try {
+                    System.err.print("Transaction is being rolled back");
+                    connection.rollback();
+                } catch (SQLException excep) {
+                    JDBCUtilities.printSQLException(excep);
+                }
+            }
+        } finally {
+            ConnectionOracle.closeInstance();
+        }
 	}
 	
 	public void clicBack() {
