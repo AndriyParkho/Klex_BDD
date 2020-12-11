@@ -9,7 +9,7 @@ CREATE TABLE Album(
   titreAlbum varchar(50) NOT NULL,
   nomGroupe varchar(50) NOT NULL,
   dateSortieAlbum date NOT NULL,
-  urlImagePochette varchar(100) NOT NULL,
+  urlImagePochette varchar(1000) NOT NULL,
   CONSTRAINT pkAlbum PRIMARY KEY (idAlbum)
 );
 
@@ -84,7 +84,7 @@ CREATE TABLE SupporteCodec(
   marque varchar(20) NOT NULL,
   modele varchar(20) NOT NULL,
   nomCodec varchar(20) NOT NULL,
-  typeCodec varchar(20) NOT NULL, 
+  typeCodec varchar(20) NOT NULL,
   CONSTRAINT pkSupporteCodec PRIMARY KEY (marque, modele, nomCodec, typeCodec),
   CONSTRAINT fkClient FOREIGN KEY (marque, modele) REFERENCES Client (marque, modele) ON DELETE CASCADE,
   CONSTRAINT fkCodecSupporteCodec FOREIGN KEY (nomCodec, typeCodec) REFERENCES Codec (nomCodec, typeCodec) ON DELETE CASCADE
@@ -95,7 +95,7 @@ CREATE TABLE Artiste(
   idArtiste integer NOT NULL,
   nomArtiste varchar(50) NOT NULL,
   dateNaissance date,
-  urlPhoto varchar(150) NOT NULL,
+  urlPhoto varchar(1000) NOT NULL,
   specialite varchar(50) NOT NULL,
   biographie varchar(2000),
   CONSTRAINT pkArtiste PRIMARY KEY (idArtiste)
@@ -214,4 +214,3 @@ CREATE TABLE FluxVideo(
   hauteurImage integer NOT NULL,
   CONSTRAINT pkFluxVideo PRIMARY KEY (idFlux)
 );
-
