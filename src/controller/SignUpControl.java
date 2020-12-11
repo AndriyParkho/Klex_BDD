@@ -19,7 +19,6 @@ import views.SignUp;
 
 public class SignUpControl {
 	private SignUp view;
-	private DAOUtilisateur bddUtil = new DAOUtilisateur();
 	private Utilisateur util = new Utilisateur();
 	
 	public SignUpControl(SignUp view) {
@@ -27,7 +26,6 @@ public class SignUpControl {
 	}
 	
 	public void clicBack() {
-		// TODO Auto-generated method stub
 		new Accueil(view.getFenetre(), view.getSwitcherView(), view.getContainerView());
 	}
 
