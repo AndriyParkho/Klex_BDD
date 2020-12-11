@@ -20,6 +20,7 @@ public class DAOAlbum extends DAO<Album> {
             if (rs.next()) {
                 albumAlreadyExist = true;
                 nextID_from_seq = rs.getInt(1);
+                System.out.println("IdAlbum: " + nextID_from_seq);
                 album.setId(nextID_from_seq);
             }
         }
