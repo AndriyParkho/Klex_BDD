@@ -38,6 +38,7 @@ public class DeletePisteControl {
 		try {
 			pisteSearch = bddPiste.find(titrePiste, titreAlbum);
 			albumSearch = bddAlbum.find(titreAlbum);
+			connection.commit();
 			
 			if(pisteSearch.next()) {				
 				TransactionDeletes.deletePiste(titrePiste, titreAlbum);
@@ -54,7 +55,6 @@ public class DeletePisteControl {
 				
 				clicBack();
 			}
-			connection.commit();
 		}catch(SQLException e) {
 			System.err.println("sql error !");
             JDBCUtilities.printSQLException(e);

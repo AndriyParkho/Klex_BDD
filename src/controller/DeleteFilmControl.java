@@ -37,6 +37,7 @@ public class DeleteFilmControl {
 		
 		try{
 			resFilm = filmDAO.find(titreFilm,anneeSortie);
+			connection.commit();
 			if(resFilm.next()) {
 				TransactionDeletes.deleteFilm(titreFilm, anneeSortie);
 			}else {
@@ -51,7 +52,6 @@ public class DeleteFilmControl {
 				
 				clicBack();
 			}
-			connection.commit();
 		}catch(SQLException e) {
 			System.err.println("sql error !");
             JDBCUtilities.printSQLException(e);

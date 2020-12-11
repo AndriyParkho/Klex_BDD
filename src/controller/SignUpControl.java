@@ -45,6 +45,8 @@ public class SignUpControl {
 				erreur.setSize(300, 100);
 				erreur.setLocationRelativeTo(null);
 				erreur.setVisible(true);
+
+				connection.commit();
 			}else {
 				String nom = view.getNomField().getText();
 				String prenom = view.getPrenomField().getText();
@@ -56,7 +58,6 @@ public class SignUpControl {
 				TransactionUtilisateur.execute(util);
 				new Connexion(view.getFenetre(), view.getSwitcherView(), view.getContainerView());
 			}
-			connection.commit();
 		}catch(SQLException e) {
 			System.err.println("sql error !");
             JDBCUtilities.printSQLException(e);

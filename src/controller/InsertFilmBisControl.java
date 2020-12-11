@@ -71,12 +71,13 @@ public class InsertFilmBisControl {
 						artiste.setSpecialite(resArt.getString("specialite"));
 						artiste.setUrlPhoto(resArt.getString("urlPhoto"));
 						view.getFichierFilm().getArtistes().put(artiste, role);
+
+						connection.commit();
 					} else {
 						allArtisteExist = false;
 						new CreateArtiste(nomArtiste, role, view.getFichierFilm(), null);
 						artisteExist = true;
 					}
-					connection.commit();
 				}catch(SQLException e) {
 					System.err.println("sql error !");
 		            JDBCUtilities.printSQLException(e);

@@ -57,12 +57,13 @@ public class InsertPisteBisControl {
 						artiste.setSpecialite(resArt.getString("specialite"));
 						artiste.setUrlPhoto(resArt.getString("urlPhoto"));
 						view.getFichierPiste().getArtistes().put(artiste, instrument);
+
+						connection.commit();
 					} else {
 						allArtisteExist = false;
 						new CreateArtiste(nomArtiste, instrument, null, view.getFichierPiste());
 						artisteExist = true;
 					}
-					connection.commit();
 				}catch(SQLException e) {
 					System.err.println("sql error !");
 		            JDBCUtilities.printSQLException(e);
