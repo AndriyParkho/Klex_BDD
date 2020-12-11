@@ -21,7 +21,7 @@ public final class Selections {
                                 + "AND fil.titreFilm = euf.titreFilm AND fil.anneeSortie = euf.anneeSortie AND fic.idFichier = euf.idFichier "
                                 + "AND fic.idFichier = flu.idFichier AND flu.nomCodec = sc.nomCodec AND flu.typeCodec = sc.typeCodec "
                                 + "AND util.email = fic.email AND sc.marque = cli.marque AND sc.modele = cli.modele "
-                                + "AND cf.typeCategorieFilm = '%s' AND cli.marque = '%s' AND cli.modele = '%s' AND util.email = '%s' "
+                                + "AND cf.typeCategorieFilm = '%s' AND cli.marque = '%s' AND cli.modele = '%s' "
                                 + "AND fil.ageMin <= util.age", categorie, marque, modele, email);
                 String titreFilm = null;
                 Date anneeSortie = null;
@@ -67,7 +67,7 @@ public final class Selections {
                                 + "AND p.numPiste = eup.numPiste AND fic.idFichier = eup.idFichier AND fic.idFichier = flu.idFichier "
                                 + "AND flu.nomCodec = sc.nomCodec AND flu.typeCodec = sc.typeCodec AND util.email = fic.email "
                                 + "AND sc.marque = cli.marque AND sc.modele = cli.modele "
-                                + "AND cm.typeCategorieMusique = '%s' AND cli.marque = '%s' AND cli.modele = '%s' AND util.email = '%s'",
+                                + "AND cm.typeCategorieMusique = '%s' AND cli.marque = '%s' AND cli.modele = '%s'",
                                 categorie, marque, modele, email);
                 Integer numPiste = null;
                 Long idAlbum = null;

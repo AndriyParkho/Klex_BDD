@@ -1,12 +1,9 @@
 package tests;
 
 import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import dao.DAOFactory;
 import model.Album;
 import model.Artiste;
 import model.CategorieMusique;
@@ -24,58 +21,45 @@ public class TestTransactionFichierPiste {
         Fichier fichier = new Fichier();
         fichier.setDateDepot(Date.valueOf("2019-04-13"));
         fichier.setTaille(2600);
-        fichier.setEmail("andriy.parkho@gmail.com");
-        
+        fichier.setEmail("@gmail.com");
 
         Album album = new Album();
-        try {
-			ResultSet rs = DAOFactory.getAlbumDAO().find("Meteora");
-			if(rs.next()) {
-				album.setId(rs.getLong("idAlbum"));
-				album.setGroupe(rs.getString("nomGroupe"));
-				album.setTitre("Meteora");
-				album.setDateSortie(rs.getDate("dateSortieAlbum"));
-				album.setUrlImagePochette(rs.getString("urlImagePochette"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-//        album.setGroupe("Linkin Park");
-//        album.setTitre("Meteora");
-//        album.setUrlImagePochette("https://img.png");
-//        album.setDateSortie(Date.valueOf("2003-09-08"));
+        album.setGroupe("Linkin Park");
+        album.setTitre("Meteora");
+        album.setUrlImagePochette("https://img.png");
+        album.setDateSortie(Date.valueOf("2003-09-08"));
 
         Piste piste = new Piste();
-        piste.setDuree("00:02:20");
-        piste.setNum(15);
-        piste.setTitre("Test2");
+        piste.setDuree("00:02:30");
+        piste.setNum(13);
+        piste.setTitre("Numb");
 
         HashSet<Flux> flux = new HashSet<Flux>();
         FluxAudio fluxAudio = new FluxAudio();
-        fluxAudio.setDebit(250);
+        fluxAudio.setDebit(850);
         fluxAudio.setEchantillonnage(16);
-        fluxAudio.setLangue("Anglais");
-        fluxAudio.setNomCodec(".mp3");
+        fluxAudio.setLangue("Français");
+        fluxAudio.setNomCodec("MPEG2");
         fluxAudio.setTypeCodec("audio");
         flux.add(fluxAudio);
 
         FluxTexte fluxTexte = new FluxTexte();
-        fluxTexte.setDebit(300);
-        fluxTexte.setLangue("Fran�ais"); // pcq on est bilingue
-        fluxTexte.setNomCodec(".txt");
+        fluxTexte.setDebit(850);
+        fluxTexte.setLangue("Anglais"); // pcq on est bilingue
+        fluxTexte.setNomCodec("Kate");
         fluxTexte.setTypeCodec("texte");
         flux.add(fluxTexte);
 
         HashSet<CategorieMusique> categories = new HashSet<CategorieMusique>();
-        categories.add(new CategorieMusique("rap"));
-        categories.add(new CategorieMusique("machin"));
+        categories.add(new CategorieMusique("métal"));
+        categories.add(new CategorieMusique("rock"));
 
         HashMap<Artiste, String> artistes = new HashMap<Artiste, String>();
         Artiste artiste = new Artiste();
-        artiste.setNom("Autre");
+        artiste.setNom("Linkin Park");
         artiste.setUrlPhoto("https://commons.wikimedia.org/wiki/File:LinkinParkBerlin2010.jpg?uselang=fr");
         artiste.setSpecialite("Chanteur");
-        artistes.put(artiste, "Beat");
+        artistes.put(artiste, "Basse");
 
         FichierPiste fichierPiste = new FichierPiste();
         fichierPiste.setFichier(fichier);
@@ -86,5 +70,6 @@ public class TestTransactionFichierPiste {
         fichierPiste.setArtistes(artistes);
 
         TransactionFichierPiste.execute(fichierPiste);
+
     }
 }

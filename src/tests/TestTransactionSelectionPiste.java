@@ -12,7 +12,7 @@ public final class TestTransactionSelectionPiste {
     public static void main(String[] args) {
         Connection connection = ConnectionOracle.getInstance();
         try {
-            try (ResultSet rs = Selections.findPiste(connection, "rock", "MusiqueDrop", "M123", "nicolas.vincent@gmail.com")) {
+            try (ResultSet rs = Selections.findPiste(connection, "rock", "Sony", "M4", "@gmail.com")) {
                 if (rs != null) {
                     System.out.println(JDBCUtilities.dumpResultSet(rs));
                 } else {
